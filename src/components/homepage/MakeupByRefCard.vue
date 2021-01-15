@@ -35,8 +35,6 @@
 }
 
 .cosmetic-bg {
-  // position: absolute;
-  // z-index: -1;
   height: 30rem;
   margin-bottom: -23rem;
 }
