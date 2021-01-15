@@ -1,9 +1,23 @@
 <template>
   <div class="home">
-    Tints
+    <Navbar></Navbar>    
+    <div class="home-container">
+      <MakeupByRefCard></MakeupByRefCard>
+    </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import Navbar from '@/components/main/Navbar.vue';
+import Footer from '@/components/main/Footer.vue';
+import MakeupByRefCard from '@/components/homepage/MakeupByRefCard.vue';
+
+export default {
+  components: {
+    Navbar,
+    Footer,
+    MakeupByRefCard,
+  },
+};
 </script>

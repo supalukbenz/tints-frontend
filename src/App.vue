@@ -5,6 +5,11 @@
 </template>
 
 <style>
+body {
+  background-color: #fff6eb !important;
+  height: 100%;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
