@@ -6,7 +6,7 @@
         <img class="ref-img" src="../../assets/images/lisa.jpg" />
         <div class="ref-body">
           <div class="ref-detail">
-            "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
+            "Neques porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
             velit..."
           </div>
           <div class="mt-5">
