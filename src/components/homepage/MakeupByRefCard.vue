@@ -11,7 +11,7 @@
           </div>
           <div class="mt-5">
             <a class="makeup-ref-btn" href=""
-              >Makeup by Reference<i class="fas fa-images pl-1"></i
+              >Makeup by Reference.<i class="fas fa-images pl-1"></i
             ></a>
           </div>
         </div>
