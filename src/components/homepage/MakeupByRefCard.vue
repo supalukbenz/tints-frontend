@@ -1,9 +1,9 @@
 <template>
   <div class="makeup-ref-card">
-    <img class="cosmetic-bg" src="@/assets/images/eyeshadow-pink.png" />
+    <!-- <img class="cosmetic-bg" src="@/assets/images/eyeshadow-pink.png" /> -->
     <div class="ref-image-container">
       <div class="ref-img-card">
-        <img id="ref-image" class="ref-img fadein" :src="require(`@/assets/images/${imgURL}`)" />
+        <img id="ref-image" class="ref-img fadeIn" :src="require(`@/assets/images/${imgURL}`)" />
         <div class="ref-body">
           <div class="ref-detail">
             "Neques porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
@@ -31,7 +31,6 @@ export default {
   created() {
     var images = ['lisa-1.png', 'lisa-2.png', 'lisa.jpg'];
     var index = 0;
-
     setInterval(() => {
       $('#ref-image').fadeOut('slow', () => {
         this.imgURL = images[index];
@@ -41,7 +40,7 @@ export default {
         }
         $('#ref-image').fadeIn('slow');
       });
-    }, 5000);
+    }, 3000);
   },
 };
 </script>
@@ -102,7 +101,7 @@ export default {
 }
 
 .makeup-ref-card {
-  padding: 0 3rem;
+  padding: 3rem;
 }
 
 .fadeIn {
