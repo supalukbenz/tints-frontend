@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Navbar></Navbar>    
+    <Banner></Banner>
     <div class="home-container">
       <MakeupByRefCard></MakeupByRefCard>
     </div>
@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import Navbar from '@/components/main/Navbar.vue';
+import Banner from '@/components/main/Banner.vue';
 import Footer from '@/components/main/Footer.vue';
 import MakeupByRefCard from '@/components/homepage/MakeupByRefCard.vue';
 
 export default {
   components: {
-    Navbar,
+    Banner,
     Footer,
     MakeupByRefCard,
   },

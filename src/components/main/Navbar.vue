@@ -1,26 +1,37 @@
 <template>
-  <div class="nav-container">
-    <img class="nav-bg" src="@/assets/images/tints.png" />
+  <div>
+    <div class="nav-container d-flex">
+      <div class="d-flex">
+        <router-link to="/" class="home-btn">
+          <span>
+            tints.
+          </span>
+        </router-link>
+      </div>
+    </div>
+    <!-- <img class="nav-bg" src="@/assets/images/nav_img.png" /> -->
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .nav-container {
-  /* background: linear-gradient(
-      180deg,
-      rgba(224, 93, 111, 0.8337710084033614) 0%,
-      rgba(0, 0, 0, 0.542454481792717) 78%
-    ),
-    url('../../assets/images/tints.png');
-  background-position: center, center;
-  background-repeat: no-repeat, repeat;
-  background-size: cover;
-  height: 18rem; */
-  /* width: auto; */
-  width: 100%;
+  height: 5rem;
+  background: #f6aaaf;
+  align-items: center;
+  padding: 0rem 2rem;
+}
+
+.home-btn {
+  font-family: 'Yeseva One', cursive;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  letter-spacing: 2px;
+  font-size: 2rem;
 }
 
 .nav-bg {
   width: 100%;
+  margin-top: -0.25rem;
 }
 </style>
