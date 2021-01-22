@@ -24,7 +24,7 @@
         </button>
       </div>
     </div>
-    <!-- <img :src="imageUpload" :class="{ hideImage: !imageUpload }" class="image-upload" /> -->
+    <img :src="imageRef" :class="{ hideImage: !imageRef }" class="image-upload" />
 
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -34,12 +34,21 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
           <div class="modal-body">
-            <img :src="imageUpload" :class="{ hideImage: !imageUpload }" class="image-upload" />
-            <div class="modal-btn" v-if="!imageUpload">
-              <button class="modal-upload-btn" type="button">Upload</button>
-              <button type="button"><i class="fas fa-undo"></i></button>
+            <div class="modal-btn mb-3" v-show="imageUpload">
+              <button
+                @click="uploadImageRef"
+                data-dismiss="modal"
+                class="modal-upload-btn border-0"
+                type="button"
+              >
+                Upload <i class="fas fa-check"></i>
+              </button>
+              <button class="modal-reset-btn" type="button" @click="deleteImageUpload">
+                <i class="fas fa-undo"></i>
+              </button>
             </div>
-            <div v-if="!imageUpload" @dragover.prevent @drop="onDrop" class="upload-modal-body">
+            <img :src="imageUpload" :class="{ hideImage: !imageUpload }" class="image-upload" />
+            <div v-show="!imageUpload" @dragover.prevent @drop="onDrop" class="upload-modal-body">
               <i class="fas fa-download upload-modal-icon" />
               <div class="modal-detail">
                 <span class="drag-title">Drag image here </span> or
@@ -51,9 +60,7 @@
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+          <div class="modal-footer p-4"></div>
         </div>
       </div>
     </div>
@@ -95,18 +102,55 @@ export default {
     deleteImageUpload() {
       this.imageUpload = null;
     },
+    uploadImageRef() {
+      if (this.imageUpload) {
+        this.imageRef = this.imageUpload;
+        this.deleteImageUpload();
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
+button {
+  outline: none;
+}
 .modal-upload-img {
-  color: #3e5374;
+  color: #be5887;
   font-weight: 800;
   cursor: pointer;
 }
 
 .modal-upload-btn {
+  background: #be5887;
+  color: #ffffff;
+  border-radius: 2rem;
+  font-weight: 600;
+  width: 10rem;
+  padding: 0.3rem 0rem;
+  margin-right: -2rem;
+}
+
+.modal-upload-btn:hover {
+  background: #a04971;
+}
+
+.modal-reset-btn {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid rgb(165, 165, 165);
+  color: rgb(165, 165, 165);
+  background: #ffffff;
+  margin-right: -3rem;
+  margin-left: 2.5rem;
+}
+
+.modal-reset-btn:hover {
+  color: #8f0730;
+  border-color: #8f0730;
+  background: rgba(197, 197, 197, 0.452);
 }
 
 .modal-upload-img:hover {
@@ -135,10 +179,10 @@ export default {
 .image-upload {
   max-width: 100%;
   height: 25rem;
-  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadein 2s; /* Firefox < 16 */
-  -ms-animation: fadein 2s; /* Internet Explorer */
-  -o-animation: fadein 2s; /* Opera < 12.1 */
+  -webkit-animation: fadein 2s;
+  -moz-animation: fadein 2s;
+  -ms-animation: fadein 2s;
+  -o-animation: fadein 2s;
   animation: fadein 2s;
 }
 
