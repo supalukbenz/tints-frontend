@@ -30,6 +30,10 @@
   font-size: 2rem;
 }
 
+.home-btn:hover {
+  text-decoration: none;
+}
+
 .nav-bg {
   width: 100%;
   margin-top: -0.25rem;

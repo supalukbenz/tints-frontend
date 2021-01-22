@@ -1,7 +1,7 @@
 <template>
-  <div class="footer-container">
+  <footer class="footer-container">
     <img class="footer-bg" src="../../assets/images/footer-bg.png" />
-  </div>
+  </footer>
 </template>
 
 <style scoped>

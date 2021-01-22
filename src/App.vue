@@ -2,14 +2,17 @@
   <div id="app">
     <Navbar></Navbar>
     <router-view />
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/main/Navbar.vue';
+import Footer from '@/components/main/Footer.vue';
 export default {
   components: {
     Navbar,
+    Footer,
   },
 };
 </script>
@@ -17,6 +20,7 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
 
+html,
 body {
   background-color: #fff6eb !important;
   height: 100%;
@@ -28,6 +32,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  min-height: 100%;
 }
 
 #nav {
