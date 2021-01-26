@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="nav-container d-flex">
+    <div class="nav-container d-flex bg-skin-100">
       <div class="d-flex">
         <router-link to="/" class="home-btn">
           <span>
@@ -16,7 +16,6 @@
 <style lang="scss" scoped>
 .nav-container {
   height: 5rem;
-  background: #f6aaaf;
   align-items: center;
   padding: 0rem 2rem;
 }

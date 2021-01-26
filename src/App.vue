@@ -2,23 +2,23 @@
   <div id="app">
     <Navbar></Navbar>
     <router-view />
-    <Footer></Footer>
+    <!-- <Footer></Footer> -->
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/main/Navbar.vue';
-import Footer from '@/components/main/Footer.vue';
+// import Footer from '@/components/main/Footer.vue';
 export default {
   components: {
     Navbar,
-    Footer,
   },
 };
 </script>
 
-<style>
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
+
 
 html,
 body {
@@ -47,6 +47,39 @@ body {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.color-green-200 {
+  color: #a1afa0;
+}
+
+.color-green-100 {
+  color: #9dc99c;
+}
+
+.color-brown-100 {
+  color: #bca79d;
+}
+
+.color-skin-100 {
+  color: #edb194;
+}
+
+.bg-green-200 {
+  background: #a1afa0;
+}
+
+.bg-green-100 {
+  background: #9dc99c;
+}
+
+.bg-brown-100 {
+  background: #bca79d;
+}
+
+.bg-skin-100 {
+  background: #edb194;
+}
+
 @keyframes fadein {
   from {
     opacity: 0;
