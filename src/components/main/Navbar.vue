@@ -15,7 +15,7 @@
 
 <style lang="scss" scoped>
 .nav-container {
-  height: 5rem;
+  height: 6rem;
   align-items: center;
   padding: 0rem 2rem;
 }
@@ -24,8 +24,9 @@
   font-family: 'Yeseva One', cursive;
   background-color: transparent;
   border: 1px solid #ffffff;
+  padding: 1rem;
   color: #ffffff;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   font-size: 2rem;
 }
 

@@ -284,11 +284,6 @@ button {
   align-items: center;
   padding-left: 2rem;
 }
-.upload-img-body {
-  border: 1px solid #a1afa0;
-  padding: 2rem 1rem;
-  margin: 0rem 1rem;
-}
 
 .upload-icon {
   display: flex;

@@ -6,15 +6,15 @@
         <img id="ref-image" class="ref-img fadeIn" :src="require(`@/assets/images/${imgURL}`)" />
         <div class="ref-body text-start">
           <div class="ref-detail">
-            "Neques porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-            velit..."
+            <div class="ref-detail-first">" Being a person in your dream "</div>
+            <span class="ref-detail-sec">- transform you with the same makeup -</span>
           </div>
-          <div class="mt-1 w-100 d-flex">
+          <div class="w-100 d-flex makeup-ref-btn">
             <!-- <button type="button" class="makeup-ref-btn" href="">Makeup by Reference.</button> -->
 
-            <router-link class="makeup-btn" to="/makeup-ref"
-              ><span>Makeup by Reference. <i class="fas fa-arrow-right next-icon"></i></span
-            ></router-link>
+            <router-link class="makeup-btn" to="/makeup-ref">
+              <span>Makeup by Reference. <i class="fas fa-magic"></i></span>
+            </router-link>
           </div>
         </div>
       </div>
@@ -50,11 +50,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda&display=swap');
+
 .makeup-btn {
-  width: 13rem;
+  width: 16rem;
   padding: 0.5rem;
+  padding-left: 1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  font-size: 1.1rem;
   color: #ffffff;
-  background: #f6aaaf;
+  background: #00b18e;
   text-align: left;
   position: relative;
   transition: all 0.35s;
@@ -77,7 +83,7 @@ export default {
   left: 0;
   width: 0;
   height: 100%;
-  background: #be5887;
+  background: #00886d;
   transition: all 0.35s;
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
@@ -94,11 +100,8 @@ export default {
 }
 
 .makeup-ref-btn {
-  background: #be5887;
-  border: none;
-  color: #ffffff;
-  font-weight: 500;
-  padding: 0rem 1rem;
+  margin-top: 2rem;
+  justify-content: center;
 }
 
 .makeup-ref-bg {
@@ -106,6 +109,7 @@ export default {
 }
 
 .makeup-ref-card {
+  font-family: 'Bodoni Moda', serif;
   padding: 3rem;
 }
 
@@ -122,17 +126,35 @@ export default {
   margin-bottom: -23rem;
 }
 
+.mirror-img {
+  height: 2rem;
+  max-width: 100%;
+}
+
 .ref-detail {
   overflow: hidden;
+  text-align: center;
+}
+
+.ref-detail-first {
+  font-weight: 600;
+  font-style: italic;
+  font-size: 1.2rem;
+  text-align: center;
+  border: 1px solid;
+  padding: 0.5rem;
+}
+
+.ref-detail-sec {
+  text-align: left;
 }
 
 .ref-body {
   display: flex;
   width: 100%;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
-  padding: 3rem;
+  align-items: center;
   text-align: left;
 }
 .ref-image-container {
@@ -148,7 +170,7 @@ export default {
   display: flex;
   width: 100%;
   height: 100%;
-  background-color: rgba(250, 230, 236, 0.8);
+  background-color: rgba(162, 176, 160, 0.5);
 }
 
 .ref-img {
@@ -193,7 +215,7 @@ export default {
   z-index: 2;
   width: 10vmin;
   right: 100%;
-  background-color: rgba(250, 230, 236, 1);
+  background-color: rgba(162, 176, 160, 0.8);
   animation-delay: 0.1s;
 
   --x1: 0;

@@ -19,10 +19,15 @@ export default {
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
 
-
 html,
 body {
-  background-color: #fff6eb !important;
+  // background-color: #fff6eb !important;
+  background-image: url('../src/assets/images/blush-bg.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-attachment: fixed;
   height: 100%;
 }
 
