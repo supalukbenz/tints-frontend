@@ -129,6 +129,7 @@ export default {
       fileUpload: File,
       imgModal: false,
       fileUploadState: false,
+      rgbColor: '',
     };
   },
   computed: {
@@ -177,15 +178,19 @@ export default {
     async uploadImageRef() {
       this.fileUploadState = true;
       if (this.imageUpload) {
+        await this.$store.dispatch('updateLipstickListByImgRef', []);
         this.updateImageReference(this.imageUpload);
         await this.$store.dispatch('loadLipstickListByImgRef', this.fileUpload);
-
+        this.rgbColor = this.getSortedLipstickList[0].rgb_value;
         this.fileUploadState = false;
 
         this.deleteImageUpload();
         this.scrollToElement('#imageRef');
       }
     },
+  },
+  mounted() {
+    this.updateImageReference(this.imageUpload);
   },
 };
 </script>

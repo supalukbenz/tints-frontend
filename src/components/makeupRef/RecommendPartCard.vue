@@ -7,26 +7,21 @@
       <div>
         <img
           class="img-ref"
-          :src="
-            lipstickList.length > 0
-              ? lipstickList[0].image_link
-              : 'https://www.clinique.com/media/export/cms/products/181x209/clq_749K01_181x209.png'
-          "
+          :src="lipstickList.length > 0 ? lipstickList[0].image_link : ''"
+          @error="$event.target.src = 'https://img.icons8.com/ios/452/lipstick.png'"
         />
       </div>
       <div class="ref-part-detail">
-        <div class="brand-name">
-          {{ lipstickList.length > 0 ? lipstickList[0].brand : 'clinique' }}
+        <div class="d-flex align-items-center">
+          <div class="brand-name">
+            {{ lipstickList.length > 0 ? lipstickList[0].brand : '' }}
+          </div>
         </div>
         <div class="color-name">
-          {{ lipstickList.length > 0 ? lipstickList[0].color_name : 'Supreme Sorbet' }}
+          {{ lipstickList.length > 0 ? lipstickList[0].color_name : '' }}
         </div>
         <div class="price">
-          ฿{{
-            lipstickList.length > 0
-              ? converterUSDToTHB(lipstickList[0].price)
-              : converterUSDToTHB('17.5')
-          }}
+          ฿{{ lipstickList.length > 0 ? converterUSDToTHB(lipstickList[0].price) : '' }}
         </div>
       </div>
     </div>
@@ -37,12 +32,18 @@
 import { mapGetters } from 'vuex';
 
 export default {
+  props: {
+    rgbColor: String,
+  },
   computed: {
     ...mapGetters({ lipstickList: 'getSortedLipstickList' }),
   },
   methods: {
     converterUSDToTHB(usd) {
       return Math.round(Number(usd) * 29.98);
+    },
+    checkNotNullArray(arr) {
+      return arr.length > 0;
     },
   },
 };

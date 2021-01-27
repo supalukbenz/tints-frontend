@@ -29,6 +29,9 @@ export default new Vuex.Store({
     updateImageReference({ commit }, payload) {
       commit('setImageReference', payload);
     },
+    updateLipstickListByImgRef({ commit }, payload) {
+      commit('setLipstickListByImgRef', payload);
+    },
     async loadLipstickListByImgRef({ commit }, payload) {
       commit('setLipstickListByImgRef', await getLipstickListByImageRef(payload));
     }

@@ -11,8 +11,16 @@
         @error="$event.target.src = 'https://img.icons8.com/ios/452/lipstick.png'"
       />
       <div class="item-detail">
-        <div class="brand-name">
-          {{ item ? item.brand : 'clinique' }}
+        <div class="d-flex align-items-center">
+          <div class="brand-name">
+            {{ item ? item.brand : 'clinique' }}
+          </div>
+          <i
+            :style="[
+              item ? { color: 'rgb' + item.rgb_value + ' !important' } : { background: '#FFF' },
+            ]"
+            class="fas fa-circle ml-1"
+          ></i>
         </div>
         <div class="color-name">
           {{ item ? item.color_name : 'Supreme Sorbet' }}
