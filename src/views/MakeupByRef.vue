@@ -12,11 +12,6 @@
             name="photo"
             accept="image/*"
           />
-          <!-- <label for="imgFile" class="m-0 img-label">
-          <div class="label-detail">
-            Select File
-            <div class="upload-icon"><i class="fas fa-upload"></i></div></div
-        ></label> -->
           <button
             class="m-0 img-label bg-green-100 border-0"
             data-toggle="modal"
@@ -29,23 +24,6 @@
           </button>
         </div>
       </div>
-
-      <!-- <div class="ref-result-container">
-        <div class="ref-result-img">
-          
-          <img
-            id="imageRef"
-            src="https://i.pinimg.com/750x/54/43/0c/54430c91f53a89f939446e8af5c752f3.jpg"
-            class="image-upload fadeIn-2 image-height-auto mt-4"
-          />
-          
-        </div>
-        <div class="part-reference">
-          <RecommendPartCard class="fadeIn-3"></RecommendPartCard>
-        </div>
-      </div>
-      <ReferenceTab class="fadeIn-3"></ReferenceTab> -->
-
       <div v-if="fileUploadState" class="mt-5 d-flex justify-content-center">
         <div class="spinner-grow color-green-200 mr-3 spinner" role="status"></div>
         <div class="spinner-grow color-green-100 mr-3 spinner" role="status"></div>
@@ -54,14 +32,12 @@
       <div v-show="imageRef && !fileUploadState">
         <div class="ref-result-container">
           <div class="ref-result-img">
-            <!-- <img class="line-img" src="@/assets/images/line.png" /> -->
             <img
               id="imageRef"
               :src="imageRef"
               :class="{ hideImage: !imageRef }"
               class="image-upload fadeIn-2 image-height-auto mt-4"
             />
-            <!-- <img class="line-img fadeIn-2 img-rotate-180" src="@/assets/images/line.png" /> -->
           </div>
           <div class="part-reference">
             <RecommendPartCard class="fadeIn-3"></RecommendPartCard>
