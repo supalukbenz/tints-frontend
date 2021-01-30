@@ -1,21 +1,27 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: Home
+    path: '/',
+    name: 'Home',
+    component: () =>
+      import(/* webpackChunkName: "makeupByRed" */ '@/views/Home.vue'),
   },
+  {
+    path: '/makeup-ref',
+    name: 'Makeup By Reference',
+    component: () =>
+      import(/* webpackChunkName: "makeupByRed" */ '@/views/MakeupByRef.vue')
+  }
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 
 export default router;
