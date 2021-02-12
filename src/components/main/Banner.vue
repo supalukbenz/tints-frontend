@@ -1,8 +1,16 @@
 <template>
   <div class="banner-container">
-    <img class="banner-bg" src="@/assets/images/tints.png" />
+    <img class="banner-bg" :src="require(`@/assets/images/banner/${bannerImg}`)" alt="Banner" />
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    bannerImg: String,
+  },
+};
+</script>
 
 <style scoped>
 .banner-container {
@@ -17,7 +25,6 @@
   background-size: cover;
   height: 18rem; */
   /* width: auto; */
-  padding: 1rem 2rem;
   width: 100%;
 }
 
