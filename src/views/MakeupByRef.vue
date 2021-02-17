@@ -1,9 +1,9 @@
 <template>
   <div>
+    <Banner bannerImg="makeup_by_ref_banner.png"></Banner>
     <div class="upload-img-border h-100">
       <div class="upload-img-container">
         <div class="upload-img-body">
-          <div class="upload-title">&#11810; Who is the person you want to be? &#11813;</div>
           <input
             class="d-none"
             type="file"
@@ -13,15 +13,22 @@
             accept="image/*"
           />
           <button
-            class="m-0 img-label bg-green-100 border-0"
+            class="m-0 img-label bg-green-200 border-0"
             data-toggle="modal"
             data-target="#myModal"
           >
             <div class="label-detail">
               Upload Image
-              <div class="upload-icon color-green-100"><i class="fas fa-image"></i></div>
+              <div class="upload-icon color-green-200"><i class="fas fa-image"></i></div>
             </div>
           </button>
+          <div class="upload-title">&#11810; Example &#11813;</div>
+          <img
+            id="ex-image"
+            class="ex-image fadeIn-2"
+            :src="require(`@/assets/images/makeupRef/${imageExampleURL}`)"
+            alt="exampleImageRef"
+          />
         </div>
       </div>
       <div v-if="fileUploadState" class="mt-5 d-flex justify-content-center">
@@ -48,7 +55,6 @@
 
       <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-          <!-- Modal content-->
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -91,6 +97,7 @@
 <script>
 import $ from 'jquery';
 import { mapActions, mapState, mapGetters } from 'vuex';
+import Banner from '@/components/main/Banner.vue';
 import RecommendPartCard from '@/components/makeupRef/RecommendPartCard.vue';
 import ReferenceTab from '@/components/makeupRef/ReferenceTab.vue';
 
@@ -98,6 +105,7 @@ export default {
   components: {
     RecommendPartCard,
     ReferenceTab,
+    Banner,
   },
   data() {
     return {
@@ -106,7 +114,22 @@ export default {
       imgModal: false,
       fileUploadState: false,
       rgbColor: '',
+      imageExampleURL: 'rihanna_ex.png',
     };
+  },
+  created() {
+    // var images = ['ex_1.jpg', 'ex_2.jpg', 'ex_3.jpg', 'ex_7.jpg', 'rihanna_ex.png'];
+    // var index = 0;
+    // setInterval(() => {
+    //   $('#ex-image').fadeOut('slow', () => {
+    //     this.imageExampleURL = images[index];
+    //     index++;
+    //     if (index === images.length) {
+    //       index = 0;
+    //     }
+    //     $('#ex-image').fadeIn('slow');
+    //   });
+    // }, 5000);
   },
   computed: {
     ...mapState({
@@ -199,6 +222,11 @@ button {
   }
 }
 
+.ex-image {
+  height: 25rem;
+  width: auto;
+}
+
 .modal-reset-btn {
   width: 2rem;
   height: 2rem;
@@ -220,11 +248,13 @@ button {
   color: #9dc99c;
 }
 .upload-img-border {
-  padding: 4rem;
+  padding: 2rem 4rem;
 }
 .upload-title {
   font-family: 'Yeseva One', cursive;
   margin-bottom: 1rem;
+  margin-top: 2rem;
+  font-size: 1.2rem;
 }
 .upload-img-container {
   display: flex;
@@ -234,17 +264,13 @@ button {
   justify-content: center;
 }
 
-.modal-detail {
-  font-size: 1.2rem;
-}
-
 .image-upload {
   max-width: 75%;
   height: 25rem;
 }
 
 .img-label {
-  width: 12rem;
+  width: 13rem;
   /* background: #be5887; */
   color: #ffffff;
   cursor: pointer;
@@ -253,9 +279,9 @@ button {
 }
 
 .img-label:hover {
-  background: #a1afa0;
+  background: #6b746a;
   .upload-icon {
-    color: #a1afa0;
+    color: #6b746a;
   }
 }
 
@@ -263,15 +289,18 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 2rem;
+  padding: 0 1.3rem;
+  padding-right: 0rem;
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 
 .upload-icon {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 2rem;
-  height: 2rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   background: #ffffff;
   /* color: #be5887; */

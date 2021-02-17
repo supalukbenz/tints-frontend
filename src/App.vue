@@ -23,13 +23,13 @@ export default {
 
 html,
 body {
-  // background-color: #fff6eb !important;
-  background-image: url('../src/assets/images/blush-bg.jpg');
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-attachment: fixed;
+  background-color: #fffcf7 !important;
+  // background-image: url('../src/assets/images/blush-bg.jpg');
+  // -webkit-background-size: cover;
+  // -moz-background-size: cover;
+  // -o-background-size: cover;
+  // background-size: cover;
+  // background-attachment: fixed;
   height: 100%;
 }
 

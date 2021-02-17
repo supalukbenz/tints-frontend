@@ -6,6 +6,7 @@
           id="ref-image"
           class="ref-img fadeIn"
           :src="require(`@/assets/images/card/${imgURL}`)"
+          alt="MakeUpRefCard"
         />
       </div>
       <div class="content-container">
@@ -54,7 +55,6 @@ export default {
   justify-content: flex-start;
   width: 90vmin;
   height: calc(90vmin * 9 / 16);
-  background: #ffffff;
   margin: auto;
   position: relative;
   overflow: hidden;
@@ -84,7 +84,7 @@ export default {
 }
 
 .content-container {
-  background-image: url('../../assets/images/card/makeup_ref-bg.png');
+  background-image: url('../../assets/images/card/makeup_ref-card.png');
   background-position: center;
   background-size: cover;
   height: calc(90vmin * 9 / 16);

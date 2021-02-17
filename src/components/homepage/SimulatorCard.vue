@@ -11,6 +11,7 @@
           id="ref-image"
           class="ref-img fadeIn"
           :src="require(`@/assets/images/card/${imgURL}`)"
+          alt="SimulatorCard"
         />
       </div>
       <div class="ref-card-animate"></div>
@@ -46,7 +47,6 @@ export default {
 
 <style lang="scss" scoped>
 .simulation-container {
-  margin-top: 3rem;
   display: flex;
   justify-content: center;
 }
@@ -55,7 +55,6 @@ export default {
   justify-content: flex-start;
   width: 90vmin;
   height: calc(90vmin * 9 / 16);
-  background: #474643;
   margin: auto;
   position: relative;
   overflow: hidden;
@@ -75,7 +74,7 @@ export default {
   text-decoration: none;
 
   &:hover {
-    background: #698868;
+    background: #714941;
   }
 }
 
@@ -85,7 +84,7 @@ export default {
 }
 
 .content-container {
-  background-image: url('../../assets/images/card/simulator_card.png');
+  background-image: url('../../assets/images/card/simulator-card.png');
   background-position: center;
   background-size: cover;
   height: calc(90vmin * 9 / 16);
