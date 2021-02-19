@@ -23,13 +23,13 @@ export default {
 
 html,
 body {
-  background-color: #fffcf7 !important;
-  // background-image: url('../src/assets/images/blush-bg.jpg');
-  // -webkit-background-size: cover;
-  // -moz-background-size: cover;
-  // -o-background-size: cover;
-  // background-size: cover;
-  // background-attachment: fixed;
+  // background-color: #fffcf7 !important;
+  background-image: url('../src/assets/images/blush-bg.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-attachment: fixed;
   height: 100%;
 }
 
@@ -86,6 +86,14 @@ body {
 
 .bg-skin-100 {
   background: #edb194;
+}
+
+.fadeIn {
+  -webkit-animation: fadein 2s;
+  -moz-animation: fadein 2s;
+  -ms-animation: fadein 2s;
+  -o-animation: fadein 2s;
+  animation: fadein 2s;
 }
 
 @keyframes fadein {

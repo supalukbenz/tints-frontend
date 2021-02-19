@@ -12,23 +12,21 @@
             name="photo"
             accept="image/*"
           />
-          <button
-            class="m-0 img-label bg-green-200 border-0"
-            data-toggle="modal"
-            data-target="#myModal"
-          >
-            <div class="label-detail">
-              Upload Image
-              <div class="upload-icon color-green-200"><i class="fas fa-image"></i></div>
+          <div class="makeup-ref-body">
+            <ExampleCard></ExampleCard>
+            <div class="btn-body">
+              <button
+                class="m-0 img-label bg-green-200 border-0"
+                data-toggle="modal"
+                data-target="#myModal"
+              >
+                <div class="label-detail">
+                  Upload Image
+                  <div class="upload-icon color-green-200"><i class="fas fa-image"></i></div>
+                </div>
+              </button>
             </div>
-          </button>
-          <div class="upload-title">&#11810; Example &#11813;</div>
-          <img
-            id="ex-image"
-            class="ex-image fadeIn-2"
-            :src="require(`@/assets/images/makeupRef/${imageExampleURL}`)"
-            alt="exampleImageRef"
-          />
+          </div>
         </div>
       </div>
       <div v-if="fileUploadState" class="mt-5 d-flex justify-content-center">
@@ -100,12 +98,14 @@ import { mapActions, mapState, mapGetters } from 'vuex';
 import Banner from '@/components/main/Banner.vue';
 import RecommendPartCard from '@/components/makeupRef/RecommendPartCard.vue';
 import ReferenceTab from '@/components/makeupRef/ReferenceTab.vue';
+import ExampleCard from '@/components/makeupRef/ExampleCard.vue';
 
 export default {
   components: {
     RecommendPartCard,
     ReferenceTab,
     Banner,
+    ExampleCard,
   },
   data() {
     return {
@@ -114,22 +114,7 @@ export default {
       imgModal: false,
       fileUploadState: false,
       rgbColor: '',
-      imageExampleURL: 'rihanna_ex.png',
     };
-  },
-  created() {
-    // var images = ['ex_1.jpg', 'ex_2.jpg', 'ex_3.jpg', 'ex_7.jpg', 'rihanna_ex.png'];
-    // var index = 0;
-    // setInterval(() => {
-    //   $('#ex-image').fadeOut('slow', () => {
-    //     this.imageExampleURL = images[index];
-    //     index++;
-    //     if (index === images.length) {
-    //       index = 0;
-    //     }
-    //     $('#ex-image').fadeIn('slow');
-    //   });
-    // }, 5000);
   },
   computed: {
     ...mapState({
@@ -204,6 +189,16 @@ button {
   height: 3rem;
 }
 
+.btn-body {
+  margin-top: 5rem;
+  margin-right: 5rem;
+}
+
+.makeup-ref-body {
+  display: flex;
+  justify-content: space-around;
+}
+
 .modal-upload-img {
   font-weight: 800;
   cursor: pointer;
@@ -250,12 +245,7 @@ button {
 .upload-img-border {
   padding: 2rem 4rem;
 }
-.upload-title {
-  font-family: 'Yeseva One', cursive;
-  margin-bottom: 1rem;
-  margin-top: 2rem;
-  font-size: 1.2rem;
-}
+
 .upload-img-container {
   display: flex;
   flex-direction: column;
@@ -271,7 +261,6 @@ button {
 
 .img-label {
   width: 13rem;
-  /* background: #be5887; */
   color: #ffffff;
   cursor: pointer;
   border-radius: 2rem;
@@ -403,16 +392,43 @@ button {
   background: #bfa5a6;
 }
 
-@media screen and (max-width: 892px) {
+@media screen and (max-width: 1080px) {
   .upload-img-border {
-    padding: 1rem;
+    padding: 2rem 1rem;
   }
+}
+
+@media screen and (max-width: 892px) {
+  .makeup-ref-body {
+    flex-direction: column-reverse;
+    align-items: center;
+    .btn-body {
+      margin-top: 0;
+      margin-bottom: 2rem;
+      margin-right: 0;
+    }
+  }
+
   .ref-result-container {
     flex-direction: column;
     align-items: center;
   }
   .ref-result-img {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 662px) {
+  .img-label {
+    width: 10rem;
+    .label-detail {
+      font-size: 0.8rem;
+    }
+
+    .upload-icon {
+      width: 2rem;
+      height: 2rem;
+    }
   }
 }
 </style>
