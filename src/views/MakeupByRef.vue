@@ -13,7 +13,7 @@
             accept="image/*"
           />
           <div class="makeup-ref-body">
-            <ExampleCard></ExampleCard>
+            <ExampleCard v-show="!imgResult"></ExampleCard>
             <div class="btn-body">
               <button
                 class="m-0 img-label bg-green-200 border-0"
@@ -34,18 +34,43 @@
         <div class="spinner-grow color-green-100 mr-3 spinner" role="status"></div>
         <div class="spinner-grow color-brown-100 spinner" role="status"></div>
       </div>
-      <div v-show="imageRef && !fileUploadState">
+      <!-- <div v-show="imgResult && !fileUploadState"> -->
+      <div v-show="!fileUploadState && getSortedLipstickList.length > 0">
         <div class="ref-result-container">
           <div class="ref-result-img">
             <img
               id="imageRef"
-              :src="imageRef"
-              :class="{ hideImage: !imageRef }"
-              class="image-upload fadeIn-2 image-height-auto mt-4"
+              :src="imgResult"
+              :class="{ hideImage: !imgResult }"
+              class="image-upload fadeIn-2 mt-4"
             />
           </div>
-          <div class="part-reference">
-            <RecommendPartCard class="fadeIn-3"></RecommendPartCard>
+          <div class="part-reference" v-if="!changeRecommendCardState">
+            <div class="sketchy top-title">
+              suggested
+              <div class="top-detail">the similar makeup</div>
+            </div>
+            <RecommendPartCard
+              :lipstickList="getSortedLipstickList[0]"
+              class="fadeIn-3"
+            ></RecommendPartCard>
+            <RecommendPartCard
+              :lipstickList="getSortedLipstickList[0]"
+              class="fadeIn-3"
+            ></RecommendPartCard>
+            <RecommendPartCard
+              :lipstickList="getSortedLipstickList[0]"
+              class="fadeIn-3"
+            ></RecommendPartCard>
+          </div>
+          <div class="part-reference-mobile" v-if="changeRecommendCardState">
+            <div class="sketchy top-title">
+              suggested
+              <div class="top-detail">the similar makeup</div>
+            </div>
+            <ItemCard :recommendState="true" :item="getSortedLipstickList[0]"></ItemCard>
+            <ItemCard :recommendState="true" :item="getSortedLipstickList[0]"></ItemCard>
+            <ItemCard :recommendState="true" :item="getSortedLipstickList[0]"></ItemCard>
           </div>
         </div>
         <ReferenceTab class="fadeIn-3"></ReferenceTab>
@@ -99,6 +124,7 @@ import Banner from '@/components/main/Banner.vue';
 import RecommendPartCard from '@/components/makeupRef/RecommendPartCard.vue';
 import ReferenceTab from '@/components/makeupRef/ReferenceTab.vue';
 import ExampleCard from '@/components/makeupRef/ExampleCard.vue';
+import ItemCard from '@/components/makeupRef/ItemCard.vue';
 
 export default {
   components: {
@@ -106,14 +132,17 @@ export default {
     ReferenceTab,
     Banner,
     ExampleCard,
+    ItemCard,
   },
   data() {
     return {
       imageUpload: null,
       fileUpload: File,
       imgModal: false,
+      imgResult: null,
       fileUploadState: false,
       rgbColor: '',
+      changeRecommendCardState: false,
     };
   },
   computed: {
@@ -124,32 +153,37 @@ export default {
   },
   methods: {
     ...mapActions(['updateImageReference']),
-    async uploadImage(e) {
-      const image = await e.target.files[0];
+    readFileImageUpload(image) {
       this.fileUpload = image;
-      // await this.$store.dispatch('loadLipstickListByImgRef', e.target.files[0]);
-
       const reader = new FileReader();
       reader.readAsDataURL(image);
       reader.onload = e => {
         this.imageUpload = e.target.result;
       };
     },
-    onDrop(e) {
-      e.stopPropagation();
-      e.preventDefault();
-      const files = e.dataTransfer.files;
-
-      const reader = new FileReader();
-      if (!files[0].type.match('image.*')) {
-        alert('Select an image');
+    myEventHandler() {
+      window.innerWidth <= 892
+        ? (this.changeRecommendCardState = true)
+        : (this.changeRecommendCardState = false);
+    },
+    checkImageType(file) {
+      return !file.type.match('image.*');
+    },
+    async uploadImage(e) {
+      const files = await e.target.files;
+      if (this.checkImageType(files[0])) {
         return;
       }
-      this.fileUpload = files[0];
-      reader.onload = e => {
-        this.imageUpload = e.target.result;
-      };
-      reader.readAsDataURL(files[0]);
+      await this.readFileImageUpload(files[0]);
+    },
+    async onDrop(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      const files = await e.dataTransfer.files;
+      if (this.checkImageType(files[0])) {
+        return;
+      }
+      await this.readFileImageUpload(files[0]);
     },
     deleteImageUpload() {
       this.imageUpload = null;
@@ -162,8 +196,10 @@ export default {
     async uploadImageRef() {
       this.fileUploadState = true;
       if (this.imageUpload) {
-        await this.$store.dispatch('updateLipstickListByImgRef', []);
-        this.updateImageReference(this.imageUpload);
+        // await this.$store.dispatch('updateLipstickListByImgRef', []);
+        // await this.updateImageReference(this.imageUpload);
+
+        this.imgResult = this.imageUpload;
         await this.$store.dispatch('loadLipstickListByImgRef', this.fileUpload);
         this.rgbColor = this.getSortedLipstickList[0].rgb_value;
         this.fileUploadState = false;
@@ -174,7 +210,10 @@ export default {
     },
   },
   mounted() {
-    this.updateImageReference(this.imageUpload);
+    window.addEventListener('resize', this.myEventHandler);
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.myEventHandler);
   },
 };
 </script>
@@ -191,7 +230,6 @@ button {
 
 .btn-body {
   margin-top: 5rem;
-  margin-right: 5rem;
 }
 
 .makeup-ref-body {
@@ -255,7 +293,7 @@ button {
 }
 
 .image-upload {
-  max-width: 75%;
+  max-width: 100%;
   height: 25rem;
 }
 
@@ -392,6 +430,52 @@ button {
   background: #bfa5a6;
 }
 
+.part-reference-mobile {
+  display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  grid-template-columns: 10rem 10rem;
+  grid-gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.top-title {
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.top-detail {
+  font-size: 0.8rem;
+}
+
+.sketchy {
+  padding: 0.5rem;
+  display: inline-block;
+  border: 3px solid #333333;
+  font-size: 1.7rem;
+  border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%;
+  text-transform: uppercase;
+  letter-spacing: 0.3rem;
+  background: rgba(237, 176, 146, 0.4);
+  color: #000000;
+  position: relative;
+
+  &::before {
+    content: '';
+    border: 2px solid #353535;
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0) scale(1.015) rotate(0.5deg);
+    border-radius: 1% 1% 2% 4% / 2% 6% 5% 4%;
+  }
+}
+
 @media screen and (max-width: 1080px) {
   .upload-img-border {
     padding: 2rem 1rem;
@@ -409,9 +493,15 @@ button {
     }
   }
 
+  .sketchy {
+    font-size: 1rem;
+    letter-spacing: 0.2rem;
+  }
+
   .ref-result-container {
     flex-direction: column;
     align-items: center;
+    margin: 2rem 0;
   }
   .ref-result-img {
     width: 100%;

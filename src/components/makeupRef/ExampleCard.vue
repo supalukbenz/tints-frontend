@@ -52,6 +52,7 @@ export default {
   padding: 2rem;
   display: flex;
   flex-direction: column;
+  // margin-left: 5rem;
 }
 
 .upload-title {
@@ -82,6 +83,7 @@ export default {
 @media screen and (max-width: 662px) {
   .ex-container {
     padding: 1rem;
+    margin: 0;
   }
   .upload-title {
     font-size: 0.9rem;

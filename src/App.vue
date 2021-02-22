@@ -43,6 +43,10 @@ body {
   min-height: 100%;
 }
 
+button {
+  outline: none;
+}
+
 #nav {
   padding: 30px;
 }
@@ -88,6 +92,39 @@ body {
   background: #edb194;
 }
 
+.ref-feature {
+  margin: 1rem 0.5rem;
+  border-left: 2px solid #cfcfcf;
+}
+
+.heart-gray {
+  color: #cfcfcf;
+}
+
+.heart-red {
+  color: #a83f39;
+}
+
+.border-red {
+  border-color: #a83f39 !important;
+}
+
+.border-gray {
+  border-color: #cfcfcf !important;
+}
+
+.like-btn {
+  border-radius: 50%;
+  margin-left: 0.5rem;
+  border: 1px solid;
+  background: #ffffff;
+  &:hover {
+    border-color: #a83f39 !important;
+    .like-icon {
+      color: #a83f39;
+    }
+  }
+}
 .fadeIn {
   -webkit-animation: fadein 2s;
   -moz-animation: fadein 2s;

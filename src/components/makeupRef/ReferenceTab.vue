@@ -64,7 +64,7 @@ export default {
       this.lipsActive = false;
       this.cheekActive = false;
       this.skinActive = true;
-    },   
+    },
   },
 };
 </script>

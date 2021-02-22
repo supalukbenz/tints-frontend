@@ -1,43 +1,69 @@
 <template>
   <div class="reccommend-card">
-    <div class="tab-reccommend">
-      <div class="star-icon"><img class="icon-card" src="@/assets/images/star.png" /></div>
-    </div>
     <div class="ref-part-container">
-      <div>
+      <div class="tab-reccommend">
+        <div class="star-card">
+          <img class="star-icon" src="@/assets/images/makeupRef/star.png" />
+        </div>
+      </div>
+      <div class="img-container">
         <img
           class="img-ref"
-          :src="lipstickList.length > 0 ? lipstickList[0].image_link : ''"
+          :src="lipstickList ? lipstickList.image_link : ''"
           @error="$event.target.src = 'https://img.icons8.com/ios/452/lipstick.png'"
         />
       </div>
       <div class="ref-part-detail">
-        <div class="d-flex align-items-center">
+        <div class="ref-title">
           <div class="brand-name">
-            {{ lipstickList.length > 0 ? lipstickList[0].brand : '' }}
+            {{ lipstickList ? lipstickList.brand : 'Dior' }}
+          </div>
+          <div class="serie-name">
+            {{ lipstickList ? lipstickList.serie : 'Dior Addict Lip Glow' }}
           </div>
         </div>
         <div class="color-name">
-          {{ lipstickList.length > 0 ? lipstickList[0].color_name : '' }}
+          color: {{ lipstickList ? lipstickList.color_name : '001' }}
+          <i
+            :style="[
+              lipstickList
+                ? { color: 'rgb' + lipstickList.rgb_value + ' !important' }
+                : { color: '#222' },
+            ]"
+            class="fas fa-circle ml-1 circle-icon"
+          ></i>
         </div>
-        <div class="price">
-          ฿{{ lipstickList.length > 0 ? converterUSDToTHB(lipstickList[0].price) : '' }}
-        </div>
+        <div class="price">฿{{ lipstickList ? converterUSDToTHB(lipstickList.price) : '990' }}</div>
+      </div>
+      <div class="ref-feature">
+        <button
+          type="button"
+          class="like-btn"
+          :class="[liked ? 'border-red' : 'border-gray']"
+          @click="handleLiked"
+        >
+          <span v-show="liked"><i class="like-icon heart-red fas fa-heart"></i></span>
+          <span v-show="!liked"><i class="like-icon heart-gray far fa-heart"></i></span>
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
+  data() {
+    return {
+      liked: false,
+    };
+  },
   props: {
     rgbColor: String,
+    lipstickList: Object,
   },
-  computed: {
-    ...mapGetters({ lipstickList: 'getSortedLipstickList' }),
-  },
+  // computed: {
+  //   ...mapGetters({ lipstickList: 'getSortedLipstickList' }),
+  // },
   methods: {
     converterUSDToTHB(usd) {
       return Math.round(Number(usd) * 29.98);
@@ -45,16 +71,23 @@ export default {
     checkNotNullArray(arr) {
       return arr.length > 0;
     },
+    handleLiked() {
+      this.liked = !this.liked;
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+button {
+  outline: none;
+}
+
 .reccommend-card {
   width: 100%;
   border-radius: 1rem;
   margin: 1rem 0;
-  height: 15rem;
+  height: 12rem;
   box-shadow: 0 1.25em 1em -0.5em #0005;
   transition: transform 0.5s;
   background: #ffffff;
@@ -63,32 +96,35 @@ export default {
   }
 }
 
-.icon-card {
+.star-icon {
   width: auto;
-  height: 3rem;
+  height: 2rem;
 }
 
-.star-icon {
-  margin-top: -1rem;
-}
 .ref-part-container {
   display: flex;
   justify-content: space-between;
+  height: 100%;
+}
+
+.img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .img-ref {
   max-width: 100%;
-  height: 13rem;
+  height: 9rem;
   margin: 0.5rem;
-  margin-top: -1rem;
 }
 
 .ref-part-detail {
-  padding: 1rem 2rem;
   width: 60%;
-  border-radius: 1rem;
   text-align: left;
-  // background: rgba(189, 168, 158, 0.65);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .brand-name {
@@ -96,53 +132,57 @@ export default {
   text-transform: uppercase;
   font-size: 1.5rem;
   color: #222222;
-  letter-spacing: 2px;
+}
+
+.serie-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.color-name {
+  color: #7b7b7b;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
 }
 
 .price {
-  font-size: 2rem;
-  margin-top: 2rem;
+  font-weight: 700;
 }
 
-@media screen and (max-width: 892px) {
-  .ref-part-container {
-    flex-direction: column;
-    align-items: center;
-    height: auto;
-  }
-  .img-ref {
-    max-width: 100%;
-    height: 7rem;
-    margin: 0;
-  }
-  .ref-part-detail {
-    padding: 0;
-    width: 60%;
-    border-radius: 1rem;
-    text-align: left;
-    // background: rgba(189, 168, 158, 0.65);
-  }
-  .brand-name {
-    font-weight: 800;
-    font-size: 0.8rem;
-    color: #222222;
-    letter-spacing: 2px;
-  }
-  .color-name {
-    font-size: 0.7rem;
-  }
-  .price {
-    font-size: 1.2rem;
-    margin: 1rem 0;
-  }
-}
-
-.tab-reccommend {
-  width: 100%;
-  text-align: right;
-}
-
-.star-icon {
-  margin-right: 0.5rem;
-}
+// @media screen and (max-width: 892px) {
+//   .ref-part-container {
+//     flex-direction: column;
+//     align-items: center;
+//     height: auto;
+//   }
+//   .img-ref {
+//     max-width: 100%;
+//     height: 5rem;
+//     margin: 0;
+//   }
+//   .ref-part-detail {
+//     padding: 0;
+//     width: 60%;
+//     border-radius: 1rem;
+//     text-align: left;
+//     // background: rgba(189, 168, 158, 0.65);
+//   }
+//   .brand-name {
+//     font-size: 0.8rem;
+//   }
+//   .serie-name {
+//     font-size: 0.5rem;
+//   }
+//   .color-name {
+//     font-size: 0.6rem;
+//     margin: 0;
+//   }
+//   .price {
+//     font-size: 0.8rem;
+//   }
+//   .ref-feature {
+//     border: none !important;
+//     margin: 0 !important;
+//   }
+// }
 </style>

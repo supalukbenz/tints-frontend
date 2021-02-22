@@ -33,7 +33,7 @@ export default{
     updateLipstickListByImgRef({ commit }, payload) {
       commit('setLipstickListByImgRef', payload);
     },
-    async loadLipstickListByImgRef({ commit }, payload) {
+    async loadLipstickListByImgRef({ commit }, payload) {      
       commit('setLipstickListByImgRef', await getLipstickListByImageRef(payload));
     }
   },
