@@ -54,14 +54,6 @@
               :lipstickList="getSortedLipstickList[0]"
               class="fadeIn-3"
             ></RecommendPartCard>
-            <RecommendPartCard
-              :lipstickList="getSortedLipstickList[0]"
-              class="fadeIn-3"
-            ></RecommendPartCard>
-            <RecommendPartCard
-              :lipstickList="getSortedLipstickList[0]"
-              class="fadeIn-3"
-            ></RecommendPartCard>
           </div>
           <div class="part-reference-mobile" v-if="changeRecommendCardState">
             <div class="sketchy top-title">
@@ -433,7 +425,7 @@ button {
 .part-reference-mobile {
   display: grid;
   // grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
-  grid-template-columns: 10rem 10rem;
+  grid-template-columns: 11rem 11rem;
   grid-gap: 1rem;
   justify-content: center;
   align-items: center;

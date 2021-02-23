@@ -9,7 +9,7 @@
       <div class="img-container">
         <img
           class="img-ref"
-          :src="lipstickList ? lipstickList.image_link : ''"
+          :src="lipstickList ? splitImageURL(lipstickList.api_image_link) : ''"
           @error="$event.target.src = 'https://img.icons8.com/ios/452/lipstick.png'"
         />
       </div>
@@ -73,6 +73,9 @@ export default {
     },
     handleLiked() {
       this.liked = !this.liked;
+    },
+    splitImageURL(url) {
+      return 'http://' + url.substring(2, url.length - 1);
     },
   },
 };

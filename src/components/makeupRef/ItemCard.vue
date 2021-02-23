@@ -9,7 +9,7 @@
           class="img-item"
           :src="
             item
-              ? item.image_link
+              ? splitImageURL(item.api_image_link)
               : 'https://www.clinique.com/media/export/cms/products/181x209/clq_749K01_181x209.png'
           "
           @error="$event.target.src = 'https://img.icons8.com/ios/452/lipstick.png'"
@@ -70,6 +70,9 @@ export default {
     },
     handleItemLiked() {
       this.liked = !this.liked;
+    },
+    splitImageURL(url) {
+      return 'http://' + url.substring(2, url.length - 1);
     },
   },
 };
