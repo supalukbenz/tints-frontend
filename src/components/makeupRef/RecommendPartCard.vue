@@ -89,7 +89,7 @@ button {
 .reccommend-card {
   width: 100%;
   border-radius: 1rem;
-  margin: 1rem 0;
+  margin: 0.4rem 0;
   height: 12rem;
   box-shadow: 0 1.25em 1em -0.5em #0005;
   transition: transform 0.5s;
@@ -118,7 +118,7 @@ button {
 
 .img-ref {
   max-width: 100%;
-  height: 9rem;
+  height: 10rem;
   margin: 0.5rem;
 }
 
@@ -128,28 +128,30 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-left: 0.5rem;
 }
 
 .brand-name {
   font-weight: 800;
   text-transform: uppercase;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: #222222;
 }
 
 .serie-name {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 700;
 }
 
 .color-name {
   color: #7b7b7b;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   margin: 0.5rem 0;
 }
 
 .price {
   font-weight: 700;
+  font-size: 0.9rem;
 }
 
 // @media screen and (max-width: 892px) {

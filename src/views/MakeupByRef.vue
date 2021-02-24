@@ -42,20 +42,33 @@
               id="imageRef"
               :src="imgResult"
               :class="{ hideImage: !imgResult }"
-              class="image-upload fadeIn-2 mt-4"
+              class="image-upload fadeIn-2"
             />
+            <a class="add-simu-btn"
+              ><i class="fas fa-plus-circle"></i> Add to simulator collection</a
+            >
           </div>
-          <div class="part-reference" v-if="!changeRecommendCardState">
+          <div class="part-reference">
             <div class="sketchy top-title">
               suggested
               <div class="top-detail">the similar makeup</div>
             </div>
-            <RecommendPartCard
-              :lipstickList="getSortedLipstickList[0]"
-              class="fadeIn-3"
-            ></RecommendPartCard>
+            <div class="recommend-detail">
+              <RecommendPartCard
+                :lipstickList="getSortedLipstickList[0]"
+                class="fadeIn-3"
+              ></RecommendPartCard>
+              <RecommendPartCard
+                :lipstickList="getSortedLipstickList[0]"
+                class="fadeIn-3"
+              ></RecommendPartCard>
+              <RecommendPartCard
+                :lipstickList="getSortedLipstickList[0]"
+                class="fadeIn-3"
+              ></RecommendPartCard>
+            </div>
           </div>
-          <div class="part-reference-mobile" v-if="changeRecommendCardState">
+          <!-- <div class="part-reference-mobile" v-if="changeRecommendCardState">
             <div class="sketchy top-title">
               suggested
               <div class="top-detail">the similar makeup</div>
@@ -63,7 +76,7 @@
             <ItemCard :recommendState="true" :item="getSortedLipstickList[0]"></ItemCard>
             <ItemCard :recommendState="true" :item="getSortedLipstickList[0]"></ItemCard>
             <ItemCard :recommendState="true" :item="getSortedLipstickList[0]"></ItemCard>
-          </div>
+          </div> -->
         </div>
         <ReferenceTab class="fadeIn-3"></ReferenceTab>
       </div>
@@ -116,7 +129,7 @@ import Banner from '@/components/main/Banner.vue';
 import RecommendPartCard from '@/components/makeupRef/RecommendPartCard.vue';
 import ReferenceTab from '@/components/makeupRef/ReferenceTab.vue';
 import ExampleCard from '@/components/makeupRef/ExampleCard.vue';
-import ItemCard from '@/components/makeupRef/ItemCard.vue';
+// import ItemCard from '@/components/makeupRef/ItemCard.vue';
 
 export default {
   components: {
@@ -124,7 +137,6 @@ export default {
     ReferenceTab,
     Banner,
     ExampleCard,
-    ItemCard,
   },
   data() {
     return {
@@ -387,8 +399,12 @@ button {
 
 .ref-result-container {
   display: flex;
-  flex-direction: row;
-  margin: 2rem;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
+  margin: 2rem 0;
+  border-top: 1px solid #cfcfcf;
+  border-bottom: 1px solid #cfcfcf;
 }
 .ref-result-img {
   display: flex;
@@ -405,9 +421,8 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 2rem;
-
-  width: 50%;
+  align-items: center;
+  margin: 2rem 0;
 }
 
 .blue-bg {
@@ -436,6 +451,7 @@ button {
 .top-title {
   text-transform: uppercase;
   font-weight: 700;
+  width: 50%;
 }
 
 .top-detail {
@@ -453,6 +469,7 @@ button {
   background: rgba(237, 176, 146, 0.4);
   color: #000000;
   position: relative;
+  margin-bottom: 0.5rem;
 
   &::before {
     content: '';
@@ -468,13 +485,24 @@ button {
   }
 }
 
+.add-simu-btn {
+  color: #989898;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.recommend-detail {
+  display: flex;
+  flex-direction: row;
+}
+
 @media screen and (max-width: 1080px) {
   .upload-img-border {
     padding: 2rem 1rem;
   }
 }
 
-@media screen and (max-width: 892px) {
+@media screen and (max-width: 920px) {
   .makeup-ref-body {
     flex-direction: column-reverse;
     align-items: center;
@@ -485,8 +513,16 @@ button {
     }
   }
 
+  .recommend-detail {
+    flex-direction: column;
+  }
+
+  .top-title {
+    width: 100%;
+  }
+
   .sketchy {
-    font-size: 1rem;
+    font-size: 1.2rem;
     letter-spacing: 0.2rem;
   }
 
