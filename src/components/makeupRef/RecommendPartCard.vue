@@ -24,12 +24,16 @@
         </div>
         <div class="color-name">
           color: {{ lipstickList ? lipstickList.color_name : '001' }}
-          <i
+          <!-- <i
             :style="[
               lipstickList
                 ? { color: 'rgb' + lipstickList.rgb_value + ' !important' }
                 : { color: '#222' },
             ]"
+            class="fas fa-circle ml-1 circle-icon"
+          ></i> -->
+          <i
+            :style="{ color: 'rgb' + rgbColorLips + ' !important' }"
             class="fas fa-circle ml-1 circle-icon"
           ></i>
         </div>
@@ -55,6 +59,7 @@ export default {
   data() {
     return {
       liked: false,
+      rgbColorLips: this.rgbColor,
     };
   },
   props: {
@@ -78,6 +83,11 @@ export default {
       return 'http://' + url.substring(2, url.length - 1);
     },
   },
+  watch: {
+    rgbColor(val) {
+      this.rgbColorLips = val;
+    },
+  },
 };
 </script>
 
@@ -89,7 +99,7 @@ button {
 .reccommend-card {
   width: 100%;
   border-radius: 1rem;
-  margin: 0.4rem 0;
+  margin: 0.4rem;
   height: 12rem;
   box-shadow: 0 1.25em 1em -0.5em #0005;
   transition: transform 0.5s;
@@ -128,13 +138,13 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 0.5rem;
+  padding: 0.5rem;
 }
 
 .brand-name {
   font-weight: 800;
   text-transform: uppercase;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   color: #222222;
 }
 

@@ -1,5 +1,22 @@
 <template>
   <div>
+    <div class="filter-container">
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-secondary dropdown-toggle"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Price
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <button class="dropdown-item" type="button">Low to Height</button>
+          <button class="dropdown-item" type="button">Hight to Low</button>
+        </div>
+      </div>
+    </div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
         <a class="nav-link lips-link" :class="{ active: lipsActive }" @click="handleLipsActive"
@@ -76,13 +93,18 @@ a.nav-link {
   font-size: 1.1rem;
 }
 
+.filter-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .tab-pane {
   background: #ffffff;
   border: 1px solid transparent;
   border-color: #ffffff #dee2e6 #dee2e6 #dee2e6;
   padding: 2rem 1rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
   justify-items: center;
   grid-gap: 2.5rem 0.5rem;
 }

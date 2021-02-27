@@ -56,14 +56,17 @@
             <div class="recommend-detail">
               <RecommendPartCard
                 :lipstickList="getSortedLipstickList[0]"
+                :rgbColor="rgbColor"
                 class="fadeIn-3"
               ></RecommendPartCard>
               <RecommendPartCard
                 :lipstickList="getSortedLipstickList[0]"
+                :rgbColor="rgbColor"
                 class="fadeIn-3"
               ></RecommendPartCard>
               <RecommendPartCard
                 :lipstickList="getSortedLipstickList[0]"
+                :rgbColor="rgbColor"
                 class="fadeIn-3"
               ></RecommendPartCard>
             </div>
