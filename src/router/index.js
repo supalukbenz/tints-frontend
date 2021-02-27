@@ -15,6 +15,12 @@ const routes = [
     name: 'Makeup By Reference',
     component: () =>
       import(/* webpackChunkName: "makeupByRed" */ '@/views/MakeupByRef.vue')
+  },
+  {
+    path: '/simulator',
+    name: 'Simulator',
+    component: () =>
+      import(/* webpackChunkName: "makeupByRed" */ '@/views/Simulator.vue')
   }
 ];
 

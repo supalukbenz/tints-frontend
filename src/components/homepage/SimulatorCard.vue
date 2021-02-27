@@ -3,7 +3,7 @@
     <div class="makeup-ref-card">
       <div class="content-container">
         <div class="content-detail">
-          <router-link class="makeup-ref-btn" to="/">Simulation</router-link>
+          <router-link class="makeup-ref-btn" to="/simulator">Simulation</router-link>
         </div>
       </div>
       <div class="model-container">
