@@ -2,26 +2,28 @@
   <div id="app">
     <Navbar></Navbar>
     <router-view />
-    <!-- <Footer></Footer> -->
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/main/Navbar.vue';
-// import Footer from '@/components/main/Footer.vue';
+import Footer from '@/components/main/Footer.vue';
 export default {
   components: {
     Navbar,
+    Footer,
   },
 };
 </script>
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 html,
 body {
-  // background-color: #fff6eb !important;
+  // background-color: #fffcf7 !important;
   background-image: url('../src/assets/images/blush-bg.jpg');
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -32,12 +34,17 @@ body {
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  // font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   min-height: 100%;
+}
+
+button {
+  outline: none;
 }
 
 #nav {
@@ -83,6 +90,47 @@ body {
 
 .bg-skin-100 {
   background: #edb194;
+}
+
+.ref-feature {
+  margin: 1rem 0.5rem;
+  border-left: 2px solid #cfcfcf;
+}
+
+.heart-gray {
+  color: #cfcfcf;
+}
+
+.heart-red {
+  color: #a83f39;
+}
+
+.border-red {
+  border-color: #a83f39 !important;
+}
+
+.border-gray {
+  border-color: #cfcfcf !important;
+}
+
+.like-btn {
+  border-radius: 50%;
+  margin-left: 0.5rem;
+  border: 1px solid;
+  background: #ffffff;
+  &:hover {
+    border-color: #a83f39 !important;
+    .like-icon {
+      color: #a83f39;
+    }
+  }
+}
+.fadeIn {
+  -webkit-animation: fadein 2s;
+  -moz-animation: fadein 2s;
+  -ms-animation: fadein 2s;
+  -o-animation: fadein 2s;
+  animation: fadein 2s;
 }
 
 @keyframes fadein {

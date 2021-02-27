@@ -1,6 +1,6 @@
 <template>
   <footer class="footer-container">
-    <img class="footer-bg" src="../../assets/images/footer-bg.png" />
+    <img class="footer-bg" src="@/assets/images/main/footer_bg.png" />
   </footer>
 </template>
 
@@ -9,11 +9,9 @@
   position: relative;
   bottom: 0;
   width: 100%;
-  height: 10rem;
 }
 
 .footer-bg {
-  height: 10rem;
   width: 100%;
 }
 </style>
