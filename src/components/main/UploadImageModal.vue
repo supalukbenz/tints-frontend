@@ -1,10 +1,18 @@
 <template>
   <div>
-    <button class="m-0 img-label bg-green-200 border-0" data-toggle="modal" data-target="#myModal">
+    <button
+      v-if="uploadState"
+      class="m-0 img-label bg-green-200 border-0"
+      data-toggle="modal"
+      data-target="#myModal"
+    >
       <div class="label-detail">
-        Upload Image
+        {{ titleButton }}
         <div class="upload-icon color-green-200"><i class="fas fa-image"></i></div>
       </div>
+    </button>
+    <button type="button" v-else class="change-img-link" data-toggle="modal" data-target="#myModal">
+      {{ titleButton }} <i class="far fa-file-image"></i>
     </button>
     <input
       class="d-none"
@@ -58,6 +66,7 @@
 export default {
   props: {
     titleButton: String,
+    uploadState: Boolean,
   },
   data() {
     return {
@@ -179,7 +188,7 @@ button {
 }
 
 .img-label {
-  width: 13rem;
+  width: 14rem;
   color: #ffffff;
   cursor: pointer;
   border-radius: 2rem;
@@ -213,6 +222,18 @@ button {
   background: #ffffff;
   /* color: #be5887; */
   margin-right: -0.25rem;
+}
+
+.change-img-link {
+  background: #ffffff;
+  border: 3px solid #ffaaaa;
+  border-right: none;
+  padding: 0.5rem 1rem;
+  border-radius: 3rem 0 0 3rem;
+  color: #737373;
+}
+
+.change-img-link:hover {
 }
 
 @media screen and (max-width: 662px) {

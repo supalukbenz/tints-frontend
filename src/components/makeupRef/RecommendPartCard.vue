@@ -24,18 +24,18 @@
         </div>
         <div class="color-name">
           color: {{ lipstickList ? lipstickList.color_name : '001' }}
-          <!-- <i
+          <i
             :style="[
               lipstickList
                 ? { color: 'rgb' + lipstickList.rgb_value + ' !important' }
                 : { color: '#222' },
             ]"
             class="fas fa-circle ml-1 circle-icon"
-          ></i> -->
-          <i
+          ></i>
+          <!-- <i
             :style="{ color: 'rgb' + rgbColorLips + ' !important' }"
             class="fas fa-circle ml-1 circle-icon"
-          ></i>
+          ></i> -->
         </div>
         <div class="price">฿{{ lipstickList ? converterUSDToTHB(lipstickList.price) : '990' }}</div>
       </div>
@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -66,9 +68,9 @@ export default {
     rgbColor: String,
     lipstickList: Object,
   },
-  // computed: {
-  //   ...mapGetters({ lipstickList: 'getSortedLipstickList' }),
-  // },
+  computed: {
+    ...mapGetters({ user: 'getUserInfo' }),
+  },
   methods: {
     converterUSDToTHB(usd) {
       return Math.round(Number(usd) * 29.98);
@@ -76,8 +78,22 @@ export default {
     checkNotNullArray(arr) {
       return arr.length > 0;
     },
+    pushLikedItem(index, list, item) {
+      if (this.liked) {
+        if (index === -1) {
+          list.push(item);
+        }
+      } else {
+        if (index !== -1) {
+          list.splice(index, 1);
+        }
+      }
+    },
     handleLiked() {
       this.liked = !this.liked;
+      const itemId = this.lipstickList._id;
+      const index = this.user.likedLip.findIndex(id => id === itemId);
+      this.pushLikedItem(index, this.user.likedLip, itemId);
     },
     splitImageURL(url) {
       return 'http://' + url.substring(2, url.length - 1);

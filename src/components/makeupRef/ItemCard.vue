@@ -1,5 +1,8 @@
 <template>
-  <div class="item-container">
+  <div
+    class="item-container"
+    :class="{ 'simulated-border': simulatedId === item._id && rgbValue === item.rgb_value }"
+  >
     <div v-if="recommendState" class="star-card">
       <img class="star-icon" src="@/assets/images/makeupRef/star.png" alt="Star" />
     </div>
@@ -31,7 +34,7 @@
             class="fas fa-circle ml-1"
           ></i>
         </div>
-        <div class="price">
+        <div v-if="item.price > 0" class="price">
           ฿{{ item ? converterUSDToTHB(item.price) : converterUSDToTHB('17.5') }}
         </div>
       </div>
@@ -51,15 +54,23 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
       liked: false,
+      simulated: false,
     };
   },
   props: {
     item: Object,
     recommendState: Boolean,
+    simulatedId: String,
+    rgbValue: String,
+  },
+  computed: {
+    ...mapGetters({ user: 'getUserInfo' }),
   },
   methods: {
     converterUSDToTHB(usd) {
@@ -68,8 +79,22 @@ export default {
     imageUrlAlt(e) {
       e.target.src = '@/assets/images/lipstick_plane.png';
     },
+    pushLikedItem(index, list, item) {
+      if (this.liked) {
+        if (index === -1) {
+          list.push(item);
+        }
+      } else {
+        if (index !== -1) {
+          list.splice(index, 1);
+        }
+      }
+    },
     handleItemLiked() {
       this.liked = !this.liked;
+      const itemId = this.item._id;
+      const index = this.user.likedLip.findIndex(id => id === itemId);
+      this.pushLikedItem(index, this.user.likedLip, itemId);
     },
     splitImageURL(url) {
       return 'http://' + url.substring(2, url.length - 1);
@@ -88,7 +113,12 @@ button {
   padding-bottom: 0;
 }
 
+.simulated-border {
+  border: 4px solid #7fd1ae !important;
+}
+
 .item-container {
+  border: 4px solid transparent;
   width: 11rem;
   height: 100%;
   padding: 0.5rem;

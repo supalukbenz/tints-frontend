@@ -7,7 +7,7 @@
           <div class="makeup-ref-body">
             <ExampleCard v-show="!imgResult"></ExampleCard>
             <div class="btn-body">
-              <UploadImageModal></UploadImageModal>
+              <UploadImageModal :uploadState="true" titleButton="Upload Image"></UploadImageModal>
             </div>
           </div>
         </div>
@@ -97,10 +97,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getSortedLipstickList', 'getImageUpload', 'getFileUpload']),
-    uploadData() {
-      return this.getImageUpload & this.getFileUpload;
-    },
+    ...mapGetters(['getSortedLipstickList', 'getImageUpload', 'getFileUpload', 'getUserInfo']),
   },
   methods: {
     ...mapActions(['updateImageReference']),
@@ -124,7 +121,11 @@ export default {
       // await this.updateImageReference(this.imageUpload);
 
       this.imgResult = imageUpload;
-      await this.$store.dispatch('loadLipstickListByImgRef', fileUpload);
+      const form = {
+        fileUpload: fileUpload,
+        userID: this.getUserInfo.userID,
+      };
+      await this.$store.dispatch('loadLipstickListByImgRef', form);
       this.rgbColor = this.getSortedLipstickList[0].rgb_value;
       this.fileUploadState = false;
       this.scrollToElement('#imageRef');
@@ -138,7 +139,7 @@ export default {
   },
   watch: {
     getImageUpload: {
-      async handler(val) {        
+      async handler(val) {
         if (val) {
           await this.uploadImageRef(this.getImageUpload, this.getFileUpload);
           this.$store.dispatch('updateImageUpload', null);
@@ -372,5 +373,4 @@ button {
     width: 100%;
   }
 }
-
 </style>

@@ -17,6 +17,14 @@ export default{
     getSortedLipstickList: state => {
       return state.lipstickListByImgRef.sort((a, b) => a.deltaE - b.deltaE);
     },
+    getSortedLipstickByPrice: state => feature => {
+      if (feature === 'lowToHeight') {
+        return state.lipstickListByImgRef.sort((a, b) => a.price - b.price);
+      }
+    },
+    getLipstickFromId: state => id => {
+      return state.lipstickListByImgRef.find(item => item._id === id);
+    },
   },
   mutations: {
     setImageReference(state, payload) {

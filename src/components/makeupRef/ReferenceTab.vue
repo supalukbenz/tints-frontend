@@ -12,8 +12,12 @@
           Price
         </button>
         <div class="dropdown-menu dropdown-menu-right">
-          <button class="dropdown-item" type="button">Low to Height</button>
-          <button class="dropdown-item" type="button">Hight to Low</button>
+          <button class="dropdown-item" @click="lowToHeightOption" type="button">
+            Low to Height
+          </button>
+          <button class="dropdown-item" @click="heightToLowOption" type="button">
+            Hight to Low
+          </button>
         </div>
       </div>
     </div>
@@ -61,6 +65,7 @@ export default {
       lipsActive: true,
       cheekActive: false,
       skinActive: false,
+      lipstickList: [],
     };
   },
   computed: {
@@ -81,6 +86,21 @@ export default {
       this.lipsActive = false;
       this.cheekActive = false;
       this.skinActive = true;
+    },
+    // setSortedLip() {
+    //   if (this.getSortedLipstickList) {
+    //     console.log('dd');
+    //     this.lipstickList = this.getSortedLipstickList;
+    //     console.log('lipstickList', this.lipstickList);
+    //   }
+    // },
+    lowToHeightOption() {
+      const feature = 'lowToHeight';
+      this.lipList = this.getSortedLipstickByPrice(feature);
+    },
+    heightToLowOption() {
+      const feature = 'heightToLow';
+      this.lipstickList = this.getSortedLipstickByPrice(feature);
     },
   },
 };

@@ -8,7 +8,9 @@ export default {
     userProfile: {},
   },
   getters: {
-
+    getUserInfo: state => {
+      return state.userProfile;
+    },
   },
   mutations: {
     setUserProfile(state, payload) {
