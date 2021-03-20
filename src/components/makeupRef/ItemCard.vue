@@ -70,7 +70,7 @@ export default {
     rgbValue: String,
   },
   computed: {
-    ...mapGetters({ user: 'getUserInfo' }),
+    ...mapGetters({ user: 'getUserInfo' }, { lipSimulated: 'lipSimulated' }),
   },
   methods: {
     converterUSDToTHB(usd) {
@@ -94,10 +94,12 @@ export default {
       this.liked = !this.liked;
       const itemId = this.item._id;
       const index = this.user.likedLip.findIndex(id => id === itemId);
-      this.pushLikedItem(index, this.user.likedLip, itemId);
+      this.pushLikedItem(index, this.user.likedLip, this.item);
     },
     splitImageURL(url) {
-      return 'http://' + url.substring(2, url.length - 1);
+      if (url) {
+        return 'http://' + url.substring(2, url.length - 1);
+      }
     },
   },
 };

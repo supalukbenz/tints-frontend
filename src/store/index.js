@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import user from '@/store/user.js';
 import makeupByRef from '@/store/makeupByRef.js';
 import uploadImage from '@/store/uploadImage.js';
+import simulator from '@/store/simulator.js';
 
 Vue.use(Vuex);
 
@@ -12,5 +13,6 @@ export default new Vuex.Store({
     user,
     makeupByRef,
     uploadImage,
+    simulator
   },
 });

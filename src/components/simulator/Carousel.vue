@@ -12,16 +12,12 @@
       :breakpoints="{
         910: { visibleSlides: 3, slideMultiple: 3 },
         650: { visibleSlides: 2, slideMultiple: 2 },
-        400: { visibleSlides: 1, slideMultiple: 1 },
       }"
     >
       <vueper-slide v-for="(i, index) in list" :key="index"
         ><template class="content-container" v-slot:content>
           <div class="content-detail">
-            <div
-              @click="selectedSimulated(i._id, i.rgb_value)"
-              class="content-wrapper content-item"
-            >
+            <div @click="selectedSimulated(i)" class="content-wrapper content-item">
               <ItemCard
                 class="transition-none"
                 :simulatedId="simulatedId"
@@ -38,6 +34,7 @@
 import { VueperSlides, VueperSlide } from 'vueperslides';
 import ItemCard from '@/components/makeupRef/ItemCard.vue';
 import 'vueperslides/dist/vueperslides.css';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -47,6 +44,11 @@ export default {
   },
   props: {
     list: Array,
+    lipState: Boolean,
+    cheeckState: Boolean,
+  },
+  computed: {
+    ...mapGetters(['getLipSimulatorDetail']),
   },
   data() {
     return {
@@ -56,9 +58,23 @@ export default {
     };
   },
   methods: {
-    selectedSimulated(id, rgbValue) {
-      this.simulatedId = id;
-      this.rgbValue = rgbValue;
+    selectedSimulated(item) {
+      this.simulatedId = item._id;
+      this.rgbValue = item.rgb_value;
+      if (this.lipState) {
+        this.$store.dispatch('updateLipSimulator', item);
+      }
+    },
+  },
+  watch: {
+    getLipSimulatorDetail: {
+      async handler(val) {
+        if (!val) {
+          this.simulatedId = '';
+          this.rgbValue = '';
+        }
+      },
+      deep: true,
     },
   },
 };

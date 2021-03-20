@@ -1,22 +1,23 @@
 <template>
   <div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item" role="presentation">
+      <!-- <li class="nav-item" role="presentation">
         <a
           class="nav-link lips-link"
           :class="{ active: simulatorActive }"
           @click="handlSimuColActive"
           >Simulator collection</a
         >
-      </li>
+      </li> -->
       <li class="nav-item" role="presentation">
-        <a class="nav-link" :class="{ active: likedActive }" @click="handleLikedActive">Liked </a>
+        <a class="nav-link" :class="{ active: likedActive }" @click="handleLikedActive">
+          <i class="like-icon heart-red fas fa-heart"></i>
+          Liked
+        </a>
       </li>
     </ul>
     <div class="tab-content">
-      <div class="tab-pane lips-pane" :class="[simulatorActive ? 'active' : 'd-none']">
-        <Carousel></Carousel>
-      </div>
+      <!-- <div class="tab-pane lips-pane" :class="[simulatorActive ? 'active' : 'd-none']"></div> -->
       <div class="tab-pane" :class="[likedActive ? 'active' : 'd-none']">
         <LikedTab></LikedTab>
       </div>
@@ -25,12 +26,10 @@
 </template>
 
 <script>
-import Carousel from '@/components/simulator/Carousel.vue';
 import LikedTab from '@/components/simulator/LikedTab.vue';
 
 export default {
   components: {
-    Carousel,
     LikedTab,
   },
   data() {

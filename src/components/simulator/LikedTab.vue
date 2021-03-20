@@ -2,7 +2,7 @@
   <div class="like-container">
     <div class="lip-container">
       <div class="title-liked">Lip</div>
-      <Carousel :list="user.likedLip"></Carousel>
+      <Carousel :lipState="true" :list="user.likedLip"></Carousel>
     </div>
   </div>
 </template>
