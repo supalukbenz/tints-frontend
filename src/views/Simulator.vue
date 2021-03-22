@@ -38,6 +38,9 @@
           <img v-else class="selected-simu-img empty" src="@/assets/images/lip_emtpy.png" />
         </div>
       </div>
+      <div>
+        <img class="user-img" v-if="imageSimulated" :src="imageSimulated" />
+      </div>
       <SimulatorTab></SimulatorTab>
     </div>
   </div>
@@ -59,10 +62,16 @@ export default {
     return {
       imgUser: 'user.jpg',
       imgInput: '',
+      imageSimulated: null,
     };
   },
   computed: {
-    ...mapGetters(['getImageUpload', 'getFileUpload', 'getLipSimulatorDetail']),
+    ...mapGetters([
+      'getImageUpload',
+      'getFileUpload',
+      'getLipSimulatorDetail',
+      'getLipSimulatedImage',
+    ]),
   },
   methods: {
     changeToUserImg() {
@@ -76,6 +85,13 @@ export default {
     handleCancelLipSimulated() {
       this.$store.dispatch('updateLipSimulator', null);
     },
+    readFileImg(imgRes) {
+      var reader = new window.FileReader();
+      reader.readAsDataURL(imgRes);
+      reader.onload = () => {
+        this.imageSimulated = reader.result;
+      };
+    },
   },
   watch: {
     getImageUpload: {
@@ -85,6 +101,25 @@ export default {
           // await this.uploadImageRef(this.getImageUpload, this.getFileUpload);
           // this.$store.dispatch('updateImageUpload', null);
           // this.$store.dispatch('updateFileUpload', null);
+        }
+      },
+      deep: true,
+    },
+    getLipSimulatorDetail: {
+      async handler(val) {
+        if (val) {
+          let form = {};
+          if (this.getFileUpload) {
+            form = {
+              fileUpload: this.getFileUpload,
+              userID: 123,
+              rlip: 170,
+              glip: 30,
+              blip: 23,
+            };
+          }
+          await this.$store.dispatch('loadLipSimulated', form);
+          await this.readFileImg(this.getLipSimulatedImage);
         }
       },
       deep: true,
