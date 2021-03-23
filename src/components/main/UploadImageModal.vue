@@ -2,13 +2,13 @@
   <div>
     <button
       v-if="uploadState"
-      class="m-0 img-label bg-green-200 border-0"
+      class="m-0 img-label border-0"
       data-toggle="modal"
       data-target="#myModal"
     >
       <div class="label-detail">
         {{ titleButton }}
-        <div class="upload-icon color-green-200"><i class="fas fa-image"></i></div>
+        <div class="upload-icon"><i class="fas fa-image"></i></div>
       </div>
     </button>
     <button type="button" v-else class="change-img-link" data-toggle="modal" data-target="#myModal">
@@ -33,7 +33,7 @@
               <button
                 @click="uploadImageRef"
                 data-dismiss="modal"
-                class="modal-upload-btn bg-green-100 border-0"
+                class="modal-upload-btn border-0"
                 type="button"
               >
                 Upload <i class="fas fa-check"></i>
@@ -48,7 +48,7 @@
               <div class="modal-detail">
                 <span class="drag-title">Drag image here </span> or
                 <label for="imgFile" class="m-0 modal-upload-img">
-                  <div class="modal-upload-detail color-green-100">
+                  <div class="modal-upload-detail">
                     Select image.
                   </div></label
                 >
@@ -133,9 +133,10 @@ button {
   width: 12rem;
   padding: 0.3rem 0rem;
   margin-right: -2rem;
+  background: #edb194;
 
   &:hover {
-    background: #a1afa0;
+    background: #be8e76;
   }
 }
 
@@ -155,9 +156,12 @@ button {
   border-color: #8f0730;
 }
 
+.modal-upload-img {
+  color: #edb194;
+}
+
 .modal-upload-img:hover {
   text-decoration: underline;
-  color: #9dc99c;
 }
 
 .hideImage {
@@ -226,7 +230,7 @@ button {
 
 .change-img-link {
   background: #ffffff;
-  border: 3px solid #ffaaaa;
+  border: 3px solid #ac6f63;
   border-right: none;
   padding: 0.5rem 1rem;
   border-radius: 3rem 0 0 3rem;

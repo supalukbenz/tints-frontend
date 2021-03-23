@@ -8,14 +8,28 @@
     <div class="simulator-container">
       <div class="simulator-img">
         <div class="img-container">
-          <img v-if="imgInput" class="user-img fadeIn" :src="imgInput" alt="InputImg" />
-          <img
-            v-else
-            class="user-img fadeIn"
-            :src="require(`@/assets/images/mockup/${imgUser}`)"
-            alt="InputImg"
-          />
+          <div v-if="!simulatedState">
+            <img
+              v-if="imgInput"
+              class="user-img fadeIn"
+              :class="{ filterImg: loadingState }"
+              :src="imgInput"
+              alt="InputImg"
+            />
+            <img
+              v-else
+              class="user-img fadeIn"
+              id="userImage"
+              :class="{ filterImg: loadingState }"
+              :src="require(`@/assets/images/mockup/${imgUser}`)"
+              alt="InputImg"
+            />
+          </div>
+          <div v-else>
+            <img class="user-img" v-if="imageSimulated" :src="imageSimulated" />
+          </div>
         </div>
+        <Loading :loadingState="loadingState"></Loading>
       </div>
       <div class="selected-makeup">
         <div class="circle-img">
@@ -38,9 +52,6 @@
           <img v-else class="selected-simu-img empty" src="@/assets/images/lip_emtpy.png" />
         </div>
       </div>
-      <div>
-        <img class="user-img" v-if="imageSimulated" :src="imageSimulated" />
-      </div>
       <SimulatorTab></SimulatorTab>
     </div>
   </div>
@@ -50,6 +61,7 @@
 import Banner from '@/components/main/Banner.vue';
 import UploadImageModal from '@/components/main/UploadImageModal.vue';
 import SimulatorTab from '@/components/simulator/SimulatorTab.vue';
+import Loading from '@/components/main/Loading.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -57,12 +69,15 @@ export default {
     Banner,
     UploadImageModal,
     SimulatorTab,
+    Loading,
   },
   data() {
     return {
       imgUser: 'user.jpg',
       imgInput: '',
       imageSimulated: null,
+      loadingState: false,
+      simulatedState: false,
     };
   },
   computed: {
@@ -92,6 +107,16 @@ export default {
         this.imageSimulated = reader.result;
       };
     },
+    async imageSrcToFile(src) {
+      let res = await fetch(src);
+      let buff = await res.arrayBuffer();
+      return new File([buff], 'simulator_input.jpg', { type: 'image/jpeg' });
+    },
+    spilitRgbColor(rgb) {
+      const getRgb = rgb.substring(1, rgb.length - 1);
+      const rgbArr = getRgb.split(', ');
+      return rgbArr;
+    },
   },
   watch: {
     getImageUpload: {
@@ -108,18 +133,23 @@ export default {
     getLipSimulatorDetail: {
       async handler(val) {
         if (val) {
-          let form = {};
+          this.loadingState = true;
+          let form = {
+            userID: 123,
+            rlip: this.spilitRgbColor(val.rgb_value)[0],
+            glip: this.spilitRgbColor(val.rgb_value)[1],
+            blip: this.spilitRgbColor(val.rgb_value)[2],
+          };
           if (this.getFileUpload) {
-            form = {
-              fileUpload: this.getFileUpload,
-              userID: 123,
-              rlip: 170,
-              glip: 30,
-              blip: 23,
-            };
+            form.fileUpload = await this.getFileUpload;
+          } else {
+            let src = document.getElementById('userImage').src;
+            form.fileUpload = await this.imageSrcToFile(src);
           }
           await this.$store.dispatch('loadLipSimulated', form);
           await this.readFileImg(this.getLipSimulatedImage);
+          this.loadingState = false;
+          this.simulatedState = true;
         }
       },
       deep: true,
@@ -195,6 +225,11 @@ export default {
 .user-img {
   height: 25rem;
   max-width: 100%;
+}
+
+.filterImg {
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
 }
 
 .simulator-img {
