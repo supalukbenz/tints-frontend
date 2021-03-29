@@ -197,12 +197,13 @@ button {
   cursor: pointer;
   border-radius: 2rem;
   font-weight: 500;
+  background: #edb194;
 }
 
 .img-label:hover {
-  background: #6b746a;
+  background: #d49e85;
   .upload-icon {
-    color: #6b746a;
+    color: #d49e85;
   }
 }
 
@@ -224,7 +225,7 @@ button {
   height: 3rem;
   border-radius: 50%;
   background: #ffffff;
-  /* color: #be5887; */
+  color: #edb194;
   margin-right: -0.25rem;
 }
 
@@ -235,9 +236,6 @@ button {
   padding: 0.5rem 1rem;
   border-radius: 3rem 0 0 3rem;
   color: #737373;
-}
-
-.change-img-link:hover {
 }
 
 @media screen and (max-width: 662px) {
@@ -251,6 +249,11 @@ button {
       width: 2rem;
       height: 2rem;
     }
+  }
+
+  .change-img-link {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.7rem;
   }
 }
 </style>

@@ -8,7 +8,7 @@
         <div class="recommend-title">ANALYZE & RECOMMEND</div>
         <div class="recommend-subtitle">the perfect makeup tone for you</div>
         <div class="recommend-btn-container">
-          <router-link class="recommend-btn" to="/">Recommend</router-link>
+          <router-link class="recommend-btn" to="/recommendation">Recommend</router-link>
         </div>
       </div>
     </div>

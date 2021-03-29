@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="item"
     class="item-container"
     :class="{ 'simulated-border': simulatedId === item._id && rgbValue === item.rgb_value }"
   >
@@ -10,25 +11,21 @@
       <div class="item-img">
         <img
           class="img-item"
-          :src="
-            item
-              ? splitImageURL(item.api_image_link)
-              : 'https://www.clinique.com/media/export/cms/products/181x209/clq_749K01_181x209.png'
-          "
+          :src="item.api_image_link ? splitImageURL(item.api_image_link) : item.image_link"
           @error="$event.target.src = 'https://img.icons8.com/ios/452/lipstick.png'"
         />
       </div>
       <div class="item-detail">
         <div class="d-flex align-items-center">
           <div class="brand-name">
-            {{ item ? item.brand : 'clinique' }}
+            {{ item.brand }}
           </div>
         </div>
         <div class="serie-name">
-          {{ item ? item.serie : 'Dior Addict' }}
+          {{ item.serie }}
         </div>
         <div class="color-name">
-          Color: {{ item ? item.color_name : 'Supreme Sorbet' }}
+          Color: {{ item.color_name }}
           <i
             :style="[item ? { color: 'rgb' + item.rgb_value + ' !important' } : { color: '#222' }]"
             class="fas fa-circle ml-1"
@@ -43,11 +40,11 @@
       <button
         type="button"
         class="like-btn"
-        :class="[liked ? 'border-red' : 'border-gray']"
+        :class="[indexLiked !== -1 ? 'border-red' : 'border-gray']"
         @click="handleItemLiked"
       >
-        <span v-show="liked"><i class="like-icon heart-red fas fa-heart"></i></span>
-        <span v-show="!liked"><i class="like-icon heart-gray far fa-heart"></i></span>
+        <span v-show="indexLiked !== -1"><i class="like-icon heart-red fas fa-heart"></i></span>
+        <span v-show="indexLiked === -1"><i class="like-icon heart-gray far fa-heart"></i></span>
       </button>
     </div>
   </div>
@@ -71,6 +68,12 @@ export default {
   },
   computed: {
     ...mapGetters({ user: 'getUserInfo' }, { lipSimulated: 'lipSimulated' }),
+    indexLiked() {
+      const index = this.user.likedLip.findIndex(
+        l => l._id === this.item._id && l.rgb_value === this.item.value
+      );
+      return index;
+    },
   },
   methods: {
     converterUSDToTHB(usd) {
@@ -80,6 +83,7 @@ export default {
       e.target.src = '@/assets/images/lipstick_plane.png';
     },
     pushLikedItem(index, list, item) {
+      console.log(index);
       if (this.liked) {
         if (index === -1) {
           list.push(item);
@@ -89,11 +93,11 @@ export default {
           list.splice(index, 1);
         }
       }
+      console.log('list', list);
     },
     handleItemLiked() {
       this.liked = !this.liked;
-      const itemId = this.item._id;
-      const index = this.user.likedLip.findIndex(id => id === itemId);
+      const index = this.indexLiked;
       this.pushLikedItem(index, this.user.likedLip, this.item);
     },
     splitImageURL(url) {

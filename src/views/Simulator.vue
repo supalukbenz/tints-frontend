@@ -51,6 +51,41 @@
           />
           <img v-else class="selected-simu-img empty" src="@/assets/images/lip_emtpy.png" />
         </div>
+        <div class="level-lip-bar" v-if="getLipSimulatorDetail">
+          <button
+            type="button"
+            class="level-btn"
+            @click="lipSimulatedLevel(0)"
+            :class="{ selectedLevel: lipLevel === 0 }"
+            :style="[
+              getLipSimulatorDetail
+                ? { background: 'rgb' + getLipSimulatorDetail.rgb_value + ' !important' }
+                : '',
+            ]"
+          ></button>
+          <button
+            type="button"
+            class="level-btn medium"
+            @click="lipSimulatedLevel(1)"
+            :class="{ selectedLevel: lipLevel === 1 }"
+            :style="[
+              getLipSimulatorDetail
+                ? { background: 'rgb' + getLipSimulatorDetail.rgb_value + ' !important' }
+                : '',
+            ]"
+          ></button>
+          <button
+            type="button"
+            class="level-btn light"
+            @click="lipSimulatedLevel(2)"
+            :class="{ selectedLevel: lipLevel === 2 }"
+            :style="[
+              getLipSimulatorDetail
+                ? { background: 'rgb' + getLipSimulatorDetail.rgb_value + ' !important' }
+                : '',
+            ]"
+          ></button>
+        </div>
       </div>
       <SimulatorTab></SimulatorTab>
     </div>
@@ -78,6 +113,7 @@ export default {
       imageSimulated: null,
       loadingState: false,
       simulatedState: false,
+      lipLevel: 1,
     };
   },
   computed: {
@@ -117,11 +153,17 @@ export default {
       const rgbArr = getRgb.split(', ');
       return rgbArr;
     },
+    lipSimulatedLevel(level) {
+      this.imageSimulated = 'data:image/png;base64, ' + this.getLipSimulatedImage[level];
+      this.lipLevel = level;
+    },
   },
   watch: {
     getImageUpload: {
       async handler(val) {
         if (val) {
+          this.simulatedState = false;
+          this.loadingState = false;
           this.imgInput = val;
           // await this.uploadImageRef(this.getImageUpload, this.getFileUpload);
           // this.$store.dispatch('updateImageUpload', null);
@@ -147,7 +189,10 @@ export default {
             form.fileUpload = await this.imageSrcToFile(src);
           }
           await this.$store.dispatch('loadLipSimulated', form);
-          await this.readFileImg(this.getLipSimulatedImage);
+          // await this.readFileImg(this.getLipSimulatedImage);
+          if (this.getLipSimulatedImage) {
+            this.imageSimulated = 'data:image/png;base64, ' + this.getLipSimulatedImage[1];
+          }
           this.loadingState = false;
           this.simulatedState = true;
         }
@@ -159,6 +204,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+button {
+  outline: none;
+}
+
 .simulator-container {
   margin: 2rem;
 }
@@ -259,6 +308,32 @@ export default {
   }
 }
 
+.level-lip-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.level-btn {
+  margin-bottom: 1rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+
+.medium {
+  opacity: 0.7;
+}
+
+.light {
+  opacity: 0.5;
+}
+
+.selectedLevel {
+  border-color: #000 !important;
+}
+
 @media screen and (max-width: 720px) {
   .user-img {
     height: 20rem;
@@ -275,6 +350,7 @@ export default {
   .circle-img {
     width: 5rem;
     height: 5rem;
+    margin: 0.2rem;
   }
   .selected-simu-img {
     height: 4rem;
@@ -289,6 +365,19 @@ export default {
   }
 
   .cancel-icon {
+    font-size: 0.7rem;
+  }
+  .level-btn {
+    margin-bottom: 0.5rem;
+    height: 15px;
+  }
+
+  .img-profile-btn {
+    margin-top: 0.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .user-img-link {
     font-size: 0.7rem;
   }
 }

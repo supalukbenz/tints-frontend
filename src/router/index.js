@@ -8,19 +8,25 @@ const routes = [
     path: '/',
     name: 'Home',
     component: () =>
-      import(/* webpackChunkName: "makeupByRed" */ '@/views/Home.vue'),
+      import(/* webpackChunkName: "Home" */ '@/views/Home.vue'),
   },
   {
     path: '/makeup-ref',
     name: 'Makeup By Reference',
     component: () =>
-      import(/* webpackChunkName: "makeupByRed" */ '@/views/MakeupByRef.vue')
+      import(/* webpackChunkName: "MakeupByRef" */ '@/views/MakeupByRef.vue')
   },
   {
     path: '/simulator',
     name: 'Simulator',
     component: () =>
-      import(/* webpackChunkName: "makeupByRed" */ '@/views/Simulator.vue')
+      import(/* webpackChunkName: "Simulator" */ '@/views/Simulator.vue')
+  },
+  {
+    path: '/recommendation',
+    name: 'Recommendation',
+    component: () =>
+      import(/* webpackChunkName: "Recommendation" */ '@/views/Recommendation.vue')
   }
 ];
 
