@@ -69,6 +69,7 @@ export default {
   border-radius: 50%;
   padding: 0;
   border: none;
+  outline: none;
 }
 
 @media screen and (max-width: 892px) {

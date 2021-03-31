@@ -8,7 +8,7 @@
       :slide-ratio="1 / 4"
       :fixed-height="true"
       :touchable="false"
-      :dragging-distance="200"
+      :dragging-distance="100"
       :breakpoints="{
         910: { visibleSlides: 3, slideMultiple: 3 },
         650: { visibleSlides: 2, slideMultiple: 2 },
@@ -122,6 +122,9 @@ export default {
 @media screen and (max-width: 556px) {
   .vueperslides--fixed-height {
     height: 18rem;
+  }
+  .carousel-width {
+    width: 80%;
   }
 }
 </style>

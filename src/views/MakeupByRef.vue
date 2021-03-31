@@ -5,10 +5,10 @@
       <div class="upload-img-container">
         <div class="upload-img-body">
           <div class="makeup-ref-body">
-            <ExampleCard v-show="!imgResult"></ExampleCard>
             <div class="btn-body">
               <UploadImageModal :uploadState="true" titleButton="Upload Image"></UploadImageModal>
             </div>
+            <ExampleCard v-show="!imgResult"></ExampleCard>
           </div>
         </div>
       </div>
@@ -163,12 +163,13 @@ button {
 }
 
 .btn-body {
-  margin-top: 5rem;
+  margin: 2rem;
 }
 
 .makeup-ref-body {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
 }
 
 .ex-image {
@@ -342,12 +343,9 @@ button {
 
 @media screen and (max-width: 920px) {
   .makeup-ref-body {
-    flex-direction: column-reverse;
     align-items: center;
     .btn-body {
-      margin-top: 0;
-      margin-bottom: 2rem;
-      margin-right: 0;
+      margin: 0.5rem;
     }
   }
 

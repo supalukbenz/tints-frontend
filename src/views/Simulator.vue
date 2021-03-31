@@ -51,7 +51,7 @@
           />
           <img v-else class="selected-simu-img empty" src="@/assets/images/lip_emtpy.png" />
         </div>
-        <div class="level-lip-bar" v-if="getLipSimulatorDetail">
+        <div class="level-lip-bar" v-if="simulatedState && getLipSimulatorDetail">
           <button
             type="button"
             class="level-btn"
@@ -116,6 +116,9 @@ export default {
       lipLevel: 1,
     };
   },
+  beforeCreate() {
+    this.$store.dispatch('updateLipSimulator', null);
+  },
   computed: {
     ...mapGetters([
       'getImageUpload',
@@ -165,9 +168,7 @@ export default {
           this.simulatedState = false;
           this.loadingState = false;
           this.imgInput = val;
-          // await this.uploadImageRef(this.getImageUpload, this.getFileUpload);
-          // this.$store.dispatch('updateImageUpload', null);
-          // this.$store.dispatch('updateFileUpload', null);
+          this.$store.dispatch('updateLipSimulator', null);
         }
       },
       deep: true,

@@ -189,13 +189,10 @@ button {
   height: 2rem;
 }
 
-.like-btn {
-  // margin: 1rem !important;
-}
-
 @media screen and (max-width: 556px) {
   .item-container {
-    width: 9.5rem;
+    width: 8rem;
+    padding: 0.2rem;
   }
   .img-item {
     height: 6rem;

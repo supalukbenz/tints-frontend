@@ -1,9 +1,9 @@
 <template>
   <div class="simulation-container">
-    <div class="makeup-ref-card">
+    <div class="simulator-card">
       <div class="content-container">
         <div class="content-detail">
-          <router-link class="makeup-ref-btn" to="/simulator">Simulation</router-link>
+          <router-link class="simulator-btn" to="/simulator">Simulation</router-link>
         </div>
       </div>
       <div class="model-container">
@@ -50,7 +50,7 @@ export default {
   display: flex;
   justify-content: center;
 }
-.makeup-ref-card {
+.simulator-card {
   display: flex;
   justify-content: flex-start;
   width: 90vmin;
@@ -65,7 +65,7 @@ export default {
   width: 40%;
 }
 
-.makeup-ref-btn {
+.simulator-btn {
   border: none;
   background: #ac6f63;
   color: #ffffff;
@@ -112,7 +112,7 @@ export default {
   object-position: 0% 50%;
   transition: transform 1s;
 
-  .makeup-ref-card:hover & {
+  .simulator-card:hover & {
     transform: translateX(-3%);
     transition-duration: 5s;
   }
@@ -138,7 +138,7 @@ export default {
   animation: gg 0.5s ease-out forwards;
   pointer-events: none;
 
-  .makeup-ref-card:hover & {
+  .simulator-card:hover & {
     animation-name: move-x;
   }
 }
@@ -152,5 +152,27 @@ export default {
 
   --x1: 0;
   --x2: -95%;
+}
+
+@media screen and (max-width: 650px) {
+  .simulator-btn {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .simulator-btn {
+    font-size: 0.5rem;
+    padding: 0.4rem;
+  }
+
+  .simulator-card {
+    width: 80vmin;
+    height: calc(80vmin * 9 / 16);
+  }
+
+  .content-detail {
+    margin-top: 2rem;
+  }
 }
 </style>
