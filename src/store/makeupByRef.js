@@ -2,7 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import {
   getLipstickListByImageRef,
-
+  getCheekImage,
+  getMakeupDetailByImageRef
 } from '@/api/reference';
 
 
@@ -12,6 +13,9 @@ export default{
   state: {
     imageRef: '',
     lipstickListByImgRef: [],
+    makeupByImageRef: null,
+    cheekImage: '',
+    predictionInfo: {},
   },
   getters: {
     getSortedLipstickList: state => {
@@ -25,6 +29,15 @@ export default{
     getLipstickFromId: state => id => {
       return state.lipstickListByImgRef.find(item => item._id === id);
     },
+    getCheekImage: state => {
+      return state.cheekImage;
+    },
+    getMakeupByImageRef: state => {
+      return state.makeupByImageRef;
+    },
+    getPredictionInfo: state => {
+      return state.predictionInfo;
+    }
   },
   mutations: {
     setImageReference(state, payload) {
@@ -32,6 +45,15 @@ export default{
     },
     setLipstickListByImgRef(state, payload) {
       state.lipstickListByImgRef = payload;
+    },
+    setCheekImage(state, payload) {
+      state.cheekImage = payload;
+    },
+    setMakeupByImageRef(state, payload) {
+      state.makeupByImageRef = payload;
+    },
+    setPredictionInfo(state, payload) {
+      state.predictionInfo = payload;
     },
   },
   actions: {
@@ -41,8 +63,20 @@ export default{
     updateLipstickListByImgRef({ commit }, payload) {
       commit('setLipstickListByImgRef', payload);
     },
+    updateCheekImage({ commit }, payload) {      
+      commit('setCheekImage', payload);
+    },
+    updatePredictionInfo({ commit }, payload) {      
+      commit('setPredictionInfo', payload);
+    },
+    async updateMakeupByImageRef({ commit }, payload) {      
+      commit('setMakeupByImageRef', await getMakeupDetailByImageRef(payload));
+    },
     async loadLipstickListByImgRef({ commit }, payload) {      
       commit('setLipstickListByImgRef', await getLipstickListByImageRef(payload));
-    }
+    },
+    async loadCheekImage({ commit }, payload) {      
+      commit('setCheekImage', await getCheekImage(payload));
+    },
   },
 };

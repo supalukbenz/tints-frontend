@@ -9,25 +9,25 @@
       <div class="img-container">
         <img
           class="img-ref"
-          :src="lipstickList ? splitImageURL(lipstickList.api_image_link) : ''"
+          :src="makeupList ? splitImageURL(makeupList.api_image_link) : ''"
           @error="$event.target.src = 'https://img.icons8.com/ios/452/lipstick.png'"
         />
       </div>
       <div class="ref-part-detail">
         <div class="ref-title">
           <div class="brand-name">
-            {{ lipstickList ? lipstickList.brand : 'Dior' }}
+            {{ makeupList ? makeupList.brand : 'Dior' }}
           </div>
           <div class="serie-name">
-            {{ lipstickList ? lipstickList.serie : 'Dior Addict Lip Glow' }}
+            {{ makeupList ? makeupList.serie : 'Dior Addict Lip Glow' }}
           </div>
         </div>
         <div class="color-name">
-          color: {{ lipstickList ? lipstickList.color_name : '001' }}
+          color: {{ makeupList ? makeupList.color_name : '001' }}
           <i
             :style="[
-              lipstickList
-                ? { color: 'rgb' + lipstickList.rgb_value + ' !important' }
+              makeupList
+                ? { color: 'rgb' + makeupList.rgb_value + ' !important' }
                 : { color: '#222' },
             ]"
             class="fas fa-circle ml-1 circle-icon"
@@ -37,7 +37,7 @@
             class="fas fa-circle ml-1 circle-icon"
           ></i> -->
         </div>
-        <div class="price">฿{{ lipstickList ? converterUSDToTHB(lipstickList.price) : '990' }}</div>
+        <div class="price">฿{{ makeupList ? converterUSDToTHB(makeupList.price) : '990' }}</div>
       </div>
       <div class="ref-feature">
         <button
@@ -66,7 +66,7 @@ export default {
   },
   props: {
     rgbColor: String,
-    lipstickList: Object,
+    makeupList: Object,
   },
   computed: {
     ...mapGetters({ user: 'getUserInfo' }),
@@ -91,7 +91,7 @@ export default {
     },
     handleLiked() {
       this.liked = !this.liked;
-      const itemId = this.lipstickList._id;
+      const itemId = this.makeupList._id;
       const index = this.user.likedLip.findIndex(id => id === itemId);
       this.pushLikedItem(index, this.user.likedLip, itemId);
     },

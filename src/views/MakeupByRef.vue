@@ -18,7 +18,7 @@
         <div class="spinner-grow color-brown-100 spinner" role="status"></div>
       </div>
       <!-- <div v-show="imgResult && !fileUploadState"> -->
-      <div v-show="!fileUploadState && getSortedLipstickList.length > 0">
+      <div v-show="!fileUploadState && getMakeupByImageRef">
         <div class="ref-result-container">
           <div class="ref-result-img">
             <img
@@ -31,24 +31,24 @@
               ><i class="fas fa-plus-circle"></i> Add to simulator collection</a
             >
           </div>
-          <div class="part-reference">
+          <div class="part-reference" v-if="getMakeupByImageRef">
             <div class="sketchy top-title">
               suggested
               <div class="top-detail">the similar makeup</div>
             </div>
             <div class="recommend-detail">
               <RecommendPartCard
-                :lipstickList="getSortedLipstickList[0]"
+                :makeupList="getMakeupByImageRef.Foundation[0]"
                 :rgbColor="rgbColor"
                 class="fadeIn-3"
               ></RecommendPartCard>
               <RecommendPartCard
-                :lipstickList="getSortedLipstickList[0]"
+                :makeupList="getMakeupByImageRef.Blush[0]"
                 :rgbColor="rgbColor"
                 class="fadeIn-3"
               ></RecommendPartCard>
               <RecommendPartCard
-                :lipstickList="getSortedLipstickList[0]"
+                :makeupList="getMakeupByImageRef.Lipstick[0]"
                 :rgbColor="rgbColor"
                 class="fadeIn-3"
               ></RecommendPartCard>
@@ -97,7 +97,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getSortedLipstickList', 'getImageUpload', 'getFileUpload', 'getUserInfo']),
+    ...mapGetters(['getMakeupByImageRef', 'getImageUpload', 'getUserInfo', 'getPredictionInfo']),
   },
   methods: {
     ...mapActions(['updateImageReference']),
@@ -114,7 +114,10 @@ export default {
         $('html, body').animate({ scrollTop: $(id).offset().top }, 1000);
       });
     },
-    async uploadImageRef(imageUpload, fileUpload) {
+    checkObjectNotEmpty(obj) {
+      return Object.keys(obj).length !== 0;
+    },
+    async uploadImageRef(imageUpload) {
       this.fileUploadState = true;
 
       // await this.$store.dispatch('updateLipstickListByImgRef', []);
@@ -122,11 +125,11 @@ export default {
 
       this.imgResult = imageUpload;
       const form = {
-        fileUpload: fileUpload,
-        userID: this.getUserInfo.userID,
+        filename: this.getPredictionInfo.filename,
+        blush_hex_color: this.getPredictionInfo.blush_hex_color,
       };
-      await this.$store.dispatch('loadLipstickListByImgRef', form);
-      this.rgbColor = this.getSortedLipstickList[0].rgb_value;
+      await this.$store.dispatch('updateMakeupByImageRef', form);
+      // this.rgbColor = this.getSortedLipstickList[0].rgb_value;
       this.fileUploadState = false;
       this.scrollToElement('#imageRef');
     },
@@ -141,9 +144,9 @@ export default {
     getImageUpload: {
       async handler(val) {
         if (val) {
-          await this.uploadImageRef(this.getImageUpload, this.getFileUpload);
+          await this.uploadImageRef(this.getImageUpload);
           this.$store.dispatch('updateImageUpload', null);
-          this.$store.dispatch('updateFileUpload', null);
+          this.$store.dispatch('updatePredictionInfo', null);
         }
       },
       deep: true,

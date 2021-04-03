@@ -23,30 +23,39 @@
     </div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
-        <a class="nav-link lips-link" :class="{ active: lipsActive }" @click="handleLipsActive"
-          >Lips <img class="icon-tab" src="@/assets/images/lipstick.png"
+        <a class="nav-link" :class="{ active: skinActive }" @click="handleSkinActive"
+          >Skin <img class="icon-tab" src="@/assets/images/foundation.png"
         /></a>
       </li>
+
       <li class="nav-item" role="presentation">
         <a class="nav-link" :class="{ active: cheekActive }" @click="handleCheeckActive"
           >Cheeck <img class="icon-tab" src="@/assets/images/blush.png"
         /></a>
       </li>
       <li class="nav-item" role="presentation">
-        <a class="nav-link" :class="{ active: skinActive }" @click="handleSkinActive"
-          >Skin <img class="icon-tab" src="@/assets/images/foundation.png"
+        <a class="nav-link lips-link" :class="{ active: lipsActive }" @click="handleLipsActive"
+          >Lips <img class="icon-tab" src="@/assets/images/lipstick.png"
         /></a>
       </li>
     </ul>
 
-    <div class="tab-content">
-      <div class="tab-pane lips-pane" :class="[lipsActive ? 'active' : 'd-none']">
-        <div v-for="(item, index) in getSortedLipstickList" :key="index">
+    <div class="tab-content" v-if="getMakeupByImageRef">
+      <div class="tab-pane lips-pane" :class="[skinActive ? 'active' : 'd-none']">
+        <div v-for="(item, index) in getMakeupByImageRef.Foundation" :key="index">
           <ItemCard :item="item"></ItemCard>
         </div>
       </div>
-      <div class="tab-pane" :class="[cheekActive ? 'active' : 'd-none']"></div>
-      <div class="tab-pane" :class="[skinActive ? 'active' : 'd-none']"></div>
+      <div class="tab-pane" :class="[cheekActive ? 'active' : 'd-none']">
+        <div v-for="(item, index) in getMakeupByImageRef.Blush" :key="index">
+          <ItemCard :item="item"></ItemCard>
+        </div>
+      </div>
+      <div class="tab-pane" :class="[lipsActive ? 'active' : 'd-none']">
+        <div v-for="(item, index) in getMakeupByImageRef.Lipstick" :key="index">
+          <ItemCard :item="item"></ItemCard>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -62,14 +71,14 @@ export default {
   },
   data() {
     return {
-      lipsActive: true,
+      lipsActive: false,
       cheekActive: false,
-      skinActive: false,
+      skinActive: true,
       lipstickList: [],
     };
   },
   computed: {
-    ...mapGetters(['getSortedLipstickList']),
+    ...mapGetters(['getSortedLipstickList', 'getMakeupByImageRef']),
   },
   methods: {
     handleLipsActive() {
