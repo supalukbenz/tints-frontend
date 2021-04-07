@@ -9,6 +9,7 @@
       :fixed-height="true"
       :touchable="false"
       :dragging-distance="100"
+      :bullets="false"
       :breakpoints="{
         910: { visibleSlides: 3, slideMultiple: 3 },
         650: { visibleSlides: 2, slideMultiple: 2 },
@@ -23,7 +24,20 @@
                 :simulatedId="simulatedId"
                 :rgbValue="rgbValue"
                 :item="i"
+                :simulatorState="simulatorState"
               ></ItemCard>
+            </div>
+            <div class="like-tab">
+              <button
+                type="button"
+                class="like-btn border-red"
+                @click="handleItemUnliked(i)"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Unlike"
+              >
+                <span><i class="like-icon heart-red fas fa-heart"></i></span>
+              </button>
             </div></div></template
       ></vueper-slide>
     </vueper-slides>
@@ -45,16 +59,18 @@ export default {
   props: {
     list: Array,
     lipState: Boolean,
+    blushState: Boolean,
     cheeckState: Boolean,
   },
   computed: {
-    ...mapGetters(['getLipSimulatorDetail']),
+    ...mapGetters(['getLipSimulatorDetail', 'getBlushSimulatorDetail', 'getUserInfo']),
   },
   data() {
     return {
       likeTest: [],
       simulatedId: '',
       rgbValue: '',
+      simulatorState: true,
     };
   },
   methods: {
@@ -64,10 +80,52 @@ export default {
       if (this.lipState) {
         this.$store.dispatch('updateLipSimulator', item);
       }
+      if (this.blushState) {
+        this.$store.dispatch('updateBlushSimulator', item);
+      }
+    },
+    indexLiked(item) {
+      if (this.lipState) {
+        const index = this.getUserInfo.likedLip.findIndex(
+          l => l._id === item._id && l.rgb_value === item.rgb_value
+        );
+        return index;
+      }
+    },
+    removeItem(user, index) {
+      let userLiked = user;
+      if (index !== -1) {
+        userLiked.splice(index, 1);
+      }
+      return userLiked;
+    },
+    handleItemUnliked(item) {
+      let updateUser = this.getUserInfo;
+      let index = this.indexLiked(item);
+      if (this.lipState) {
+        if (index !== -1) {
+          updateUser.likedLip.splice(index, 1);
+        }
+      }
+      if (this.blushState) {
+        if (index !== -1) {
+          updateUser.likedBlush.splice(index, 1);
+        }
+      }
+      this.$store.dispatch('updateUserProfile', updateUser);
     },
   },
   watch: {
     getLipSimulatorDetail: {
+      async handler(val) {
+        if (!val) {
+          this.simulatedId = '';
+          this.rgbValue = '';
+        }
+      },
+      deep: true,
+    },
+    getBlushSimulatorDetail: {
       async handler(val) {
         if (!val) {
           this.simulatedId = '';
@@ -92,7 +150,7 @@ export default {
 }
 .vueperslides--fixed-height {
   /* height: calc(70vmin * 9 / 16); */
-  height: 22rem;
+  height: 20rem;
 }
 
 .carousel-width {
@@ -102,6 +160,7 @@ export default {
 .content-item {
   width: fit-content;
   cursor: pointer;
+  height: 20rem;
 }
 
 .content {
@@ -112,10 +171,21 @@ export default {
   display: flex;
   justify-content: center;
 }
+.like-tab {
+  margin-left: -2.5rem;
+  margin-bottom: 1rem;
+  z-index: 2;
+  width: 1rem;
+  display: flex;
+  align-items: flex-end;
+}
 
 @media screen and (max-width: 720px) {
   .vueperslides--fixed-height {
-    height: 20rem;
+    height: 18rem;
+  }
+  .content-item {
+    height: 18rem;
   }
 }
 
@@ -123,8 +193,19 @@ export default {
   .vueperslides--fixed-height {
     height: 18rem;
   }
+  .content-item {
+    height: 18rem;
+  }
   .carousel-width {
     width: 80%;
+  }
+
+  .like-btn {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+  .like-icon {
+    font-size: 0.7rem;
   }
 }
 </style>

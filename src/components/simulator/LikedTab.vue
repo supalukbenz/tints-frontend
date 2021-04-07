@@ -4,6 +4,10 @@
       <div class="title-liked">Lip</div>
       <Carousel :lipState="true" :list="user.likedLip"></Carousel>
     </div>
+    <div class="lip-container">
+      <div class="title-liked">Blush</div>
+      <Carousel :blushState="true" :list="user.likedBlush"></Carousel>
+    </div>
   </div>
 </template>
 

@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <div class="item-feature">
+    <div class="item-feature" v-show="!simulatorState">
       <button
         type="button"
         class="like-btn"
@@ -44,7 +44,7 @@
         @click="handleItemLiked"
       >
         <span v-show="indexLiked !== -1"><i class="like-icon heart-red fas fa-heart"></i></span>
-        <span v-show="indexLiked === -1"><i class="like-icon heart-gray far fa-heart"></i></span>
+        <span v-show="indexLiked == -1"><i class="like-icon heart-gray far fa-heart"></i></span>
       </button>
     </div>
   </div>
@@ -65,12 +65,17 @@ export default {
     recommendState: Boolean,
     simulatedId: String,
     rgbValue: String,
+    simulatorState: Boolean,
   },
   computed: {
-    ...mapGetters({ user: 'getUserInfo' }, { lipSimulated: 'lipSimulated' }),
+    ...mapGetters(
+      { user: 'getUserInfo' },
+      { lipSimulated: 'lipSimulated' },
+      { addLikedLip: 'addLikedLip' }
+    ),
     indexLiked() {
       const index = this.user.likedLip.findIndex(
-        l => l._id === this.item._id && l.rgb_value === this.item.value
+        l => l._id === this.item._id && l.rgb_value === this.item.rgb_value
       );
       return index;
     },
@@ -82,23 +87,23 @@ export default {
     imageUrlAlt(e) {
       e.target.src = '@/assets/images/lipstick_plane.png';
     },
-    pushLikedItem(index, list, item) {
-      console.log(index);
+    pushLikedItem(index, item) {
+      let updateLikedLip = this.user;
       if (this.liked) {
         if (index === -1) {
-          list.push(item);
+          updateLikedLip.likedLip.push(item);
         }
       } else {
         if (index !== -1) {
-          list.splice(index, 1);
+          updateLikedLip.likedLip.splice(index, 1);
         }
       }
-      console.log('list', list);
+      this.$store.dispatch('updateUserProfile', updateLikedLip);
     },
     handleItemLiked() {
       this.liked = !this.liked;
       const index = this.indexLiked;
-      this.pushLikedItem(index, this.user.likedLip, this.item);
+      this.pushLikedItem(index, this.item);
     },
     splitImageURL(url) {
       if (url) {

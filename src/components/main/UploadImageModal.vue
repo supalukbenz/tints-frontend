@@ -1,7 +1,7 @@
 <template>
   <div>
     <button
-      v-if="uploadState"
+      v-if="predictionState"
       class="m-0 img-label border-0"
       data-toggle="modal"
       data-target="#myModal"
@@ -30,7 +30,11 @@
           </div>
 
           <div class="modal-body">
-            <ProgressBar :state="state" @handleChangeState="handleChangeState"></ProgressBar>
+            <ProgressBar
+              :predictionState="predictionState"
+              :state="state"
+              @handleChangeState="handleChangeState"
+            ></ProgressBar>
             <div v-if="loadingState" class="loading-bar">
               <div class="lds-heart"><div></div></div>
               Loading...
@@ -80,7 +84,7 @@
                 @click="findCheekImage"
                 class="modal-upload-btn border-0"
                 type="button"
-                v-if="uploadState && state === 1"
+                v-if="predictionState && state === 1"
               >
                 Next <i class="fas fa-chevron-right"></i>
               </button>
@@ -90,7 +94,7 @@
                 data-dismiss="modal"
                 class="modal-upload-btn border-0"
                 type="button"
-                v-if="uploadState && state === 2"
+                v-if="predictionState && state === 2"
               >
                 Upload <i class="fas fa-check"></i>
               </button>
@@ -99,7 +103,7 @@
                 data-dismiss="modal"
                 class="modal-upload-btn border-0"
                 type="button"
-                v-if="!uploadState"
+                v-if="!predictionState"
               >
                 Upload <i class="fas fa-check"></i>
               </button>
@@ -124,7 +128,7 @@ export default {
   },
   props: {
     titleButton: String,
-    uploadState: Boolean,
+    predictionState: Boolean,
   },
   data() {
     return {
@@ -207,6 +211,7 @@ export default {
       if (this.imageUpload && this.fileUpload) {
         this.$store.dispatch('updateImageUpload', this.imageUpload);
         this.$store.dispatch('updateFileUpload', this.fileUpload);
+        this.state = 0;
         this.deleteImageUpload();
       }
     },

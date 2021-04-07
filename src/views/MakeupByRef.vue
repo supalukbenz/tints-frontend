@@ -6,7 +6,7 @@
         <div class="upload-img-body">
           <div class="makeup-ref-body">
             <div class="btn-body">
-              <UploadImageModal :uploadState="true" titleButton="Upload Image"></UploadImageModal>
+              <UploadImageModal :predictionState="true" titleButton="Upload Image"></UploadImageModal>
             </div>
             <ExampleCard v-show="!imgResult"></ExampleCard>
           </div>

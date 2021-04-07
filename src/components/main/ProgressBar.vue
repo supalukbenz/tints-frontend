@@ -5,7 +5,14 @@
         @click="handleChangeState(0)"
         class="circle"
         :class="{ bgSelectedState: state === 0 || state === 1 || state === 2 }"
-      ></div>
+      >
+        <div
+          class="progress-detail"
+          :class="{ colorSelectedState: state === 0 || state === 1 || state === 2 }"
+        >
+          select image
+        </div>
+      </div>
     </div>
     <div class="progrss-line" :class="{ bgSelectedState: state === 1 || state === 2 }"></div>
     <div class="progress-point">
@@ -13,15 +20,27 @@
         @click="handleChangeState(1)"
         class="circle"
         :class="{ bgSelectedState: state === 1 || state === 2, disbledButton: state < 1 }"
-      ></div>
+      >
+        <div class="progress-detail" :class="{ colorSelectedState: state === 1 || state === 2 }">
+          upload image
+        </div>
+      </div>
     </div>
-    <div class="progrss-line" :class="{ bgSelectedState: state === 2 }"></div>
-    <div class="progress-point">
+    <div
+      v-if="predictionState"
+      class="progrss-line"
+      :class="{ bgSelectedState: state === 2 }"
+    ></div>
+    <div v-if="predictionState" class="progress-point">
       <div
         @click="handleChangeState(2)"
         class="circle"
         :class="{ bgSelectedState: state === 2, disbledButton: state < 2 }"
-      ></div>
+      >
+        <div class="progress-detail" :class="{ colorSelectedState: state === 2 }">
+          pick cheek color
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -30,6 +49,7 @@
 export default {
   props: {
     state: Number,
+    predictionState: Boolean,
   },
   methods: {
     handleChangeState(nextState) {
@@ -66,13 +86,21 @@ export default {
   background: #edb194 !important;
 }
 
+.colorSelectedState {
+  color: #edb194 !important;
+}
+
 .progress-point {
   display: flex;
   flex-direction: column;
 }
 
-.progress-step {
+.progress-detail {
   font-size: 0.5rem;
+  margin-top: 1.5rem;
+  white-space: nowrap;
+  margin-left: -1.2rem;
+  color: #cfcccc;
 }
 
 .circle {

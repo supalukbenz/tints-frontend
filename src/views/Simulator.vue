@@ -8,16 +8,16 @@
     <div class="simulator-container">
       <div class="simulator-img">
         <div class="img-container">
-          <div v-if="!simulatedState">
+          <div v-show="!simulatedState">
             <img
-              v-if="imgInput"
+              v-show="imgInput"
               class="user-img fadeIn"
               :class="{ filterImg: loadingState }"
               :src="imgInput"
               alt="InputImg"
             />
             <img
-              v-else
+              v-show="!imgInput"
               class="user-img fadeIn"
               id="userImage"
               :class="{ filterImg: loadingState }"
@@ -25,8 +25,13 @@
               alt="InputImg"
             />
           </div>
-          <div v-else>
-            <img class="user-img" v-if="imageSimulated" :src="imageSimulated" />
+          <div v-show="simulatedState">
+            <img
+              :class="{ filterImg: loadingState }"
+              class="user-img"
+              v-if="imageSimulated"
+              :src="imageSimulated"
+            />
           </div>
         </div>
         <Loading :loadingState="loadingState"></Loading>
@@ -36,7 +41,17 @@
           <img class="selected-simu-img empty" src="@/assets/images/foundation_emtpy.png" />
         </div>
         <div class="circle-img">
-          <img class="selected-simu-img empty" src="@/assets/images/blush_emtpy.png" />
+          <div v-if="getBlushSimulatorDetail" class="cancel-lip-simulated">
+            <a @click="handleCancelBlushSimulated" class="cancel-icon"
+              ><i class="fas fa-times"></i
+            ></a>
+          </div>
+          <img
+            v-if="getBlushSimulatorDetail"
+            class="selected-simu-img fadeIn"
+            :src="splitImageURL(getBlushSimulatorDetail.api_image_link)"
+          />
+          <img v-else class="selected-simu-img empty" src="@/assets/images/blush_emtpy.png" />
         </div>
         <div class="circle-img">
           <div v-if="getLipSimulatorDetail" class="cancel-lip-simulated">
@@ -124,7 +139,9 @@ export default {
       'getImageUpload',
       'getFileUpload',
       'getLipSimulatorDetail',
+      'getBlushSimulatorDetail',
       'getLipSimulatedImage',
+      'getBlushSimulatedImage',
     ]),
   },
   methods: {
@@ -138,6 +155,11 @@ export default {
     },
     handleCancelLipSimulated() {
       this.$store.dispatch('updateLipSimulator', null);
+      this.simulatedState = false;
+      this.imageSimulated = null;
+    },
+    handleCancelBlushSimulated() {
+      this.$store.dispatch('updateBlushSimulator', null);
     },
     readFileImg(imgRes) {
       var reader = new window.FileReader();
@@ -169,6 +191,7 @@ export default {
           this.loadingState = false;
           this.imgInput = val;
           this.$store.dispatch('updateLipSimulator', null);
+          this.$store.dispatch('updateBlushSimulator', null);
         }
       },
       deep: true,
@@ -183,7 +206,9 @@ export default {
             glip: this.spilitRgbColor(val.rgb_value)[1],
             blip: this.spilitRgbColor(val.rgb_value)[2],
           };
-          if (this.getFileUpload) {
+          if (this.imageSimulated) {
+            form.fileUpload = await this.imageSrcToFile(this.imageSimulated);
+          } else if (this.getFileUpload) {
             form.fileUpload = await this.getFileUpload;
           } else {
             let src = document.getElementById('userImage').src;
@@ -193,6 +218,35 @@ export default {
           // await this.readFileImg(this.getLipSimulatedImage);
           if (this.getLipSimulatedImage) {
             this.imageSimulated = 'data:image/png;base64, ' + this.getLipSimulatedImage[1];
+          }
+          this.loadingState = false;
+          this.simulatedState = true;
+        }
+      },
+      deep: true,
+    },
+    getBlushSimulatorDetail: {
+      async handler(val) {
+        if (val) {
+          this.loadingState = true;
+          let form = {
+            userID: 123,
+            r_blush: this.spilitRgbColor(val.rgb_value)[0],
+            g_blush: this.spilitRgbColor(val.rgb_value)[1],
+            b_blush: this.spilitRgbColor(val.rgb_value)[2],
+          };
+          if (this.imageSimulated) {
+            form.fileUpload = await this.imageSrcToFile(this.imageSimulated);
+          } else if (this.getFileUpload) {
+            form.fileUpload = await this.getFileUpload;
+          } else {
+            let src = document.getElementById('userImage').src;
+            form.fileUpload = await this.imageSrcToFile(src);
+          }
+          await this.$store.dispatch('loadBlushSimulated', form);
+          // await this.readFileImg(this.getLipSimulatedImage);
+          if (this.getBlushSimulatedImage) {
+            this.imageSimulated = 'data:image/png;base64, ' + this.getBlushSimulatedImage[1];
           }
           this.loadingState = false;
           this.simulatedState = true;
