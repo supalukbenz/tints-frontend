@@ -9,6 +9,86 @@ export default {
       userID: 1,
       username: 'nana',
       userImgURL: 'https://i.mydramalist.com/rgA8j_5f.jpg',
+      likedFoundation: [
+        {
+            _id: "6062debbd318f9caf9a3be65",
+            brand: "nyx",
+            serie: "#NOFILTER Finishing Powder",
+            price: "12.0",
+            image_link: "https://www.nyxcosmetics.com/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-cpd-nyxusa-master-catalog/default/dwd7e25eb8/ProductImages/2016/Face/No_Filter_Finishing_Powder/nofilterfinishingpowder_main.jpg?sw=390&sh=390&sm=fit",
+            product_link: "https://www.nyxcosmetics.com/no-filter-finishing-powder/NYX_358.html?cgid=powder",
+            category: "powder",
+            color_name: "Deep Golden",
+            rgb_value: "(207, 139, 104)",
+            deltaE: 5.194,
+            api_image_link: "//s3.amazonaws.com/donovanbailey/products/api_featured_images/000/000/936/original/open-uri20171224-4-h5gd5x?1514082686"
+        },
+        {
+            _id: "6062debbd318f9caf9a3be64",
+            brand: "nyx",
+            serie: "#NOFILTER Finishing Powder",
+            price: "12.0",
+            image_link: "https://www.nyxcosmetics.com/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-cpd-nyxusa-master-catalog/default/dwd7e25eb8/ProductImages/2016/Face/No_Filter_Finishing_Powder/nofilterfinishingpowder_main.jpg?sw=390&sh=390&sm=fit",
+            product_link: "https://www.nyxcosmetics.com/no-filter-finishing-powder/NYX_358.html?cgid=powder",
+            category: "powder",
+            color_name: "Sand",
+            rgb_value: "(217, 157, 123)",
+            deltaE: 5.722,
+            api_image_link: "//s3.amazonaws.com/donovanbailey/products/api_featured_images/000/000/936/original/open-uri20171224-4-h5gd5x?1514082686"
+        },
+        {
+            _id: "6062dec2d318f9caf9a3bea7",
+            brand: "fenty",
+            serie: "MATCH STIX - Matte Skinstick",
+            price: "25.0",
+            image_link: "https://www.fentybeauty.com/dw/image/v2/AAXW_PRD/on/demandware.static/-/Sites-itemmaster_FENTY/default/dw50617083/hi-res/FB30003_FB3009.jpg?sw=550 550w",
+            product_link: "https://www.fentybeauty.com/match-stix/matte-skinstick/FB30003.html?dwvar_FB30003_color=FB3009",
+            category: "concealer",
+            color_name: "Mocha - Cool",
+            rgb_value: "(197, 144, 114)",
+            deltaE: 6.127,
+            api_image_link: "//s3.amazonaws.com/donovanbailey/products/api_featured_images/000/000/847/original/open-uri20171224-4-1se9mcb?1514074989"
+        },
+        {
+            _id: "6062decfd318f9caf9a3bf22",
+            brand: "nyx",
+            serie: "Tinted Moisturizer",
+            price: "10.0",
+            image_link: "https://www.nyxcosmetics.com/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-cpd-nyxusa-master-catalog/default/dw8cbca26c/ProductImages/Face/Tinted_Moisturizer/tintedmoisturizer_main.jpg?sw=390&sh=390&sm=fit",
+            product_link: "https://www.nyxcosmetics.com/tinted-moisturizer/NYX_131.html?cgid=foundation",
+            category: null,
+            color_name: "Buff",
+            rgb_value: "(229, 169, 144)",
+            deltaE: 6.248,
+            api_image_link: "//s3.amazonaws.com/donovanbailey/products/api_featured_images/000/000/904/original/open-uri20171224-4-afx6c?1514082602"
+        },
+        {
+            _id: "6062dec1d318f9caf9a3be97",
+            brand: "nyx",
+            serie: "HD Studio Photogenic Foundation",
+            price: "18.0",
+            image_link: "https://www.nyxcosmetics.com/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-cpd-nyxusa-master-catalog/default/dw37943ebb/ProductImages/2017/Face/High_Definition_Foundation/800897051822_highdefinitionfoundation_chestnut_main.jpg?sw=390&sh=390&sm=fit",
+            product_link: "https://www.nyxcosmetics.com/hd-studio-photogenic-foundation/NYX_185.html?cgid=foundation",
+            category: null,
+            color_name: "Natural Beige",
+            rgb_value: "(194, 135, 105)",
+            deltaE: 6.341,
+            api_image_link: "//s3.amazonaws.com/donovanbailey/products/api_featured_images/000/000/897/original/data?1514082585"
+        },
+        {
+            _id: "6062ded3d318f9caf9a3bf48",
+            brand: "clinique",
+            serie: "Stay-Matte Sheer Pressed Powder",
+            price: "26.0",
+            image_link: "https://www.clinique.com/media/export/cms/products/181x209/clq_645J_181x209.png",
+            product_link: "https://www.clinique.com/product/1599/6069/makeup/foundations/stay-matte-sheer-pressed-powder",
+            category: null,
+            color_name: "17 Stay Golden",
+            rgb_value: "(200, 151, 122)",
+            deltaE: 6.471,
+            api_image_link: "//s3.amazonaws.com/donovanbailey/products/api_featured_images/000/000/834/original/open-uri20171223-4-1b6qpa2?1514072593"
+        },
+      ],
       likedLip: [
         {
             _id: "600010e404026944b4ad186d",
@@ -105,19 +185,17 @@ export default {
       ],
       likedBlush: [
         {
-          _id: '6000105304026944b4ad1789',
-          brand: 'pacifica',
-          serie: 'Pacifica Radiant Shimmer Highlighting Creams For Eyes Lips Face',
-          price: '28.0',
-          image_link:
-            'https://d3t32hsnjxo7q6.cloudfront.net/i/4395f2c09aebd1b8d8f183168bc5d00f_ra,w158,h184_pa,w158,h184.jpeg',
-          product_link: 'https://well.ca/products/pacifica-radiant-shimmer_77804.html?cat=1977',
-          category: 'powder',
-          color_name: 'color 1',
-          rgb_value: '(126, 85, 74)',
-          deltaE: 0.0,
-          api_image_link:
-            '//s3.amazonaws.com/donovanbailey/products/api_featured_images/000/000/278/original/data?1514063324',
+          _id: "6000105304026944b4ad1754",
+          brand: "dior",
+          serie: "Diorblush",
+          price: "32.5",
+          image_link: "https://www.dior.com/beauty/version-5.1432748111912/resize-image/ep/0/390/100/0/packshots%252FPDG_Y0715255.jpg",
+          product_link: "https://www.dior.com/beauty/en_gb/fragrance-beauty/makeup/face/blush/pr-blush-y0715255_f071525556-vibrant-colour-powder-blush.html",
+          category: null,
+          color_name: "896 Redissimo",
+          rgb_value: "(235, 92, 84)",
+          deltaE: 2.462,
+          api_image_link: "//s3.amazonaws.com/donovanbailey/products/api_featured_images/000/000/684/original/open-uri20171223-4-14490w0?1514062728"
         },
         {
           _id: '6000105304026944b4ad1741',

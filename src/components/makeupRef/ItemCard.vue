@@ -68,11 +68,7 @@ export default {
     simulatorState: Boolean,
   },
   computed: {
-    ...mapGetters(
-      { user: 'getUserInfo' },
-      { lipSimulated: 'lipSimulated' },
-      { addLikedLip: 'addLikedLip' }
-    ),
+    ...mapGetters({ user: 'getUserInfo' }),
     indexLiked() {
       const index = this.user.likedLip.findIndex(
         l => l._id === this.item._id && l.rgb_value === this.item.rgb_value

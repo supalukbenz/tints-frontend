@@ -14,6 +14,9 @@ export default{
     lipSimulatedImage: null,
     blushSimulatedImage: null,
     blushSimulator: null,
+    makeupSimulator: null,
+    makeupSimulatedImage: null,
+    makeupState: '',
   },
   getters: {
     getLipSimulatorDetail: state => {
@@ -27,6 +30,15 @@ export default{
     },
     getBlushSimulatedImage: state => {
       return state.blushSimulatedImage;
+    },
+    getMakeupSimulator: state => {
+      return state.makeupSimulator;
+    },
+    getMakeupState: state => {
+      return state.makeupState;
+    },
+    getMakeupSimulatedImage: state => {
+      return state.makeupSimulatedImage;
     }
   },
   mutations: {
@@ -41,6 +53,15 @@ export default{
     },
     setBlushSimulatedImage(state, payload) {
       state.blushSimulatedImage = payload;
+    },
+    setMakeupSimulator(state, payload) {
+      state.makeupSimulator = payload;
+    },
+    setMakeupState(state, payload) {
+      state.makeupState = payload;
+    },
+    setMakeupSimulatedImage(state, payload) {
+      state.makeupSimulatedImage = payload;
     }
   },
   actions: {
@@ -50,11 +71,17 @@ export default{
     updateBlushSimulator({ commit }, payload) {
       commit('setBlushSimulatorDetail', payload);
     },
+    updateMakeupSimulator({ commit }, payload) {
+      commit('setMakeupSimulator', payload);
+    },
+    updateMakeupState({ commit }, payload) {
+      commit('setMakeupState', payload);
+    },
     async loadLipSimulated({ commit }, payload) {
-      commit('setlipSimulatedImage', await getLipSimulator(payload));
+      commit('setMakeupSimulatedImage', await getLipSimulator(payload));
     },
     async loadBlushSimulated({ commit }, payload) {
-      commit('setBlushSimulatedImage', await getBlushSimulator(payload));
-    }
+      commit('setMakeupSimulatedImage', await getBlushSimulator(payload));
+    },
   },
 };

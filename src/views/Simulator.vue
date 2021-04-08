@@ -38,65 +38,49 @@
       </div>
       <div class="selected-makeup">
         <div class="circle-img">
-          <img class="selected-simu-img empty" src="@/assets/images/foundation_emtpy.png" />
-        </div>
-        <div class="circle-img">
-          <div v-if="getBlushSimulatorDetail" class="cancel-lip-simulated">
-            <a @click="handleCancelBlushSimulated" class="cancel-icon"
-              ><i class="fas fa-times"></i
-            ></a>
+          <div v-if="getMakeupSimulator" class="cancel-lip-simulated">
+            <a @click="handleCancelSimulated" class="cancel-icon"><i class="fas fa-times"></i></a>
           </div>
           <img
-            v-if="getBlushSimulatorDetail"
+            v-if="getMakeupSimulator"
             class="selected-simu-img fadeIn"
-            :src="splitImageURL(getBlushSimulatorDetail.api_image_link)"
+            :src="splitImageURL(getMakeupSimulator.api_image_link)"
           />
-          <img v-else class="selected-simu-img empty" src="@/assets/images/blush_emtpy.png" />
-        </div>
-        <div class="circle-img">
-          <div v-if="getLipSimulatorDetail" class="cancel-lip-simulated">
-            <a @click="handleCancelLipSimulated" class="cancel-icon"
-              ><i class="fas fa-times"></i
-            ></a>
+          <div v-show="!getMakeupSimulator" class="selected-simu-img empty">
+            <i class="fas fa-magic"></i>
           </div>
-          <img
-            v-if="getLipSimulatorDetail"
-            class="selected-simu-img fadeIn"
-            :src="splitImageURL(getLipSimulatorDetail.api_image_link)"
-          />
-          <img v-else class="selected-simu-img empty" src="@/assets/images/lip_emtpy.png" />
         </div>
-        <div class="level-lip-bar" v-if="simulatedState && getLipSimulatorDetail">
+        <div class="level-lip-bar" v-if="simulatedState && getMakeupSimulator && !loadingState">
           <button
             type="button"
             class="level-btn"
-            @click="lipSimulatedLevel(0)"
-            :class="{ selectedLevel: lipLevel === 0 }"
+            @click="makeupSimulatedLevel(0)"
+            :class="{ selectedLevel: simulatedLevel === 0 }"
             :style="[
-              getLipSimulatorDetail
-                ? { background: 'rgb' + getLipSimulatorDetail.rgb_value + ' !important' }
+              getMakeupSimulator
+                ? { background: 'rgb' + getMakeupSimulator.rgb_value + ' !important' }
                 : '',
             ]"
           ></button>
           <button
             type="button"
             class="level-btn medium"
-            @click="lipSimulatedLevel(1)"
-            :class="{ selectedLevel: lipLevel === 1 }"
+            @click="makeupSimulatedLevel(1)"
+            :class="{ selectedLevel: simulatedLevel === 1 }"
             :style="[
-              getLipSimulatorDetail
-                ? { background: 'rgb' + getLipSimulatorDetail.rgb_value + ' !important' }
+              getMakeupSimulator
+                ? { background: 'rgb' + getMakeupSimulator.rgb_value + ' !important' }
                 : '',
             ]"
           ></button>
           <button
             type="button"
             class="level-btn light"
-            @click="lipSimulatedLevel(2)"
-            :class="{ selectedLevel: lipLevel === 2 }"
+            @click="makeupSimulatedLevel(2)"
+            :class="{ selectedLevel: simulatedLevel === 2 }"
             :style="[
-              getLipSimulatorDetail
-                ? { background: 'rgb' + getLipSimulatorDetail.rgb_value + ' !important' }
+              getMakeupSimulator
+                ? { background: 'rgb' + getMakeupSimulator.rgb_value + ' !important' }
                 : '',
             ]"
           ></button>
@@ -128,20 +112,23 @@ export default {
       imageSimulated: null,
       loadingState: false,
       simulatedState: false,
-      lipLevel: 1,
+      simulatedLevel: 1,
     };
   },
   beforeCreate() {
-    this.$store.dispatch('updateLipSimulator', null);
+    this.$store.dispatch('updateMakeupState', null);
+    this.$store.dispatch('updateMakeupSimulator', null);
   },
   computed: {
     ...mapGetters([
       'getImageUpload',
       'getFileUpload',
-      'getLipSimulatorDetail',
+      'getMakeupSimulator',
+      'getMakeupSimulatedImage',
       'getBlushSimulatorDetail',
       'getLipSimulatedImage',
       'getBlushSimulatedImage',
+      'getMakeupState',
     ]),
   },
   methods: {
@@ -153,13 +140,11 @@ export default {
         return 'http://' + url.substring(2, url.length - 1);
       }
     },
-    handleCancelLipSimulated() {
-      this.$store.dispatch('updateLipSimulator', null);
+    handleCancelSimulated() {
+      this.$store.dispatch('updateMakeupSimulator', null);
+      this.$store.dispatch('updateMakeupState', '');
       this.simulatedState = false;
       this.imageSimulated = null;
-    },
-    handleCancelBlushSimulated() {
-      this.$store.dispatch('updateBlushSimulator', null);
     },
     readFileImg(imgRes) {
       var reader = new window.FileReader();
@@ -178,9 +163,9 @@ export default {
       const rgbArr = getRgb.split(', ');
       return rgbArr;
     },
-    lipSimulatedLevel(level) {
-      this.imageSimulated = 'data:image/png;base64, ' + this.getLipSimulatedImage[level];
-      this.lipLevel = level;
+    makeupSimulatedLevel(level) {
+      this.imageSimulated = 'data:image/png;base64, ' + this.getMakeupSimulatedImage[level];
+      this.simulatedLevel = level;
     },
   },
   watch: {
@@ -190,63 +175,38 @@ export default {
           this.simulatedState = false;
           this.loadingState = false;
           this.imgInput = val;
-          this.$store.dispatch('updateLipSimulator', null);
-          this.$store.dispatch('updateBlushSimulator', null);
+          this.$store.dispatch('updateMakeupState', '');
+          this.$store.dispatch('updateMakeupSimulator', null);
         }
       },
       deep: true,
     },
-    getLipSimulatorDetail: {
+    getMakeupSimulator: {
       async handler(val) {
         if (val) {
           this.loadingState = true;
           let form = {
             userID: 123,
-            rlip: this.spilitRgbColor(val.rgb_value)[0],
-            glip: this.spilitRgbColor(val.rgb_value)[1],
-            blip: this.spilitRgbColor(val.rgb_value)[2],
+            r_value: this.spilitRgbColor(val.rgb_value)[0],
+            g_value: this.spilitRgbColor(val.rgb_value)[1],
+            b_value: this.spilitRgbColor(val.rgb_value)[2],
           };
-          if (this.imageSimulated) {
-            form.fileUpload = await this.imageSrcToFile(this.imageSimulated);
-          } else if (this.getFileUpload) {
+
+          if (this.getFileUpload) {
             form.fileUpload = await this.getFileUpload;
           } else {
             let src = document.getElementById('userImage').src;
             form.fileUpload = await this.imageSrcToFile(src);
           }
-          await this.$store.dispatch('loadLipSimulated', form);
-          // await this.readFileImg(this.getLipSimulatedImage);
-          if (this.getLipSimulatedImage) {
-            this.imageSimulated = 'data:image/png;base64, ' + this.getLipSimulatedImage[1];
+          console.log(this.getMakeupState);
+          if (this.getMakeupState === 'Lip') {
+            await this.$store.dispatch('loadLipSimulated', form);
+          } else if (this.getMakeupState === 'Blush') {
+            await this.$store.dispatch('loadBlushSimulated', form);
           }
-          this.loadingState = false;
-          this.simulatedState = true;
-        }
-      },
-      deep: true,
-    },
-    getBlushSimulatorDetail: {
-      async handler(val) {
-        if (val) {
-          this.loadingState = true;
-          let form = {
-            userID: 123,
-            r_blush: this.spilitRgbColor(val.rgb_value)[0],
-            g_blush: this.spilitRgbColor(val.rgb_value)[1],
-            b_blush: this.spilitRgbColor(val.rgb_value)[2],
-          };
-          if (this.imageSimulated) {
-            form.fileUpload = await this.imageSrcToFile(this.imageSimulated);
-          } else if (this.getFileUpload) {
-            form.fileUpload = await this.getFileUpload;
-          } else {
-            let src = document.getElementById('userImage').src;
-            form.fileUpload = await this.imageSrcToFile(src);
-          }
-          await this.$store.dispatch('loadBlushSimulated', form);
-          // await this.readFileImg(this.getLipSimulatedImage);
-          if (this.getBlushSimulatedImage) {
-            this.imageSimulated = 'data:image/png;base64, ' + this.getBlushSimulatedImage[1];
+
+          if (this.getMakeupSimulatedImage) {
+            this.imageSimulated = 'data:image/png;base64, ' + this.getMakeupSimulatedImage[1];
           }
           this.loadingState = false;
           this.simulatedState = true;
@@ -292,12 +252,10 @@ button {
 }
 
 .selected-simu-img {
-  height: 6rem;
-  max-width: 100%;
-}
-
-.empty {
   height: 4rem;
+  font-size: 3rem;
+  max-width: 100%;
+  color: #cfcfcf;
 }
 
 .img-profile-btn {
@@ -408,12 +366,10 @@ button {
     margin: 0.2rem;
   }
   .selected-simu-img {
-    height: 4rem;
+    height: 3rem;
+    font-size: 2rem;
   }
 
-  .empty {
-    height: 3rem;
-  }
   .cancel-lip-simulated {
     margin-top: 1;
     margin-right: -2.5rem;

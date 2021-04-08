@@ -3,12 +3,10 @@ import axios from 'axios';
 async function getLipSimulator(form) {        
   var bodyFormData = new FormData();
   bodyFormData.append('user_image', form.fileUpload);
-  // bodyFormData.append('user_image_1', form.fileUpload);
-  // bodyFormData.append('user_image_2', form.fileUpload);  
   bodyFormData.append('user_id', form.userID);
-  bodyFormData.append('rlip', form.rlip);
-  bodyFormData.append('glip', form.glip);
-  bodyFormData.append('blip', form.blip);
+  bodyFormData.append('r_value', form.r_value);
+  bodyFormData.append('g_value', form.g_value);
+  bodyFormData.append('b_value', form.b_value);
 
   // const response = await axios.post('simulator/lip', bodyFormData, { responseType: "blob" });
   const response = await axios.post('simulator/lip', bodyFormData);
@@ -19,9 +17,9 @@ async function getBlushSimulator(form) {
   var bodyFormData = new FormData();
   bodyFormData.append('user_image', form.fileUpload);
   bodyFormData.append('user_id', form.userID);
-  bodyFormData.append('r_blush', form.r_blush);
-  bodyFormData.append('g_blush', form.g_blush);
-  bodyFormData.append('b_blush', form.b_blush);
+  bodyFormData.append('r_value', form.r_value);
+  bodyFormData.append('g_value', form.g_value);
+  bodyFormData.append('b_value', form.b_value);
 
   // const response = await axios.post('simulator/lip', bodyFormData, { responseType: "blob" });
   const response = await axios.post('simulator/blush', bodyFormData);

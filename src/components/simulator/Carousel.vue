@@ -60,10 +60,16 @@ export default {
     list: Array,
     lipState: Boolean,
     blushState: Boolean,
+    skinState: Boolean,
     cheeckState: Boolean,
   },
   computed: {
-    ...mapGetters(['getLipSimulatorDetail', 'getBlushSimulatorDetail', 'getUserInfo']),
+    ...mapGetters([
+      'getLipSimulatorDetail',
+      'getBlushSimulatorDetail',
+      'getUserInfo',
+      'getMakeupSimulator',
+    ]),
   },
   data() {
     return {
@@ -78,11 +84,18 @@ export default {
       this.simulatedId = item._id;
       this.rgbValue = item.rgb_value;
       if (this.lipState) {
-        this.$store.dispatch('updateLipSimulator', item);
+        // this.$store.dispatch('updateLipSimulator', item);
+        this.$store.dispatch('updateMakeupState', 'Lip');
       }
       if (this.blushState) {
-        this.$store.dispatch('updateBlushSimulator', item);
+        // this.$store.dispatch('updateBlushSimulator', item);
+        this.$store.dispatch('updateMakeupState', 'Blush');
       }
+      if (this.skinState) {
+        // this.$store.dispatch('updateBlushSimulator', item);
+        this.$store.dispatch('updateMakeupState', 'Foundation');
+      }
+      this.$store.dispatch('updateMakeupSimulator', item);
     },
     indexLiked(item) {
       if (this.lipState) {
@@ -116,16 +129,7 @@ export default {
     },
   },
   watch: {
-    getLipSimulatorDetail: {
-      async handler(val) {
-        if (!val) {
-          this.simulatedId = '';
-          this.rgbValue = '';
-        }
-      },
-      deep: true,
-    },
-    getBlushSimulatorDetail: {
+    getMakeupSimulator: {
       async handler(val) {
         if (!val) {
           this.simulatedId = '';
