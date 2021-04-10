@@ -9,7 +9,7 @@
       :fixed-height="true"
       :touchable="false"
       :dragging-distance="100"
-      :bullets="false"
+      :bullets="true"
       :breakpoints="{
         910: { visibleSlides: 3, slideMultiple: 3 },
         650: { visibleSlides: 2, slideMultiple: 2 },
@@ -154,7 +154,7 @@ export default {
 }
 .vueperslides--fixed-height {
   /* height: calc(70vmin * 9 / 16); */
-  height: 20rem;
+  height: 24rem;
 }
 
 .carousel-width {

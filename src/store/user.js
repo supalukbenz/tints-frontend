@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 export default {
-  state: {
+  state: {    
     userProfile: {
       userID: 1,
       username: 'nana',
