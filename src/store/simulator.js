@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import {
   getLipSimulator,
   getBlushSimulator,
+  getFoundationSimulator,
 
 } from '@/api/simulator';
 
@@ -82,6 +83,9 @@ export default{
     },
     async loadBlushSimulated({ commit }, payload) {
       commit('setMakeupSimulatedImage', await getBlushSimulator(payload));
+    },
+    async loadFoundationSimulated({ commit }, payload) {
+      commit('setMakeupSimulatedImage', await getFoundationSimulator(payload));
     },
   },
 };

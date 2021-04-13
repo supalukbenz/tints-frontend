@@ -125,6 +125,11 @@ export default {
           updateUser.likedBlush.splice(index, 1);
         }
       }
+      if (this.skinState) {
+        if (index !== -1) {
+          updateUser.likedFoundation.splice(index, 1);
+        }
+      }
       this.$store.dispatch('updateUserProfile', updateUser);
     },
   },

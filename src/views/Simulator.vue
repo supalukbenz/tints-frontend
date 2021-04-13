@@ -203,6 +203,8 @@ export default {
             await this.$store.dispatch('loadLipSimulated', form);
           } else if (this.getMakeupState === 'Blush') {
             await this.$store.dispatch('loadBlushSimulated', form);
+          } else if (this.getMakeupState === 'Foundation') {
+            await this.$store.dispatch('loadFoundationSimulated', form);
           }
 
           if (this.getMakeupSimulatedImage) {
