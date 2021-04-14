@@ -1,8 +1,6 @@
 <template>
   <div class="collection-container">
-    <div class="collection-item">
-      
-    </div>
+    <div class="collection-item"></div>
   </div>
 </template>
 
@@ -11,13 +9,9 @@ export default {
   props: {
     imgUrl: String,
     lipRgb: String,
-    cheeckRgb: String,    
-  }
+    cheeckRgb: String,
+  },
 };
 </script>
 
-<style scoped>
-.collection-container {
-  
-}
-</style>
+<style scoped></style>

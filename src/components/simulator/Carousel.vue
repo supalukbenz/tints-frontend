@@ -64,12 +64,7 @@ export default {
     cheeckState: Boolean,
   },
   computed: {
-    ...mapGetters([
-      'getLipSimulatorDetail',
-      'getBlushSimulatorDetail',
-      'getUserInfo',
-      'getMakeupSimulator',
-    ]),
+    ...mapGetters(['getUserInfo', 'getMakeupSimulator']),
   },
   data() {
     return {
@@ -84,15 +79,12 @@ export default {
       this.simulatedId = item._id;
       this.rgbValue = item.rgb_value;
       if (this.lipState) {
-        // this.$store.dispatch('updateLipSimulator', item);
         this.$store.dispatch('updateMakeupState', 'Lip');
       }
       if (this.blushState) {
-        // this.$store.dispatch('updateBlushSimulator', item);
         this.$store.dispatch('updateMakeupState', 'Blush');
       }
       if (this.skinState) {
-        // this.$store.dispatch('updateBlushSimulator', item);
         this.$store.dispatch('updateMakeupState', 'Foundation');
       }
       this.$store.dispatch('updateMakeupSimulator', item);

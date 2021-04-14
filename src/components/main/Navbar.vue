@@ -7,11 +7,7 @@
         </span>
       </router-link>
       <button class="user-btn" type="button">
-        <img
-          class="user-img"
-          :src="require(`@/assets/images/mockup/${userProfile.userImage}`)"
-          alt="User"
-        />
+        <img class="user-img" :src="getUserInfo.userImgURL" alt="User" />
       </button>
     </div>
     <!-- <img class="nav-bg" src="@/assets/images/nav_img.png" /> -->
@@ -19,15 +15,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
-  data() {
-    return {
-      userProfile: {
-        username: 'anyataylor',
-        userEmail: 'anya@gmail.com',
-        userImage: 'user.jpg',
-      },
-    };
+  computed: {
+    ...mapGetters(['getUserInfo']),
   },
 };
 </script>
@@ -58,14 +50,14 @@ export default {
 }
 
 .user-img {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 3rem;
+  height: 3.2rem;
   border-radius: 50%;
 }
 
 .user-btn {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 3rem;
+  height: 3.2rem;
   border-radius: 50%;
   padding: 0;
   border: none;

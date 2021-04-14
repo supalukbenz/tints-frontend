@@ -21,7 +21,7 @@
               class="user-img fadeIn"
               id="userImage"
               :class="{ filterImg: loadingState }"
-              :src="require(`@/assets/images/mockup/${imgUser}`)"
+              :src="getUserInfo.userImgURL"
               alt="InputImg"
             />
           </div>
@@ -125,10 +125,8 @@ export default {
       'getFileUpload',
       'getMakeupSimulator',
       'getMakeupSimulatedImage',
-      'getBlushSimulatorDetail',
-      'getLipSimulatedImage',
-      'getBlushSimulatedImage',
       'getMakeupState',
+      'getUserInfo',
     ]),
   },
   methods: {

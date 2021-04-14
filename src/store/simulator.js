@@ -10,28 +10,13 @@ import {
 Vue.use(Vuex);
 
 export default{
-  state: {
-    lipSimulator: null,
-    lipSimulatedImage: null,
-    blushSimulatedImage: null,
-    blushSimulator: null,
+  state: {            
     makeupSimulator: null,
     makeupSimulatedImage: null,
     makeupState: '',
   },
   getters: {
-    getLipSimulatorDetail: state => {
-      return state.lipSimulator;
-    },
-    getBlushSimulatorDetail: state => {
-      return state.blushSimulator;
-    },
-    getLipSimulatedImage: state => {
-      return state.lipSimulatedImage;
-    },
-    getBlushSimulatedImage: state => {
-      return state.blushSimulatedImage;
-    },
+
     getMakeupSimulator: state => {
       return state.makeupSimulator;
     },
@@ -43,18 +28,6 @@ export default{
     }
   },
   mutations: {
-    setLipSimulatorDetail(state, payload) {
-      state.lipSimulator = payload;
-    },
-    setBlushSimulatorDetail(state, payload) {
-      state.blushSimulator = payload;
-    },
-    setlipSimulatedImage(state, payload) {
-      state.lipSimulatedImage = payload;
-    },
-    setBlushSimulatedImage(state, payload) {
-      state.blushSimulatedImage = payload;
-    },
     setMakeupSimulator(state, payload) {
       state.makeupSimulator = payload;
     },
@@ -66,12 +39,7 @@ export default{
     }
   },
   actions: {
-    updateLipSimulator({ commit }, payload) {
-      commit('setLipSimulatorDetail', payload);
-    },
-    updateBlushSimulator({ commit }, payload) {
-      commit('setBlushSimulatorDetail', payload);
-    },
+
     updateMakeupSimulator({ commit }, payload) {
       commit('setMakeupSimulator', payload);
     },
