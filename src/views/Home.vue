@@ -28,5 +28,6 @@ export default {
 <style lang="scss" scoped>
 .home-container {
   padding: 2rem 0;
+  background-color: #fffcf7 !important;
 }
 </style>

@@ -52,6 +52,7 @@ export default {
   padding: 2rem;
   display: flex;
   flex-direction: column;
+  border: 2px solid #dee2e6;
   // margin-left: 5rem;
 }
 
@@ -62,8 +63,8 @@ export default {
 }
 
 .ex-image {
-  height: 25rem;
-  width: auto;
+  height: 20rem;
+  max-width: 100%;
 }
 
 .condition-detail {

@@ -153,4 +153,26 @@ export default {
   --x1: 0;
   --x2: 95%;
 }
+
+@media screen and (max-width: 650px) {
+  .makeup-ref-btn {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .makeup-ref-btn {
+    font-size: 0.5rem;
+    padding: 0.4rem;
+  }
+
+  .makeup-ref-card {
+    width: 80vmin;
+    height: calc(80vmin * 9 / 16);
+  }
+
+  .content-detail {
+    margin-top: 2rem;
+  }
+}
 </style>

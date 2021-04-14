@@ -23,8 +23,8 @@ export default {
 
 html,
 body {
-  // background-color: #fffcf7 !important;
-  background-image: url('../src/assets/images/blush-bg.jpg');
+  background-color: #fffcf7 !important;
+  // background-image: url('../src/assets/images/blush-bg.jpg');
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -115,9 +115,12 @@ button {
 
 .like-btn {
   border-radius: 50%;
-  margin-left: 0.5rem;
+  // margin-left: 0.5rem;
   border: 1px solid;
   background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     border-color: #a83f39 !important;
     .like-icon {
