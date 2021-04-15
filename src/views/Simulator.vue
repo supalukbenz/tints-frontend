@@ -118,6 +118,8 @@ export default {
   beforeCreate() {
     this.$store.dispatch('updateMakeupState', null);
     this.$store.dispatch('updateMakeupSimulator', null);
+    this.$store.dispatch('updateImageUpload', null);
+    this.$store.dispatch('updateFileUpload', null);
   },
   computed: {
     ...mapGetters([

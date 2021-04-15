@@ -31,9 +31,7 @@
             class="fas fa-circle ml-1"
           ></i>
         </div>
-        <div v-if="item.price > 0" class="price">
-          ฿{{ item ? converterUSDToTHB(item.price) : converterUSDToTHB('17.5') }}
-        </div>
+        <div v-if="item.price > 0" class="price">฿{{ converterUSDToTHB(item.price) }}</div>
       </div>
     </div>
     <div class="item-feature" v-show="!simulatorState">
@@ -66,13 +64,29 @@ export default {
     simulatedId: String,
     rgbValue: String,
     simulatorState: Boolean,
+    skinState: Boolean,
+    blushState: Boolean,
+    lipState: Boolean,
   },
   computed: {
     ...mapGetters({ user: 'getUserInfo' }),
     indexLiked() {
-      const index = this.user.likedLip.findIndex(
-        l => l._id === this.item._id && l.rgb_value === this.item.rgb_value
-      );
+      let index = null;
+      if (this.lipState) {
+        index = this.user.likedLip.findIndex(
+          l => l._id === this.item._id && l.rgb_value === this.item.rgb_value
+        );
+      }
+      if (this.blushState) {
+        index = this.user.likedBlush.findIndex(
+          l => l._id === this.item._id && l.rgb_value === this.item.rgb_value
+        );
+      }
+      if (this.skinState) {
+        index = this.user.likedFoundation.findIndex(
+          l => l._id === this.item._id && l.rgb_value === this.item.rgb_value
+        );
+      }
       return index;
     },
   },
@@ -84,21 +98,43 @@ export default {
       e.target.src = '@/assets/images/lipstick_plane.png';
     },
     pushLikedItem(index, item) {
-      let updateLikedLip = this.user;
+      let updateUser = this.user;
       if (this.liked) {
         if (index === -1) {
-          updateLikedLip.likedLip.push(item);
+          // updateUser.likedLip.push(item);
+          if (this.lipState) {
+            updateUser.likedLip.push(item);
+          }
+          if (this.blushState) {
+            updateUser.likedBlush.push(item);
+          }
+          if (this.skinState) {
+            console.log('skin');
+            updateUser.likedFoundation.push(item);
+            console.log(updateUser.likedFoundation);
+          }
         }
       } else {
         if (index !== -1) {
-          updateLikedLip.likedLip.splice(index, 1);
+          if (this.lipState) {
+            updateUser.likedLip.splice(index, 1);
+          }
+          if (this.blushState) {
+            updateUser.likedBlush.splice(index, 1);
+          }
+          if (this.skinState) {
+            updateUser.likedFoundation.splice(index, 1);
+          }
         }
       }
-      this.$store.dispatch('updateUserProfile', updateLikedLip);
+      this.$store.dispatch('updateUserProfile', updateUser);
     },
     handleItemLiked() {
+      console.log('like');
       this.liked = !this.liked;
       const index = this.indexLiked;
+      console.log('liked', this.liked);
+      console.log('indexLiked', this.indexLiked);
       this.pushLikedItem(index, this.item);
     },
     splitImageURL(url) {

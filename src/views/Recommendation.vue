@@ -12,7 +12,7 @@ import AnalyseStepCard from '@/components/recommendation/AnalyseStepCard.vue';
 export default {
   components: {
     Banner,
-    AnalyseStepCard,
+    AnalyseStepCard,    
   },
 };
 </script>

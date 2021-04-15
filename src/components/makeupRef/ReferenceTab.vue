@@ -43,17 +43,17 @@
     <div class="tab-content" v-if="getMakeupByImageRef">
       <div class="tab-pane lips-pane" :class="[skinActive ? 'active' : 'd-none']">
         <div v-for="(item, index) in getMakeupByImageRef.Foundation" :key="index">
-          <ItemCard :item="item"></ItemCard>
+          <ItemCard :skinState="true" :item="item"></ItemCard>
         </div>
       </div>
       <div class="tab-pane" :class="[cheekActive ? 'active' : 'd-none']">
         <div v-for="(item, index) in getMakeupByImageRef.Blush" :key="index">
-          <ItemCard :item="item"></ItemCard>
+          <ItemCard :blushState="true" :item="item"></ItemCard>
         </div>
       </div>
       <div class="tab-pane" :class="[lipsActive ? 'active' : 'd-none']">
         <div v-for="(item, index) in getMakeupByImageRef.Lipstick" :key="index">
-          <ItemCard :item="item"></ItemCard>
+          <ItemCard :lipState="true" :item="item"></ItemCard>
         </div>
       </div>
     </div>

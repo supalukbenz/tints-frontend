@@ -6,6 +6,16 @@ import {
 
 Vue.use(Vuex);
 
+function suffle(list) {
+  if (list) {
+    let shuffled = list
+      .map((a) => ({sort: Math.random(), value: a}))
+      .sort((a, b) => a.sort - b.sort)
+    .map((a) => a.value)
+  return shuffled
+  }
+}
+
 export default{
   state: {            
     makeupRecommended: {},
@@ -15,7 +25,13 @@ export default{
       return state.makeupRecommended;
     },
     getLipRecommended: state => {
-      return state.makeupRecommended.Lipstick;
+      return suffle(state.makeupRecommended.Lipstick)
+    },
+    getBlushRecommended: state => {
+      return suffle(state.makeupRecommended.Blush)
+    },
+    getFoundationRecommended: state => {
+      return suffle(state.makeupRecommended.Foundation)
     },
   },
   mutations: {

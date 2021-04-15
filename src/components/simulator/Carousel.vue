@@ -96,6 +96,18 @@ export default {
         );
         return index;
       }
+      if (this.blushState) {
+        const index = this.getUserInfo.likedBlush.findIndex(
+          l => l._id === item._id && l.rgb_value === item.rgb_value
+        );
+        return index;
+      }
+      if (this.skinState) {
+        const index = this.getUserInfo.likedFoundation.findIndex(
+          l => l._id === item._id && l.rgb_value === item.rgb_value
+        );
+        return index;
+      }
     },
     removeItem(user, index) {
       let userLiked = user;
