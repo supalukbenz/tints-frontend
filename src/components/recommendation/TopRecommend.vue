@@ -4,9 +4,62 @@
       <img v-if="skinState" class="title-icon" src="@/assets/recommendation/foundation-icon.png" />
       <img v-if="blushState" class="title-icon" src="@/assets/recommendation/blush-icon.png" />
       <img v-if="lipState" class="title-icon" src="@/assets/recommendation/lip-icon.png" />
-      <div class="title-makeup"><slot></slot></div>
+      <div class="title-makeup">
+        <slot></slot>
+        <div class="all-makeup-btn">
+          <a
+            @click="handleModalState"
+            class="all-makeup-modal"
+            data-toggle="modal"
+            :data-target="'#modal' + state"
+            >See all.</a
+          >
+        </div>
+      </div>
+
+      <div
+        v-if="modalState"
+        class="modal fade bd-example-modal-xl"
+        tabindex="-1"
+        role="dialog"
+        :id="'modal' + state"
+        aria-labelledby="myExtraLargeModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"><slot></slot></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="item-grid">
+                <div v-for="(makeup, index) in makeupList" :key="index">
+                  <ItemCard
+                    :lipState="lipState"
+                    :blushState="blushState"
+                    :skinState="skinState"
+                    :analysisState="true"
+                    :item="createItemForm(makeup)"
+                  ></ItemCard>
+                </div>
+              </div>
+              BOdy
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="item-container">
+      <div v-if="startIndex > 0" class="next-item-btn" @click="handleBackItem">
+        <i class="fas fa-chevron-left next-icon"></i>
+      </div>
       <div v-if="makeupList" id="itemContainer" class="top-item slide-left">
         <div v-if="checkIndex(startIndex)" class="top-first">
           <div class="img-part">
@@ -55,14 +108,18 @@
 
 <script>
 import SubItemCard from '@/components/recommendation/SubItemCard.vue';
+import ItemCard from '@/components/makeupRef/ItemCard.vue';
 
 export default {
   components: {
     SubItemCard,
+    ItemCard,
   },
   data() {
     return {
       startIndex: 0,
+      modalState: false,
+      itemCardModal: [],
     };
   },
   props: {
@@ -71,6 +128,7 @@ export default {
     lipState: Boolean,
     colorBg: String,
     makeupList: Array,
+    state: String,
   },
   methods: {
     splitImageURL(url) {
@@ -85,19 +143,55 @@ export default {
       const arrayLength = this.makeupList.length - 1;
       return index <= arrayLength;
     },
+    handleBackItem() {
+      if (this.startIndex <= 0 || this.startIndex - 1 <= 0 || this.startIndex - 2 <= 0) {
+        this.startIndex = 0;
+      } else {
+        this.startIndex = this.startIndex - 3;
+      }
+    },
     handleNextItem() {
       // $('#itemContainer').removeClass('slide-left');
       const arrayLength = this.makeupList.length - 1;
-
-      if (this.startIndex >= arrayLength) {
-        this.startIndex = 0;
-      } else if (this.startIndex + 1 >= arrayLength) {
-        this.startIndex = 0;
-      } else if (this.startIndex + 2 >= arrayLength) {
+      if (
+        this.startIndex >= arrayLength ||
+        this.startIndex + 1 >= arrayLength ||
+        this.startIndex + 2 >= arrayLength
+      ) {
         this.startIndex = 0;
       } else {
         this.startIndex = this.startIndex + 3;
       }
+    },
+    handleModalState() {
+      console.log(this.makeupList[0]);
+      this.modalState = true;
+    },
+    hexToRGB(hexValue) {
+      if (hexValue) {
+        let hex = hexValue.replace('#', '');
+        let r = parseInt(hex.substring(0, 2), 16);
+        let g = parseInt(hex.substring(2, 4), 16);
+        let b = parseInt(hex.substring(4, 6), 16);
+
+        return `(${r}, ${g}, ${b})`;
+      }
+    },
+    createItemForm(item) {
+      const itemCardForm = {
+        _id: item._id,
+        brand: item.brand,
+        serie: item.name,
+        price: item.price,
+        image_link: item.image_link,
+        product_link: item.product_link,
+        category: item.category,
+        color_name: item.product_colors[0].colour_name,
+        rgb_value: this.hexToRGB(item.product_colors[0].hex_value),
+        deltaE: item.deltaE,
+        api_image_link: item.api_featured_image,
+      };
+      return itemCardForm;
     },
   },
 };
@@ -107,6 +201,19 @@ export default {
 .title-icon {
   height: 9rem;
   max-width: 100%;
+}
+
+.item-grid {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  grid-gap: 2.5rem 0.5rem;
+}
+
+.item-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .makeup-detail {
@@ -127,6 +234,16 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.all-makeup-btn {
+  font-size: 0.9rem;
+  text-align: right;
+  text-decoration: underline;
+}
+
+.all-makeup-modal {
+  cursor: pointer;
 }
 
 .title-makeup {
@@ -164,6 +281,7 @@ export default {
 }
 .top-first-img {
   height: 13rem;
+  max-width: 100%;
 }
 
 .top-detail {

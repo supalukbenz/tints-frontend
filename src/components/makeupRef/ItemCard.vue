@@ -12,7 +12,7 @@
         <img
           class="img-item"
           :src="item.api_image_link ? splitImageURL(item.api_image_link) : item.image_link"
-          @error="$event.target.src = 'https://img.icons8.com/ios/452/lipstick.png'"
+          @error="$event.target.src = item.image_link"
         />
       </div>
       <div class="item-detail">
@@ -27,7 +27,7 @@
         <div class="color-name">
           Color: {{ item.color_name }}
           <i
-            :style="[item ? { color: 'rgb' + item.rgb_value + ' !important' } : { color: '#222' }]"
+            :style="{ color: 'rgb' + item.rgb_value + ' !important' }"
             class="fas fa-circle ml-1"
           ></i>
         </div>
@@ -67,6 +67,7 @@ export default {
     skinState: Boolean,
     blushState: Boolean,
     lipState: Boolean,
+    analysisState: Boolean,
   },
   computed: {
     ...mapGetters({ user: 'getUserInfo' }),
@@ -138,7 +139,7 @@ export default {
       this.pushLikedItem(index, this.item);
     },
     splitImageURL(url) {
-      if (url) {
+      if (url.includes('//s3.amazonaws.com')) {
         return 'http://' + url.substring(2, url.length - 1);
       }
     },

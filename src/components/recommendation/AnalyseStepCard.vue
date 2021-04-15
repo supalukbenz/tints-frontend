@@ -3,7 +3,7 @@
     <div class="user-img-card fadeIn" v-show="!makeupRecommended">
       <LoadingAnalysis class="loading-content" v-if="loadingState"></LoadingAnalysis>
       <button v-if="!loadingState" @click="handleAnalysis" type="button" class="analyse-btn">
-        Click to analyse Image
+        Click to Analyse Image
       </button>
       <img class="user-img filterImg" :src="getUserInfo.userImgURL" />
     </div>
@@ -21,13 +21,18 @@
         <TopRecommend
           :makeupList="getFoundationRecommended"
           :skinState="true"
+          state="skin"
           :colorBg="foundationBg"
           >FOUNDATION</TopRecommend
         >
-        <TopRecommend :makeupList="getBlushRecommended" :blushState="true" :colorBg="blushBg"
+        <TopRecommend
+          :makeupList="getBlushRecommended"
+          state="blush"
+          :blushState="true"
+          :colorBg="blushBg"
           >BLUSH</TopRecommend
         >
-        <TopRecommend :makeupList="getLipRecommended" :lipState="true" :colorBg="lipBg"
+        <TopRecommend :makeupList="getLipRecommended" state="lip" :lipState="true" :colorBg="lipBg"
           >LIPSTICK</TopRecommend
         >
       </div>
