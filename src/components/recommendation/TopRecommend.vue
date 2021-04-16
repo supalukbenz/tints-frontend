@@ -46,7 +46,6 @@
                   ></ItemCard>
                 </div>
               </div>
-              BOdy
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -57,11 +56,11 @@
       </div>
     </div>
     <div class="item-container">
-      <div v-if="startIndex > 0" class="next-item-btn" @click="handleBackItem">
+      <div v-if="startIndex > 0" class="next-item-btn" @click="handleBackItem(state)">
         <i class="fas fa-chevron-left next-icon"></i>
       </div>
       <div v-if="makeupList" id="itemContainer" class="top-item slide-left">
-        <div v-if="checkIndex(startIndex)" class="top-first">
+        <div v-if="checkIndex(startIndex)" class="top-first" :class="'top' + state">
           <div class="img-part">
             <img
               class="top-first-img fadeIn"
@@ -85,7 +84,8 @@
             </div>
           </div>
         </div>
-        <div class="sub-top">
+
+        <div class="sub-top" :class="'sub' + state">
           <SubItemCard
             v-if="checkIndex(startIndex + 1)"
             class="sub-first slide-left"
@@ -97,9 +97,8 @@
             :item="makeupList[startIndex + 2]"
           ></SubItemCard>
         </div>
-        <div class="sub-top"></div>
       </div>
-      <div class="next-item-btn" @click="handleNextItem">
+      <div class="next-item-btn" @click="handleNextItem(state)">
         <i class="fas fa-chevron-right next-icon"></i>
       </div>
     </div>
@@ -109,6 +108,7 @@
 <script>
 import SubItemCard from '@/components/recommendation/SubItemCard.vue';
 import ItemCard from '@/components/makeupRef/ItemCard.vue';
+import $ from 'jquery';
 
 export default {
   components: {
@@ -143,15 +143,22 @@ export default {
       const arrayLength = this.makeupList.length - 1;
       return index <= arrayLength;
     },
-    handleBackItem() {
+    handleBackItem(state) {
+      $(`.sub${state}`).addClass('transformLeft');
+      $(`.top${state}`).addClass('transformLeft');
       if (this.startIndex <= 0 || this.startIndex - 1 <= 0 || this.startIndex - 2 <= 0) {
         this.startIndex = 0;
       } else {
         this.startIndex = this.startIndex - 3;
       }
+      setTimeout(function() {
+        $(`.sub${state}`).removeClass('transformLeft');
+        $(`.top${state}`).removeClass('transformLeft');
+      }, 500);
     },
-    handleNextItem() {
-      // $('#itemContainer').removeClass('slide-left');
+    async handleNextItem(state) {
+      $(`.sub${state}`).addClass('transformLeft');
+      $(`.top${state}`).addClass('transformLeft');
       const arrayLength = this.makeupList.length - 1;
       if (
         this.startIndex >= arrayLength ||
@@ -162,9 +169,12 @@ export default {
       } else {
         this.startIndex = this.startIndex + 3;
       }
+      setTimeout(function() {
+        $(`.sub${state}`).removeClass('transformLeft');
+        $(`.top${state}`).removeClass('transformLeft');
+      }, 500);
     },
     handleModalState() {
-      console.log(this.makeupList[0]);
       this.modalState = true;
     },
     hexToRGB(hexValue) {
@@ -244,6 +254,7 @@ export default {
 
 .all-makeup-modal {
   cursor: pointer;
+  color: #353d4e;
 }
 
 .title-makeup {
@@ -268,10 +279,54 @@ export default {
   padding: 2rem;
 }
 
-.transformX {
-  margin-right: -100px;
-  transform: translateX(-100px);
-  transition: transform 1s ease-in-out;
+.transformLeft {
+  // transition: transform 1s ease-in-out;
+  // animation: 0.5s slide-left;
+  animation: slide-in 0.5s forwards;
+  -webkit-animation: slide-in 0.5s forwards;
+}
+
+.transformRight {
+  // transition: transform 1s ease-in-out;
+  // animation: 0.5s slide-left;
+  animation: slide-out 0.5s forwards;
+  -webkit-animation: slide-out 0.5s forwards;
+}
+
+@keyframes slide-in {
+  0% {
+    -webkit-transform: translateX(100%);
+  }
+  100% {
+    -webkit-transform: translateX(0%);
+  }
+}
+
+@-webkit-keyframes slide-in {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@-webkit-keyframes slide-out {
+  0% {
+    -webkit-transform: translateX(0%);
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+  }
 }
 
 .sub-top {
@@ -336,6 +391,7 @@ export default {
 .slide-left {
   animation: 1s slide-left;
 }
+
 @keyframes slide-left {
   from {
     margin-left: 100%;
