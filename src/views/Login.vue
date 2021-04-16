@@ -4,7 +4,9 @@
       <div class="wrapper">
         <div class="login-banner flex-center">
           <div class="welcome-txt">Welcome!</div>
-          <button type="button" class="register-btn form-btn">Sign up</button>
+          <router-link to="/register" type="button" class="register-btn form-btn"
+            >Sign up</router-link
+          >
         </div>
         <div class="login-form flex-center">
           <div>
@@ -19,7 +21,7 @@
             </div>
           </div>
           <div>
-            <button type="button" class="login-btn form-btn">Login</button>
+            <button @click="handleLogin" type="button" class="login-btn form-btn">Login</button>
           </div>
         </div>
       </div>
@@ -28,6 +30,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -35,11 +39,27 @@ export default {
       password: '',
     };
   },
+  computed: {
+    ...mapGetters({ token: 'getUserToken' }),
+  },
+  methods: {
+    async handleLogin() {
+      if (this.email !== '' && this.password !== '') {
+        const form = {
+          email: this.email,
+          password: this.password,
+        };
+        await this.$store.dispatch('loadUserToken', form);
+        console.log('token', this.token);
+      }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-input {
+input,
+button {
   outline: none;
 }
 

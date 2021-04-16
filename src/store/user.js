@@ -1,10 +1,17 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import {
+  userLogin
+} from '@/api/authentication';
+
 
 Vue.use(Vuex);
 
 export default {
-  state: {    
+  state: {
+    userToken: '',
+    registerState: 1,
+    userRegisterInfo: {},
     userProfile: {
       userID: 1,
       username: 'nana',
@@ -317,15 +324,42 @@ export default {
     addLikedLip: state => item =>{
       return state.userProfile.likedLip.push(item);
     },
+    getUserToken: state => {
+      return state.userToken;
+    },
+    getRegisterState: state => {
+      return state.registerState;
+    },
+    getUserRegisterInfo: state => {
+      return state.userRegisterInfo;
+    }
   },
   mutations: {
     setUserProfile(state, payload) {
       state.userProfile = payload;
     },
+    setUserToken(state, payload) {
+      state.userToken = payload;
+    },
+    setRegisterState(state, payload) {
+      state.registerState = payload;
+    },
+    setUserRegisterInfo(state, payload) {
+      state.userRegisterInfo = payload;
+    }
   },
   actions: {
     updateUserProfile({ commit }, payload) {
       commit('setUserProfile', payload);
+    },
+    updateRegisterState({ commit }, payload) {
+      commit('setRegisterState', payload);
+    },
+    updateUserRegisterInfo({ commit }, payload) {
+      commit('setUserRegisterInfo', payload);
+    },
+    async loadUserToken({ commit }, payload) {      
+      commit('setUserToken', await userLogin(payload));
     },
   },
   modules: {
