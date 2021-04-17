@@ -7,7 +7,11 @@
         <div v-if="index > 0" class="cancel-form">
           <a @click="removeFoundationForm(index)" class="cancel-txt">- remove</a>
         </div>
-        <FoundationForm :neverOption="neverOption" class="fadeIn"></FoundationForm>
+        <FoundationForm
+          :clickedNextState="clickedNextState"
+          :neverOption="neverOption"
+          class="fadeIn"
+        ></FoundationForm>
         <hr />
       </div>
       <div class="add-foundation-part">
@@ -25,9 +29,90 @@
       Never used a foundation/There is no foundation used in the options.
     </div>
     <div class="btn-feature">
-      <button class="next-btn" @click="handleNextState" type="button">
+      <button
+        v-show="!neverOption"
+        data-toggle="modal"
+        data-target="#submitModal"
+        class="next-btn"
+        @click="handleNextState"
+        type="button"
+      >
         Next <i class="fas fa-chevron-right"></i>
       </button>
+      <button
+        v-show="neverOption"
+        class="next-btn"
+        @click="handleNextStateNoneOption"
+        type="button"
+      >
+        Next <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    <div
+      class="modal fade"
+      id="submitModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Confirm foundation information
+            </h5>
+            <button
+              @click="handleEditFoundationList"
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div v-show="foundationList.length === 0">--None--</div>
+            <div v-show="foundationList.length !== 0">
+              <div v-for="(foundation, index) in foundationList" :key="index">
+                <div class="confirm-container">
+                  <div class="confirm-item">
+                    <div class="confirm-detail">Brand:</div>
+                    {{ foundation.brandSelected }}
+                  </div>
+                  <div class="confirm-item">
+                    <div class="confirm-detail">Product:</div>
+                    {{ foundation.productSelected }}
+                  </div>
+                  <div class="confirm-item">
+                    <div class="confirm-detail">Color:</div>
+                    {{ foundation.colorSelected }}
+                  </div>
+                </div>
+                <hr />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              @click="handleEditFoundationList"
+              type="button"
+              class="btn btn-edit"
+              data-dismiss="modal"
+            >
+              Edit
+            </button>
+            <button
+              @click="handleConfirmFoundation"
+              type="button"
+              class="btn btn-save-change"
+              data-dismiss="modal"
+            >
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -45,10 +130,14 @@ export default {
     return {
       foundationFormNumber: [1],
       neverOption: false,
+      clickedNextState: false,
     };
   },
   computed: {
-    ...mapGetters({ userRegisInfo: 'getUserRegisterInfo' }),
+    ...mapGetters({
+      userRegisInfo: 'getUserRegisterInfo',
+      foundationList: 'getFoundationFormList',
+    }),
   },
   methods: {
     handleAddFoundationForm() {
@@ -57,7 +146,24 @@ export default {
     removeFoundationForm(index) {
       this.foundationFormNumber.splice(index, 1);
     },
-    handleNextState() {},
+    handleNextState() {
+      this.clickedNextState = true;
+    },
+    async handleEditFoundationList() {
+      let arrEmpty = this.foundationList;
+      arrEmpty.splice(0, arrEmpty.length);
+      await this.$store.dispatch('updateFoundationFormList', arrEmpty);
+      this.clickedNextState = false;
+    },
+    handleConfirmFoundation() {
+      let updateUser = this.userRegisInfo;
+      updateUser.foundationList = this.foundationList;
+      this.$store.dispatch('updateUserRegisterInfo', updateUser);
+      this.$store.dispatch('updateRegisterState', 3);
+    },
+    handleNextStateNoneOption() {
+      this.handleConfirmFoundation();
+    },
   },
   watch: {
     neverOption() {
@@ -84,6 +190,37 @@ a {
   font-weight: 800;
   margin-top: 1.5rem;
   width: 32rem;
+}
+
+.btn-save-change {
+  font-size: 0.9rem;
+  background: #9dc99c;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.btn-edit {
+  background: #6c757d;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.confirm-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.confirm-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.confirm-detail {
+  font-weight: 700;
+  color: #edb194;
+  padding-right: 0.5rem;
 }
 
 .question-part {
@@ -199,6 +336,9 @@ a {
   .alert-txt {
     width: 100% !important;
   }
+
+  .btn-save-change,
+  .btn-edit,
   .add-foundation-btn {
     font-size: 0.8rem;
   }
@@ -218,6 +358,10 @@ a {
     width: 100% !important;
     font-size: 0.7rem;
   }
+  .modal-title,
+  .modal-body {
+    font-size: 0.9rem !important;
+  }
 }
 
 @media screen and (max-width: 450px) {
@@ -236,6 +380,9 @@ a {
   .alert-txt {
     width: 100% !important;
     font-size: 0.6rem;
+  }
+  .modal-body {
+    font-size: 0.7rem !important;
   }
 }
 </style>

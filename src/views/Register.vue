@@ -18,6 +18,7 @@
         <div class="regis-detail">
           <RegisterForm v-show="stepRegis === 1"></RegisterForm>
           <Questionare v-show="stepRegis === 2"></Questionare>
+          <UploadImageRegistry v-show="stepRegis === 3"></UploadImageRegistry>
         </div>
       </div>
     </div>
@@ -27,12 +28,14 @@
 <script>
 import RegisterForm from '@/components/register/RegisterForm.vue';
 import Questionare from '@/components/register/Questionare.vue';
+import UploadImageRegistry from '@/components/register/UploadImageRegistry.vue';
 import { mapGetters } from 'vuex';
 
 export default {
   components: {
     RegisterForm,
     Questionare,
+    UploadImageRegistry,
   },
   computed: {
     ...mapGetters({ stepRegis: 'getRegisterState', userRegisInfo: 'getUserRegisterInfo' }),
@@ -41,16 +44,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.register-bg {
-  background-image: url('../assets/images/banner/home_cosmetics.jpg');
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-attachment: fixed;
-  height: 100%;
-  margin-bottom: -7rem;
-}
+// .register-bg {
+//   background-image: url('../assets/images/banner/home_cosmetics.jpg');
+//   -webkit-background-size: cover;
+//   -moz-background-size: cover;
+//   -o-background-size: cover;
+//   background-size: cover;
+//   background-attachment: fixed;
+//   // height: 100%;
+//   height: 100vh;
+//   margin-bottom: -7rem;
+// }
 
 .register-container {
   padding: 5rem 1rem;

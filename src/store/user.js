@@ -12,6 +12,8 @@ export default {
     userToken: '',
     registerState: 2,
     userRegisterInfo: {},
+    foundationFormList: [],
+    checkFoundationForm: false,
     userProfile: {
       userID: 1,
       username: 'nana',
@@ -332,6 +334,12 @@ export default {
     },
     getUserRegisterInfo: state => {
       return state.userRegisterInfo;
+    },
+    getFoundationFormList: state => {
+      return state.foundationFormList;
+    },
+    getCheckFoundationForm: state => {
+      return state.checkFoundationForm;
     }
   },
   mutations: {
@@ -346,7 +354,13 @@ export default {
     },
     setUserRegisterInfo(state, payload) {
       state.userRegisterInfo = payload;
-    }
+    },
+    setFoundationFormList(state, payload) {
+      state.foundationFormList = payload;
+    },
+    setCheckFoundationForm(state, payload) {
+      state.checkFoundationForm = payload;
+    },
   },
   actions: {
     updateUserProfile({ commit }, payload) {
@@ -357,6 +371,12 @@ export default {
     },
     updateUserRegisterInfo({ commit }, payload) {
       commit('setUserRegisterInfo', payload);
+    },
+    updateFoundationFormList({ commit }, payload) {
+      commit('setFoundationFormList', payload);
+    },
+    updateCheckFoundationForm({ commit }, payload) {
+      commit('setCheckFoundationForm', payload);
     },
     async loadUserToken({ commit }, payload) {      
       commit('setUserToken', await userLogin(payload));

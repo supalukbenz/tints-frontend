@@ -9,6 +9,7 @@
               class="btn dropdown-form brand-form dropdown-toggle"
               :class="{
                 selectedItem: brandSelected !== '--Select brand--',
+                notSelectedItem: brandSelected === '--Select brand--' && clickedNextState,
               }"
               data-display="static"
               href="#"
@@ -35,7 +36,10 @@
               <a
                 class="btn dropdown-form product-form dropdown-toggle"
                 data-display="static"
-                :class="{ selectedItem: productSelected !== '--Select product--' }"
+                :class="{
+                  selectedItem: productSelected !== '--Select product--',
+                  notSelectedItem: productSelected === '--Select product--' && clickedNextState,
+                }"
                 href="#"
                 role="button"
                 id="dropdownMenuLink"
@@ -60,7 +64,10 @@
             <div class="dropdown">
               <a
                 class="btn dropdown-form color-form dropdown-toggle"
-                :class="{ selectedItem: colorSelected !== '--Select color--' }"
+                :class="{
+                  selectedItem: colorSelected !== '--Select color--',
+                  notSelectedItem: colorSelected === '--Select color--' && clickedNextState,
+                }"
                 data-display="static"
                 href="#"
                 role="button"
@@ -86,6 +93,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
@@ -118,6 +126,10 @@ export default {
   },
   props: {
     neverOption: Boolean,
+    clickedNextState: Boolean,
+  },
+  computed: {
+    ...mapGetters(['getFoundationFormList']),
   },
   methods: {
     handleBrandSelected(brand) {
@@ -128,6 +140,26 @@ export default {
     },
     handleColorSelected(color) {
       this.colorSelected = color;
+    },
+  },
+  watch: {
+    clickedNextState(val) {
+      if (val) {
+        if (
+          this.brandSelected !== '--Select brand--' &&
+          this.productSelected !== '--Select product--' &&
+          this.colorSelected !== '--Select color--'
+        ) {
+          let foundationList = this.getFoundationFormList;
+          const form = {
+            brandSelected: this.brandSelected,
+            productSelected: this.productSelected,
+            colorSelected: this.colorSelected,
+          };
+          foundationList.push(form);
+          this.$store.dispatch('updateFoundationFormList', foundationList);
+        }
+      }
     },
   },
 };
@@ -141,6 +173,11 @@ export default {
 .selectedItem {
   border-color: #9dc99c !important;
 }
+
+.notSelectedItem {
+  border-color: #a83f39 !important;
+}
+
 .step-container {
   display: flex;
   justify-content: flex-start;
