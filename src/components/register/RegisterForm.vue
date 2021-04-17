@@ -94,6 +94,10 @@ button {
   outline: none;
 }
 
+.register-form-container {
+  padding: 2rem 4rem;
+}
+
 .form-container {
   display: flex;
   flex-direction: column;
@@ -120,8 +124,9 @@ button {
   color: #ffffff;
   font-weight: 800;
   border: none;
-  padding: 0.3rem 1rem;
+  padding: 0.3rem 2rem;
   border-radius: 10rem;
+  font-size: 0.8rem;
 }
 
 .form-input {

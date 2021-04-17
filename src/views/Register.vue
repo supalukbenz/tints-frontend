@@ -53,7 +53,7 @@ export default {
 }
 
 .register-container {
-  padding: 5rem 0;
+  padding: 5rem 1rem;
   padding-bottom: 8rem;
 }
 .flex-center {
@@ -75,12 +75,11 @@ export default {
 .step-regis-card {
   border-radius: 1rem 0 0 1rem;
   background: #edb194;
-  padding: 3rem 1rem;
-  padding-top: 5rem;
+  padding: 4rem 1rem;
+  // padding-top: 5rem;
 }
 
 .regis-detail {
-  padding: 2rem 4rem;
   border-radius: 0 1rem 1rem 0;
 }
 
@@ -94,10 +93,13 @@ export default {
 .step-txt {
   text-align: left;
   font-size: 0.8rem;
+  align-items: center;
+  display: flex;
 }
 
 .circle-icon {
   font-size: 0.5rem;
+  padding-right: 0.2rem;
 }
 
 .stepActive {
@@ -117,7 +119,13 @@ export default {
 
 @media screen and (max-width: 450px) {
   .regis-detail {
-    padding: 1rem;
+    padding: 1rem 0.5rem;
+  }
+  .stepActive {
+    font-size: 0.8rem !important;
+  }
+  .step-regis-card {
+    padding: 4rem 0.5rem;
   }
 }
 </style>

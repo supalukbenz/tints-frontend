@@ -10,7 +10,7 @@ Vue.use(Vuex);
 export default {
   state: {
     userToken: '',
-    registerState: 1,
+    registerState: 2,
     userRegisterInfo: {},
     userProfile: {
       userID: 1,
