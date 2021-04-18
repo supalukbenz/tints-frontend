@@ -10,7 +10,7 @@ Vue.use(Vuex);
 export default {
   state: {
     userToken: '',
-    registerState: 2,
+    registerState: 1,
     userRegisterInfo: {},
     foundationFormList: [],
     checkFoundationForm: false,

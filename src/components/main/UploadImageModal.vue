@@ -1,7 +1,7 @@
 <template>
   <div>
     <button
-      v-if="predictionState"
+      v-if="predictionState || registerState"
       class="m-0 img-label border-0"
       data-toggle="modal"
       data-target="#myModal"
@@ -129,6 +129,7 @@ export default {
   props: {
     titleButton: String,
     predictionState: Boolean,
+    registerState: Boolean,
   },
   data() {
     return {
