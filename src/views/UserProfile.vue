@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="user-profile-txt">User profile</div>
+    <div class="user-profile-container">
+      <div class="user-profile">User profile <i class="fas fa-user-circle"></i></div>
+    </div>
     <div class="detail-container">
       <div class="profile-content">
         <img class="user-img" :src="getUserInfo.userImgURL" alt="UserImageProfile" />
@@ -40,7 +42,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="emailModalLabel">Change password</h5>
+            <h5 class="modal-title" id="emailModalLabel">Change email</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -62,8 +64,8 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" @click="handleChangeEmail" class="btn btn-primary">
+            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            <button type="button" @click="handleChangeEmail" class="btn btn-save-change">
               Save changes
             </button>
           </div>
@@ -142,8 +144,8 @@
             <span v-show="passwordIncorrect" class="alert-txt">* Your password is incorrect</span>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" @click="handleChangePassword" class="btn btn-primary">
+            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            <button type="button" @click="handleChangePassword" class="btn btn-save-change">
               Save changes
             </button>
           </div>
@@ -255,6 +257,13 @@ button {
   font-size: 0.8rem;
 }
 
+.btn-save-change {
+  font-size: 0.9rem;
+  background: #ac6f63;
+  color: #ffffff;
+  font-weight: 800;
+}
+
 .borderRed {
   border-color: #a83f39 !important;
 }
@@ -269,10 +278,18 @@ button {
   margin-left: 0.2rem;
 }
 
-.user-profile-txt {
-  font-size: 2rem;
-  text-transform: uppercase;
+.user-profile-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.user-profile {
+  font-size: 1.4rem;
   font-weight: 800;
+  padding: 0.5rem 2rem;
+  padding-right: 1rem;
+  background: #edb194;
+  color: #ffffff;
 }
 
 .change-img-btn {
@@ -293,6 +310,7 @@ button {
 .email-form {
   display: flex;
   justify-content: center;
+  padding: 2rem 0;
 }
 
 .user-img {
@@ -382,6 +400,7 @@ button {
 
 .edit-btn {
   cursor: pointer;
+  color: #ac6f63;
 }
 .edit-title {
   font-size: 0.9rem;
@@ -392,10 +411,15 @@ button {
   // flex-direction: row;
   // align-items: flex-start;
   display: grid;
-  grid-template-columns: 12rem 10rem;
   margin-bottom: 1.2rem;
   text-align: left;
   grid-template-columns: 12rem 14rem;
+  justify-content: center;
+  align-items: end;
+}
+
+.title-input {
+  font-size: 0.9rem;
 }
 
 .form-input {
@@ -412,11 +436,6 @@ button {
   align-items: flex-end;
 }
 
-.title-input {
-  // font-weight: 600;
-  // margin-right: 1rem;
-}
-
 .email-input {
   margin-right: 1rem;
 }
@@ -426,14 +445,11 @@ button {
     font-size: 0.8rem;
     grid-template-columns: 8rem 17rem;
   }
-}
-
-@media screen and (max-width: 662px) {
-  .user-img {
-    height: 17rem;
+  .modal-title {
+    font-size: 1.1rem;
   }
-  .user-profile-txt {
-    font-size: 1.5rem;
+  .btn-save-change {
+    font-size: 0.8rem;
   }
 }
 
@@ -446,7 +462,18 @@ button {
     margin: 3rem 1rem;
     grid-template-columns: 7rem 15rem;
   }
-  .user-profile-txt {
+
+  .form-container {
+    grid-template-columns: 11rem 13rem;
+  }
+
+  .title-input {
+    font-size: 0.8rem;
+  }
+  .form-input {
+    width: 13rem;
+  }
+  .user-profile-container {
     font-size: 1.2rem;
   }
 }
@@ -460,7 +487,15 @@ button {
     margin: 3rem 1rem;
     grid-template-columns: 6rem 13rem;
   }
-  .user-profile-txt {
+
+  .form-container {
+    grid-template-columns: 7rem 12rem;
+  }
+  .form-input {
+    width: 11rem;
+    font-size: 0.8rem;
+  }
+  .user-profile-container {
     font-size: 1.2rem;
   }
 }
