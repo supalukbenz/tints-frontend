@@ -9,7 +9,7 @@ Vue.use(Vuex);
 
 export default {
   state: {
-    userToken: '',
+    userToken: '',    
     registerState: 1,
     userRegisterInfo: {},
     foundationFormList: [],
@@ -17,6 +17,8 @@ export default {
     userProfile: {
       userID: 1,
       username: 'nana',
+      password: '1234',
+      email: 'nana1234567k@gmail.com ',
       userImgURL: 'https://images.squarespace-cdn.com/content/v1/5aa928d52714e59ff668dc6f/1597620102289-8SOI82N2AQ1GJ95AW9TQ/ke17ZwdGBToddI8pDm48kP9SUFcrIrZ2i8ygGjurrtB7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UXehz5hAMqtGS8nPCETVtPp90JtVrWJCQpTjiHONNB6TNtaSsYFyFGUm_eZioT9-3g/london-beauty-editorial-photographer-1.jpg?format=2500w',
       likedFoundation: [
         {

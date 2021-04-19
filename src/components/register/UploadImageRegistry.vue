@@ -18,6 +18,7 @@
 <script>
 import UploadImageModal from '@/components/main/UploadImageModal.vue';
 import { mapGetters } from 'vuex';
+import { userResgister } from '@/api/authentication';
 
 export default {
   components: {
@@ -37,14 +38,21 @@ export default {
       this.$store.dispatch('updateImageUpload', null);
       this.$store.dispatch('updateFileUpload', null);
     },
-    handleSubmitRegis() {
+    async handleSubmitRegis() {
       if (this.imageUpload) {
         console.log('up');
         let updateUser = this.getUserRegisterInfo;
-        updateUser.image = this.getFileUpload;
-        this.$store.dispatch('updateUserRegisterInfo', updateUser);
-        this.$store.dispatch('updateRegisterState', 3);
+        updateUser.userImage = this.getFileUpload;
+        await this.$store.dispatch('updateUserRegisterInfo', updateUser);
+        // this.$store.dispatch('updateRegisterState', 1);
         //registerpath
+        const form = {
+          email: this.getUserRegisterInfo.email,
+          password: this.getUserRegisterInfo.password,
+          userImage: this.getUserRegisterInfo.userImage,
+        };
+        await userResgister(form);
+        await this.$store.dispatch('loadUserToken', form);
         this.$router.push('/login');
       }
     },
@@ -106,9 +114,6 @@ export default {
 .submit-btn:hover {
   background: #edb194;
   color: #ffffff;
-}
-
-.new-img-part {
 }
 
 @media screen and (max-width: 750px) {

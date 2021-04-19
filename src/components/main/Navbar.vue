@@ -6,9 +6,23 @@
           tints.
         </span>
       </router-link>
-      <button class="user-btn" type="button">
-        <img class="user-img" :src="getUserInfo.userImgURL" alt="User" />
-      </button>
+      <div class="dropdown">
+        <button
+          class="user-btn"
+          type="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <img class="user-img" :src="getUserInfo.userImgURL" alt="User" />
+        </button>
+
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+          <router-link class="dropdown-item user-item" to="/user-profile">Edit profile</router-link>
+          <a class="dropdown-item user-item" href="#">Logout</a>
+          <a class="dropdown-item user-item" href="#">Something else here</a>
+        </div>
+      </div>
     </div>
     <!-- <img class="nav-bg" src="@/assets/images/nav_img.png" /> -->
   </div>
@@ -40,6 +54,11 @@ export default {
   font-size: 2rem;
 }
 
+.user-item:hover {
+  background: #edb194;
+  color: #ffffff;
+}
+
 .home-btn:hover {
   text-decoration: none;
 }
@@ -50,14 +69,14 @@ export default {
 }
 
 .user-img {
-  width: 3rem;
-  height: 3.2rem;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
 }
 
 .user-btn {
-  width: 3rem;
-  height: 3.2rem;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   padding: 0;
   border: none;

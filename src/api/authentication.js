@@ -9,6 +9,17 @@ async function userLogin(form) {
   return response.data;
 }
 
+async function userResgister(form) {
+  var bodyFormData = new FormData();
+  bodyFormData.append('email', form.email);
+  bodyFormData.append('password', form.password);
+  bodyFormData.append('user_image', form.userImage);
+  // const response = await axios.post('simulator/lip', bodyFormData, { responseType: "blob" });
+  const response = await axios.post('auth/signup', bodyFormData);
+  return response.data;
+}
+
 export {
   userLogin,
+  userResgister
 };
