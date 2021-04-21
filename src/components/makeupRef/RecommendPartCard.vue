@@ -9,25 +9,25 @@
       <div class="img-container">
         <img
           class="img-ref"
-          :src="makeupList ? splitImageURL(makeupList.api_image_link) : ''"
+          :src="item ? splitImageURL(item.api_image_link) : ''"
           @error="$event.target.src = 'https://img.icons8.com/ios/452/lipstick.png'"
         />
       </div>
       <div class="ref-part-detail">
         <div class="ref-title">
           <div class="brand-name">
-            {{ makeupList ? makeupList.brand : 'Dior' }}
+            {{ item ? item.brand : 'Dior' }}
           </div>
           <div class="serie-name">
-            {{ makeupList ? makeupList.serie : 'Dior Addict Lip Glow' }}
+            {{ item ? item.serie : 'Dior Addict Lip Glow' }}
           </div>
         </div>
         <div class="color-name">
-          color: {{ makeupList ? makeupList.color_name : '001' }}
+          color: {{ item ? item.color_name : '001' }}
           <i
             :style="[
-              makeupList
-                ? { color: 'rgb' + makeupList.rgb_value + ' !important' }
+              item
+                ? { color: 'rgb' + item.rgb_value + ' !important' }
                 : { color: '#222' },
             ]"
             class="fas fa-circle ml-1 circle-icon"
@@ -37,17 +37,17 @@
             class="fas fa-circle ml-1 circle-icon"
           ></i> -->
         </div>
-        <div class="price">฿{{ makeupList ? converterUSDToTHB(makeupList.price) : '990' }}</div>
+        <div class="price">฿{{ item ? converterUSDToTHB(item.price) : '990' }}</div>
       </div>
       <div class="ref-feature">
         <button
           type="button"
           class="like-btn"
-          :class="[liked ? 'border-red' : 'border-gray']"
-          @click="handleLiked"
+          :class="[indexLiked !== -1 ? 'border-red' : 'border-gray']"
+          @click="handleItemLiked"
         >
-          <span v-show="liked"><i class="like-icon heart-red fas fa-heart"></i></span>
-          <span v-show="!liked"><i class="like-icon heart-gray far fa-heart"></i></span>
+          <span v-show="indexLiked !== -1"><i class="like-icon heart-red fas fa-heart"></i></span>
+          <span v-show="indexLiked == -1"><i class="like-icon heart-gray far fa-heart"></i></span>
         </button>
       </div>
     </div>
@@ -66,10 +66,32 @@ export default {
   },
   props: {
     rgbColor: String,
-    makeupList: Object,
+    item: Object,
+    skinState: Boolean,
+    blushState: Boolean,
+    lipState: Boolean,
   },
   computed: {
     ...mapGetters({ user: 'getUserInfo' }),
+    indexLiked() {
+      let index = null;
+      if (this.lipState) {
+        index = this.user.likedLip.findIndex(
+          l => l._id === this.item._id && l.rgb_value === this.item.rgb_value
+        );
+      }
+      if (this.blushState) {
+        index = this.user.likedBlush.findIndex(
+          l => l._id === this.item._id && l.rgb_value === this.item.rgb_value
+        );
+      }
+      if (this.skinState) {
+        index = this.user.likedFoundation.findIndex(
+          l => l._id === this.item._id && l.rgb_value === this.item.rgb_value
+        );
+      }
+      return index;
+    },
   },
   methods: {
     converterUSDToTHB(usd) {
@@ -78,22 +100,45 @@ export default {
     checkNotNullArray(arr) {
       return arr.length > 0;
     },
-    pushLikedItem(index, list, item) {
+    pushLikedItem(index, item) {
+      let updateUser = this.user;
       if (this.liked) {
         if (index === -1) {
-          list.push(item);
+          // updateUser.likedLip.push(item);
+          if (this.lipState) {
+            updateUser.likedLip.push(item);
+          }
+          if (this.blushState) {
+            updateUser.likedBlush.push(item);
+          }
+          if (this.skinState) {
+            console.log('skin');
+            updateUser.likedFoundation.push(item);
+            console.log(updateUser.likedFoundation);
+          }
         }
       } else {
         if (index !== -1) {
-          list.splice(index, 1);
+          if (this.lipState) {
+            updateUser.likedLip.splice(index, 1);
+          }
+          if (this.blushState) {
+            updateUser.likedBlush.splice(index, 1);
+          }
+          if (this.skinState) {
+            updateUser.likedFoundation.splice(index, 1);
+          }
         }
       }
+      this.$store.dispatch('updateUserProfile', updateUser);
     },
-    handleLiked() {
+    handleItemLiked() {
+      console.log('like');
       this.liked = !this.liked;
-      const itemId = this.makeupList._id;
-      const index = this.user.likedLip.findIndex(id => id === itemId);
-      this.pushLikedItem(index, this.user.likedLip, itemId);
+      const index = this.indexLiked;
+      console.log('liked', this.liked);
+      console.log('indexLiked', this.indexLiked);
+      this.pushLikedItem(index, this.item);
     },
     splitImageURL(url) {
       return 'http://' + url.substring(2, url.length - 1);

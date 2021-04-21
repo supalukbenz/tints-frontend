@@ -18,9 +18,6 @@ export default{
     predictionInfo: {},
   },
   getters: {
-    getSortedLipstickList: state => {
-      return state.lipstickListByImgRef.sort((a, b) => a.deltaE - b.deltaE);
-    },
     getSortedLipstickByPrice: state => feature => {
       if (feature === 'lowToHeight') {
         return state.lipstickListByImgRef.sort((a, b) => a.price - b.price);

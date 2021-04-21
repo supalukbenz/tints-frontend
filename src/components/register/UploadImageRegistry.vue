@@ -52,7 +52,7 @@ export default {
           userImage: this.getUserRegisterInfo.userImage,
         };
         await userResgister(form);
-        await this.$store.dispatch('loadUserToken', form);
+        await this.$store.dispatch('loadUserInfo', form);
         this.$router.push('/login');
       }
     },

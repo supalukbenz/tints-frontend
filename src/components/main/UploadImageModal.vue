@@ -44,6 +44,9 @@
               :class="{ hideImage: !imageUpload || state !== 1 }"
               class="image-upload"
             />
+            <div v-show="cheekErrorState" class="alert-txt">
+              * Cannot find cheek, please select new image
+            </div>
             <div v-if="cheekImage && state === 2 && !loadingState">
               <div class="pick-color">
                 Pick cheek color:
@@ -137,6 +140,7 @@ export default {
       fileUpload: null,
       cheekImage: null,
       loadingState: false,
+      cheekErrorState: false,
       colorPicker: '',
       state: 0,
       predictionInfo: {},
@@ -181,6 +185,7 @@ export default {
       this.selectedColorState = true;
     },
     async uploadImage(e) {
+      this.cheekErrorState = false;
       const files = await e.target.files;
       if (this.checkImageType(files[0])) {
         return;
@@ -190,6 +195,7 @@ export default {
     async onDrop(e) {
       e.stopPropagation();
       e.preventDefault();
+      this.cheekErrorState = false;
       const files = await e.dataTransfer.files;
       if (this.checkImageType(files[0])) {
         return;
@@ -218,6 +224,7 @@ export default {
     },
     handleBackState() {
       this.handleChangeState(this.state - 1);
+      this.cheekErrorState = false;
     },
     async findCheekImage() {
       await this.$store.dispatch('updateCheekImage', '');
@@ -227,9 +234,14 @@ export default {
           fileUpload: this.fileUpload,
           userID: this.getUserInfo.userID,
         };
-        await this.$store.dispatch('loadCheekImage', form);
-        await this.readFileImg(this.getCheekImage.cheek_image);
-        this.state = 2;
+        try {
+          await this.$store.dispatch('loadCheekImage', form);
+          await this.readFileImg(this.getCheekImage.cheek_image);
+          this.state = 2;
+        } catch (err) {
+          console.log('err');
+          this.cheekErrorState = true;
+        }
         this.loadingState = false;
       }
     },
@@ -271,6 +283,12 @@ button {
   color: rgb(165, 165, 165);
   background: #ffffff;
   // margin-left: 2.5rem;
+}
+
+.alert-txt {
+  margin-top: 0.5rem;
+  color: #a83f39;
+  font-weight: 800;
 }
 
 .modal-back-btn:hover {

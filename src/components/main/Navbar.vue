@@ -19,7 +19,7 @@
 
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
           <router-link class="dropdown-item user-item" to="/user-profile">Edit profile</router-link>
-          <a class="dropdown-item user-item" href="#">Logout</a>
+          <a class="dropdown-item user-item" @click="handleLogout" href="#">Logout</a>
           <a class="dropdown-item user-item" href="#">Something else here</a>
         </div>
       </div>
@@ -34,6 +34,12 @@ import { mapGetters } from 'vuex';
 export default {
   computed: {
     ...mapGetters(['getUserInfo']),
+  },
+  methods: {
+    handleLogout() {
+      localStorage.clear();
+      this.$router.push('/');
+    },
   },
 };
 </script>

@@ -40,7 +40,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ token: 'getUserToken' }),
+    ...mapGetters({ token: 'getUserToken', user: 'getUserDetail' }),
   },
   beforeUpdate() {
     this.$store.dispatch('updateRegisterState', 1);
@@ -52,7 +52,9 @@ export default {
           email: this.email,
           password: this.password,
         };
-        await this.$store.dispatch('loadUserToken', form);
+        await this.$store.dispatch('loadUserInfo', form);
+        await this.$store.dispatch('updateUserToken', this.user.token);
+        this.$router.push('/');
         console.log('token', this.token);
       }
     },

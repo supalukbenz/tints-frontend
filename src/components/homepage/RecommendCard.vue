@@ -21,10 +21,11 @@ export default {};
 
 <style lang="scss" scoped>
 .recommend-container {
-  background-image: url('../../assets/images/card/recommend-bg.png');
-  background-position: center;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  // background-image: url('../../assets/images/card/recommend-bg.png');
+  // background-position: center;
+  // background-size: 100% 100%;
+  // background-repeat: no-repeat;
+  background: #efe5e3;
   height: calc(70vmin * 9 / 16);
   margin-top: 4rem;
 }

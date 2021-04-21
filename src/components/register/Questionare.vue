@@ -286,13 +286,6 @@ a {
   -webkit-animation: slide-in 0.5s forwards;
 }
 
-.transformDown {
-  // transition: transform 1s ease-in-out;
-  // animation: 0.5s slide-left;
-  animation: slide-out 0.5s forwards;
-  -webkit-animation: slide-out 0.5s forwards;
-}
-
 @keyframes slide-in {
   0% {
     -webkit-transform: translateY(100%);

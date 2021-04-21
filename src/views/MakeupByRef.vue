@@ -6,7 +6,10 @@
         <div class="upload-img-body">
           <div class="makeup-ref-body">
             <div class="btn-body">
-              <UploadImageModal :predictionState="true" titleButton="Upload Image"></UploadImageModal>
+              <UploadImageModal
+                :predictionState="true"
+                titleButton="Upload Image"
+              ></UploadImageModal>
             </div>
             <ExampleCard v-show="!imgResult"></ExampleCard>
           </div>
@@ -38,31 +41,25 @@
             </div>
             <div class="recommend-detail">
               <RecommendPartCard
-                :makeupList="getMakeupByImageRef.Foundation[0]"
+                :skinState="true"
+                :item="getMakeupByImageRef.Foundation[0]"
                 :rgbColor="rgbColor"
                 class="fadeIn-3"
               ></RecommendPartCard>
               <RecommendPartCard
-                :makeupList="getMakeupByImageRef.Blush[0]"
+                :item="getMakeupByImageRef.Blush[0]"
+                :blushState="true"
                 :rgbColor="rgbColor"
                 class="fadeIn-3"
               ></RecommendPartCard>
               <RecommendPartCard
-                :makeupList="getMakeupByImageRef.Lipstick[0]"
+                :item="getMakeupByImageRef.Lipstick[0]"
+                :lipState="true"
                 :rgbColor="rgbColor"
                 class="fadeIn-3"
               ></RecommendPartCard>
             </div>
           </div>
-          <!-- <div class="part-reference-mobile" v-if="changeRecommendCardState">
-            <div class="sketchy top-title">
-              suggested
-              <div class="top-detail">the similar makeup</div>
-            </div>
-            <ItemCard :recommendState="true" :item="getSortedLipstickList[0]"></ItemCard>
-            <ItemCard :recommendState="true" :item="getSortedLipstickList[0]"></ItemCard>
-            <ItemCard :recommendState="true" :item="getSortedLipstickList[0]"></ItemCard>
-          </div> -->
         </div>
         <ReferenceTab class="fadeIn-3"></ReferenceTab>
       </div>
@@ -129,7 +126,6 @@ export default {
         blush_hex_color: this.getPredictionInfo.blush_hex_color,
       };
       await this.$store.dispatch('updateMakeupByImageRef', form);
-      // this.rgbColor = this.getSortedLipstickList[0].rgb_value;
       this.fileUploadState = false;
       this.scrollToElement('#imageRef');
     },

@@ -49,6 +49,7 @@ export default {
 .makeup-ref-container {
   display: flex;
   justify-content: center;
+  background: #f2e4dc;
 }
 .makeup-ref-card {
   display: flex;

@@ -42,17 +42,17 @@
 
     <div class="tab-content" v-if="getMakeupByImageRef">
       <div class="tab-pane lips-pane" :class="[skinActive ? 'active' : 'd-none']">
-        <div v-for="(item, index) in getMakeupByImageRef.Foundation" :key="index">
+        <div v-for="(item, index) in skinList" :key="index">
           <ItemCard :skinState="true" :item="item"></ItemCard>
         </div>
       </div>
       <div class="tab-pane" :class="[cheekActive ? 'active' : 'd-none']">
-        <div v-for="(item, index) in getMakeupByImageRef.Blush" :key="index">
+        <div v-for="(item, index) in blushList" :key="index">
           <ItemCard :blushState="true" :item="item"></ItemCard>
         </div>
       </div>
       <div class="tab-pane" :class="[lipsActive ? 'active' : 'd-none']">
-        <div v-for="(item, index) in getMakeupByImageRef.Lipstick" :key="index">
+        <div v-for="(item, index) in lipsList" :key="index">
           <ItemCard :lipState="true" :item="item"></ItemCard>
         </div>
       </div>
@@ -75,10 +75,34 @@ export default {
       cheekActive: false,
       skinActive: true,
       lipstickList: [],
+      sortedBlush: [],
+      sortedLips: [],
+      sortedSkin: [],
     };
   },
   computed: {
-    ...mapGetters(['getSortedLipstickList', 'getMakeupByImageRef']),
+    ...mapGetters(['getMakeupByImageRef']),
+    skinList() {
+      if (this.sortedSkin.length !== 0) {
+        return this.sortedSkin;
+      } else {
+        return this.getMakeupByImageRef.Foundation;
+      }
+    },
+    blushList() {
+      if (this.sortedBlush.length !== 0) {
+        return this.sortedBlush;
+      } else {
+        return this.getMakeupByImageRef.Blush;
+      }
+    },
+    lipsList() {
+      if (this.sortedLips.length !== 0) {
+        return this.sortedLips;
+      } else {
+        return this.getMakeupByImageRef.Lipstick;
+      }
+    },
   },
   methods: {
     handleLipsActive() {
@@ -96,16 +120,17 @@ export default {
       this.cheekActive = false;
       this.skinActive = true;
     },
-    // setSortedLip() {
-    //   if (this.getSortedLipstickList) {
-    //     console.log('dd');
-    //     this.lipstickList = this.getSortedLipstickList;
-    //     console.log('lipstickList', this.lipstickList);
-    //   }
-    // },
     lowToHeightOption() {
-      const feature = 'lowToHeight';
-      this.lipList = this.getSortedLipstickByPrice(feature);
+      let makeupList = this.getMakeupByImageRef;
+      if (this.skinActive) {
+        this.sortedSkin = makeupList.Foundation.sort((a, b) => a.price - b.price);
+      }
+      if (this.cheekActive) {
+        this.sortedBlush = makeupList.Blush.sort((a, b) => a.price - b.price);
+      }
+      if (this.lipsActive) {
+        this.sortedLips = makeupList.Lipstick.sort((a, b) => a.price - b.price);
+      }
     },
     heightToLowOption() {
       const feature = 'heightToLow';

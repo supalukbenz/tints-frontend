@@ -9,10 +9,22 @@
 <script>
 import Navbar from '@/components/main/Navbar.vue';
 import Footer from '@/components/main/Footer.vue';
+import { mapGetters } from 'vuex';
+import axios from 'axios';
+
 export default {
   components: {
     Navbar,
     Footer,
+  },
+  computed: {
+    ...mapGetters(['getUserToken']),
+  },
+  mounted() {
+    if (this.getUserToken) {
+      console.log('val', localStorage.getItem('token'));
+      axios.defaults.headers.common['Authorization'] = `Bearer ${this.getUserToken}`;
+    }
   },
 };
 </script>
@@ -94,6 +106,7 @@ button {
 
 .ref-feature {
   margin: 1rem 0.5rem;
+  padding: 0 0.5rem;
   border-left: 2px solid #cfcfcf;
 }
 

@@ -9,9 +9,10 @@ Vue.use(Vuex);
 
 export default {
   state: {
-    userToken: '',    
+    token: localStorage.getItem('token') || '',
     registerState: 1,
     userRegisterInfo: {},
+    userInfo: {},
     foundationFormList: [],
     checkFoundationForm: false,
     userProfile: {
@@ -325,11 +326,11 @@ export default {
     getUserInfo: state => {
       return state.userProfile;
     },
-    addLikedLip: state => item =>{
-      return state.userProfile.likedLip.push(item);
-    },
+    getUserDetail: state => {
+      return state.userInfo;
+    },   
     getUserToken: state => {
-      return state.userToken;
+      return state.token;
     },
     getRegisterState: state => {
       return state.registerState;
@@ -348,8 +349,12 @@ export default {
     setUserProfile(state, payload) {
       state.userProfile = payload;
     },
+    setUserInfo(state, payload) {
+      state.userInfo = payload;
+    },
     setUserToken(state, payload) {
-      state.userToken = payload;
+      state.token = payload;
+      localStorage.setItem('token', payload);
     },
     setRegisterState(state, payload) {
       state.registerState = payload;
@@ -361,7 +366,7 @@ export default {
       state.foundationFormList = payload;
     },
     setCheckFoundationForm(state, payload) {
-      state.checkFoundationForm = payload;
+      state.checkFoundationForm = payload;      
     },
   },
   actions: {
@@ -380,8 +385,11 @@ export default {
     updateCheckFoundationForm({ commit }, payload) {
       commit('setCheckFoundationForm', payload);
     },
-    async loadUserToken({ commit }, payload) {      
-      commit('setUserToken', await userLogin(payload));
+    updateUserToken({ commit }, payload) {      
+      commit('setUserToken', payload);
+    },
+    async loadUserInfo({ commit }, payload) {
+      commit('setUserInfo', await userLogin(payload));
     },
   },
   modules: {
