@@ -21,7 +21,7 @@
               class="user-img fadeIn"
               id="userImage"
               :class="{ filterImg: loadingState }"
-              :src="getUserInfo.userImgURL"
+              :src="convertBase64Image(getUserInfo.base64_user_image)"
               alt="InputImg"
             />
           </div>
@@ -138,6 +138,11 @@ export default {
     splitImageURL(url) {
       if (url) {
         return 'http://' + url.substring(2, url.length - 1);
+      }
+    },
+    convertBase64Image(base64) {
+      if (base64) {
+        return `data:image/png;base64, ${base64}`;
       }
     },
     handleCancelSimulated() {

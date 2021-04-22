@@ -14,7 +14,11 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <img class="user-img" :src="getUserInfo.userImgURL" alt="User" />
+          <img
+            class="user-img"
+            :src="convertBase64Image(getUserInfo.base64_user_image)"
+            alt="User"
+          />
         </button>
 
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
@@ -38,7 +42,10 @@ export default {
   methods: {
     handleLogout() {
       localStorage.clear();
-      this.$router.push('/');
+      this.$router.push('/').catch(() => {});
+    },
+    convertBase64Image(base64) {      
+      return `data:image/png;base64, ${base64}`;
     },
   },
 };

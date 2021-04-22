@@ -49,6 +49,8 @@ import { VueperSlides, VueperSlide } from 'vueperslides';
 import ItemCard from '@/components/makeupRef/ItemCard.vue';
 import 'vueperslides/dist/vueperslides.css';
 import { mapGetters } from 'vuex';
+import { getUserInformation } from '@/api/authentication';
+import { userUnlikedLipsticks, userUnlikedBlush, userUnlikedFoundation } from '@/api/userFeatures';
 
 export default {
   components: {
@@ -116,25 +118,33 @@ export default {
       }
       return userLiked;
     },
-    handleItemUnliked(item) {
-      let updateUser = this.getUserInfo;
+    async updateStageUser() {
+      const updateUser = await getUserInformation();
+      await this.$store.dispatch('updateUserInfo', updateUser);
+    },
+    async handleItemUnliked(item) {
+      // let updateUser = this.getUserInfo;
       let index = this.indexLiked(item);
       if (this.lipState) {
         if (index !== -1) {
-          updateUser.likedLip.splice(index, 1);
+          await userUnlikedLipsticks(item);
+          // updateUser.likedLip.splice(index, 1);
         }
       }
       if (this.blushState) {
         if (index !== -1) {
-          updateUser.likedBlush.splice(index, 1);
+          await userUnlikedBlush(item);
+          // updateUser.likedBlush.splice(index, 1);
         }
       }
       if (this.skinState) {
         if (index !== -1) {
-          updateUser.likedFoundation.splice(index, 1);
+          await userUnlikedFoundation(item);
+          // updateUser.likedFoundation.splice(index, 1);
         }
       }
-      this.$store.dispatch('updateUserProfile', updateUser);
+      // this.$store.dispatch('updateUserProfile', updateUser);
+      await this.updateStageUser();
     },
   },
   watch: {
@@ -152,6 +162,9 @@ export default {
 </script>
 
 <style scoped>
+button {
+  outline: none;
+}
 .slide-container {
   justify-content: center;
   display: flex;

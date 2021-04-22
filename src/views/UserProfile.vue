@@ -5,7 +5,11 @@
     </div>
     <div class="detail-container">
       <div class="profile-content">
-        <img class="user-img" :src="getUserInfo.userImgURL" alt="UserImageProfile" />
+        <img
+          class="user-img"
+          :src="convertBase64Image(getUserInfo.base64_user_image)"
+          alt="UserImageProfile"
+        />
 
         <div class="change-img-feature">
           <UploadImageModal class="change-img-btn" titleButton="Change image"></UploadImageModal>
@@ -16,9 +20,9 @@
             <div class="user-email">
               {{ getUserInfo.email }}
             </div>
-            <a class="edit-btn" data-toggle="modal" data-target="#changeEmailModal"
+            <!-- <a class="edit-btn" data-toggle="modal" data-target="#changeEmailModal"
               ><i class="fas fa-edit"></i
-            ></a>
+            ></a> -->
           </div>
           <div class="item secound-title">Password</div>
           <div class="item secound-item">
@@ -159,6 +163,7 @@
 import UploadImageModal from '@/components/main/UploadImageModal.vue';
 import $ from 'jquery';
 import { mapGetters } from 'vuex';
+import { userChangeImage, getUserInformation, userChangePassword } from '@/api/authentication';
 
 export default {
   components: {
@@ -178,7 +183,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getUserInfo']),
+    ...mapGetters(['getUserInfo', 'getImageUpload', 'getFileUpload']),
   },
   methods: {
     async handleChangePassword() {
@@ -191,26 +196,40 @@ export default {
       ) {
         return;
       }
-      if (this.passwordInput !== this.getUserInfo.password) {
-        this.sameNewPasswordState = false;
-        this.newPassword = '';
-        this.reNewPassword = '';
-        this.passwordIncorrect = true;
-        this.passwordInput = '';
-        return;
-      }
-      if (this.sameNewPasswordState && this.passwordInput === this.getUserInfo.password) {
-        let updateUser = this.getUserInfo;
-        updateUser.password = this.newPassword;
+      // if (this.passwordInput !== this.getUserInfo.password) {
+      //   this.sameNewPasswordState = false;
+      //   this.newPassword = '';
+      //   this.reNewPassword = '';
+      //   this.passwordIncorrect = true;
+      //   this.passwordInput = '';
+      //   return;
+      // }
+      if (this.sameNewPasswordState) {
+        const form = {
+          currentPassword: this.passwordInput,
+          newPassword: this.newPassword,
+        };
 
-        await this.$store.dispatch('updateUserProfile', updateUser);
-        this.passwordInput = '';
-        this.newPassword = '';
-        this.reNewPassword = '';
-        this.submitPasswordState = false;
-        this.passwordIncorrect = false;
-        this.newPasswordInput = false;
-        $('#changePasswordModal').modal('hide');
+        try {
+          await userChangePassword(form);
+
+          const updateUser = await getUserInformation();
+          await this.$store.dispatch('updateUserInfo', updateUser);
+          // await this.$store.dispatch('updateUserProfile', updateUser);
+          this.passwordInput = '';
+          this.newPassword = '';
+          this.reNewPassword = '';
+          this.submitPasswordState = false;
+          this.passwordIncorrect = false;
+          this.newPasswordInput = false;
+          $('#changePasswordModal').modal('hide');
+        } catch (err) {
+          this.sameNewPasswordState = false;
+          this.newPassword = '';
+          this.reNewPassword = '';
+          this.passwordIncorrect = true;
+          this.passwordInput = '';
+        }
       }
     },
     async handleChangeEmail() {
@@ -227,8 +246,23 @@ export default {
         $('#changeEmailModal').modal('hide');
       }
     },
+    convertBase64Image(base64) {
+      if (base64) {
+        return `data:image/png;base64, ${base64}`;
+      }
+    },
   },
   watch: {
+    getImageUpload: {
+      async handler(val) {
+        if (val) {
+          await userChangeImage(this.getFileUpload);
+          const updateUser = await getUserInformation();
+          await this.$store.dispatch('updateUserInfo', updateUser);
+        }
+      },
+      deep: true,
+    },
     reNewPassword(val) {
       if (val) {
         this.newPasswordInput = true;

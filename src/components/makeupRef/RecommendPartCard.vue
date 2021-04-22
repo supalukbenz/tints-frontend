@@ -25,11 +25,7 @@
         <div class="color-name">
           color: {{ item ? item.color_name : '001' }}
           <i
-            :style="[
-              item
-                ? { color: 'rgb' + item.rgb_value + ' !important' }
-                : { color: '#222' },
-            ]"
+            :style="[item ? { color: 'rgb' + item.rgb_value + ' !important' } : { color: '#222' }]"
             class="fas fa-circle ml-1 circle-icon"
           ></i>
           <!-- <i
@@ -56,6 +52,15 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { getUserInformation } from '@/api/authentication';
+import {
+  userLikedFoundation,
+  userLikedBlush,
+  userLikedLipsticks,
+  userUnlikedLipsticks,
+  userUnlikedBlush,
+  userUnlikedFoundation,
+} from '@/api/userFeatures';
 
 export default {
   data() {
@@ -100,44 +105,49 @@ export default {
     checkNotNullArray(arr) {
       return arr.length > 0;
     },
-    pushLikedItem(index, item) {
-      let updateUser = this.user;
+    async updateStageUser() {
+      const updateUser = await getUserInformation();
+      await this.$store.dispatch('updateUserInfo', updateUser);
+    },
+    async pushLikedItem(index, item) {
       if (this.liked) {
         if (index === -1) {
-          // updateUser.likedLip.push(item);
           if (this.lipState) {
-            updateUser.likedLip.push(item);
+            await userLikedLipsticks(item);
+            // updateUser.likedLip.push(item);
           }
           if (this.blushState) {
-            updateUser.likedBlush.push(item);
+            await userLikedBlush(item);
+            // updateUser.likedBlush.push(item);
           }
           if (this.skinState) {
-            console.log('skin');
-            updateUser.likedFoundation.push(item);
-            console.log(updateUser.likedFoundation);
+            await userLikedFoundation(item);
+            // updateUser.likedFoundation.push(item);
           }
+          await this.updateStageUser();
         }
       } else {
         if (index !== -1) {
           if (this.lipState) {
-            updateUser.likedLip.splice(index, 1);
+            console.log('unlike');
+            await userUnlikedLipsticks(item);
+            // updateUser.likedLip.splice(index, 1);
           }
           if (this.blushState) {
-            updateUser.likedBlush.splice(index, 1);
+            await userUnlikedBlush(item);
+            // updateUser.likedBlush.splice(index, 1);
           }
           if (this.skinState) {
-            updateUser.likedFoundation.splice(index, 1);
+            await userUnlikedFoundation(item);
+            // updateUser.likedFoundation.splice(index, 1);
           }
+          await this.updateStageUser();
         }
       }
-      this.$store.dispatch('updateUserProfile', updateUser);
     },
-    handleItemLiked() {
-      console.log('like');
+    handleItemLiked() {      
       this.liked = !this.liked;
       const index = this.indexLiked;
-      console.log('liked', this.liked);
-      console.log('indexLiked', this.indexLiked);
       this.pushLikedItem(index, this.item);
     },
     splitImageURL(url) {

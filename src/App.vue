@@ -22,7 +22,6 @@ export default {
   },
   mounted() {
     if (this.getUserToken) {
-      console.log('val', localStorage.getItem('token'));
       axios.defaults.headers.common['Authorization'] = `Bearer ${this.getUserToken}`;
     }
   },

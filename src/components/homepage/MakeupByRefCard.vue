@@ -49,6 +49,7 @@ export default {
 .makeup-ref-container {
   display: flex;
   justify-content: center;
+  margin: 4rem;
   background: #f2e4dc;
 }
 .makeup-ref-card {
@@ -155,9 +156,18 @@ export default {
   --x2: 95%;
 }
 
+@media screen and (max-width: 800px) {
+  .makeup-ref-container {
+    margin: 3rem;
+  }
+}
+
 @media screen and (max-width: 650px) {
   .makeup-ref-btn {
     font-size: 0.8rem;
+  }
+  .makeup-ref-container {
+    margin: 2rem;
   }
 }
 
@@ -174,6 +184,9 @@ export default {
 
   .content-detail {
     margin-top: 2rem;
+  }
+  .makeup-ref-container {
+    margin: 1rem;
   }
 }
 </style>

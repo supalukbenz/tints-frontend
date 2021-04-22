@@ -12,7 +12,7 @@ export default {
     token: localStorage.getItem('token') || '',
     registerState: 1,
     userRegisterInfo: {},
-    userInfo: {},
+    userInfo: JSON.parse(localStorage.getItem('user')) || {},
     foundationFormList: [],
     checkFoundationForm: false,
     userProfile: {
@@ -323,8 +323,8 @@ export default {
     }
   },
   getters: {
-    getUserInfo: state => {
-      return state.userProfile;
+    getUserInfo: state => {      
+      return state.userInfo;
     },
     getUserDetail: state => {
       return state.userInfo;
@@ -347,10 +347,11 @@ export default {
   },
   mutations: {
     setUserProfile(state, payload) {
-      state.userProfile = payload;
+      state.userProfile = payload;      
     },
-    setUserInfo(state, payload) {
+    setUserInfo(state, payload) {      
       state.userInfo = payload;
+      localStorage.setItem('user', JSON.stringify(payload));
     },
     setUserToken(state, payload) {
       state.token = payload;
@@ -387,6 +388,9 @@ export default {
     },
     updateUserToken({ commit }, payload) {      
       commit('setUserToken', payload);
+    },
+    updateUserInfo({ commit }, payload) {
+      commit('setUserInfo', payload);
     },
     async loadUserInfo({ commit }, payload) {
       commit('setUserInfo', await userLogin(payload));

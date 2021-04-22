@@ -1,9 +1,14 @@
 <template>
   <div class="recommend-container">
     <div class="recommend-detail">
-      <div class="img-container">
-        <img class="img-user" src="@/assets/images/mockup/user.jpg" />
+      <div class="img-recommend-container">
+        <img class="img-recommend" src="@/assets/images/recommendation/skin_rec.jpg" />
+        <img class="img-recommend" src="@/assets/images/recommendation/blush_rec.jpeg" />
+        <img class="img-recommend" src="@/assets/images/recommendation/lip_rec.jpg" />
       </div>
+      <!-- <div class="img-container">
+        <img class="img-user" src="@/assets/images/mockup/user.jpg" />
+      </div> -->
       <div class="recommned-content">
         <div class="recommend-title">ANALYZE & RECOMMEND</div>
         <div class="recommend-subtitle">the perfect makeup tone for you</div>
@@ -26,7 +31,7 @@ export default {};
   // background-size: 100% 100%;
   // background-repeat: no-repeat;
   background: #efe5e3;
-  height: calc(70vmin * 9 / 16);
+  // height: calc(70vmin * 9 / 16);
   margin-top: 4rem;
 }
 
@@ -34,7 +39,18 @@ export default {};
   display: flex;
   justify-content: center;
   padding: 0 4rem;
-  text-align: right;
+  flex-direction: column;
+}
+
+.img-recommend-container {
+  display: flex;
+  justify-content: center;
+}
+
+.img-recommend {
+  height: 24rem;
+  max-width: 100%;
+  margin: 0 1rem;
 }
 
 .img-user {
@@ -45,10 +61,6 @@ export default {};
   margin-right: 1rem;
 }
 
-.recommned-content {
-  margin-left: 1rem;
-}
-
 .recommend-title {
   font-weight: 700;
   font-size: 1.7rem;
@@ -56,9 +68,9 @@ export default {};
 }
 
 .recommned-content {
-  margin-top: 2rem;
+  margin: 3rem 0rem;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
 }
@@ -81,6 +93,38 @@ export default {};
   margin: 2rem 0;
 }
 
+@media screen and (max-width: 980px) {
+  .img-recommend {
+    height: 22rem;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .img-recommend {
+    height: 20rem;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .img-recommend {
+    height: 17rem;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .img-recommend {
+    height: 14rem;
+    margin: 0 0.5rem;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .img-recommend {
+    height: 10rem;
+    margin: 0 0.5rem;
+  }
+}
+
 @media screen and (max-width: 570px) {
   .recommend-title {
     font-size: 1rem;
@@ -93,6 +137,13 @@ export default {};
   }
   .recommend-detail {
     padding: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .img-recommend {
+    height: 8rem;
+    margin: 0 0.2rem;
   }
 }
 </style>
