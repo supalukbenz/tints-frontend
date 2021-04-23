@@ -62,6 +62,7 @@ export default {
     async handleLogin() {
       this.clickedLoginState = true;
       if (this.email !== '' && this.password !== '') {
+        console.log('login');
         this.loginErrorState = false;
         const form = {
           email: this.email,
@@ -69,6 +70,7 @@ export default {
         };
         try {
           await this.$store.dispatch('loadUserInfo', form);
+          console.log('this.user.token', this.user.token);
           await this.$store.dispatch('updateUserToken', this.user.token);
           this.$router.push('/');
         } catch (err) {

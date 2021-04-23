@@ -44,10 +44,20 @@ async function userChangePassword(form) {
   return response.data;
 }
 
+async function checkEmailExist(email) {
+  var bodyFormData = new FormData();  
+  bodyFormData.append('email', email);
+  
+  const response = await axios.post('check/email/exist', bodyFormData);
+  
+  return response.data;
+}
+
 export {
   userLogin,
   userResgister,
   userChangeImage,
   getUserInformation,
   userChangePassword,
+  checkEmailExist,
 };

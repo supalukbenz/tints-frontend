@@ -332,7 +332,8 @@ export default {
 .sub-top {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  // justify-content: space-between;
+  justify-content: center;
 }
 .top-first-img {
   height: 13rem;

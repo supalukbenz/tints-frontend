@@ -43,6 +43,11 @@ export default {
     async handleLogout() {
       await localStorage.clear();
       await this.$store.dispatch('updateUserInfo', {});
+      await this.$store.dispatch('updateUserToken', '');
+      // if (this.$route.path !== '/') {
+      //   this.$router.push('/');
+      // }
+      this.$router.push('/login').catch(() => {});
       // this.$router.push('/');
     },
     convertBase64Image(base64) {

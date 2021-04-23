@@ -45,7 +45,7 @@
               class="image-upload"
             />
             <div v-show="cheekErrorState" class="alert-txt">
-              * Cannot find cheek, please select new image
+              * The system cannot identify facial on the image
             </div>
             <div v-if="cheekImage && state === 2 && !loadingState">
               <div class="pick-color">
@@ -148,7 +148,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getUserInfo', 'getCheekImage']),
+    ...mapGetters(['getUserInfo', 'getCheekImage', 'getUserToken']),
   },
   methods: {
     readFileImageUpload(image) {
@@ -230,6 +230,7 @@ export default {
       await this.$store.dispatch('updateCheekImage', '');
       if (this.imageUpload && this.fileUpload) {
         this.loadingState = true;
+
         const form = {
           fileUpload: this.fileUpload,
           userID: this.getUserInfo.userID,
@@ -288,6 +289,7 @@ button {
 .alert-txt {
   margin-top: 0.5rem;
   color: #a83f39;
+  font-size: 0.9rem;
   font-weight: 800;
 }
 

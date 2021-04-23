@@ -9,6 +9,7 @@
         :class="{ borderRed: clickedRegisState && email === '' }"
         class="email-input form-input"
         placeholder="example@email.com"
+        required
       />
     </div>
     <div class="password-form form-container">
@@ -45,6 +46,7 @@
         class="email-input form-input"
       />
     </div>
+    <div v-show="emailExistState" class="alert-txt">* Email already exist.</div>
     <div class="btn-feature">
       <button @click="handleRegister" class="next-btn" type="button">
         Next <i class="fas fa-chevron-right"></i>
@@ -54,6 +56,8 @@
 </template>
 
 <script>
+import { checkEmailExist } from '@/api/authentication';
+
 export default {
   data() {
     return {
@@ -63,10 +67,11 @@ export default {
       samePasswordState: false,
       passwordInput: false,
       clickedRegisState: false,
+      emailExistState: false,
     };
   },
   methods: {
-    handleRegister() {
+    async handleRegister() {
       this.clickedRegisState = true;
       if (
         this.email.trim() !== '' &&
@@ -74,14 +79,19 @@ export default {
         this.rePassword !== '' &&
         this.samePasswordState
       ) {
-        const user = {
-          email: this.email.trim(),
-          password: this.password,
-        };
-        this.$store.dispatch('updateUserRegisterInfo', user);
-        this.$store.dispatch('updateRegisterState', 2);
+        try {
+          await checkEmailExist(this.email);
+          const user = {
+            email: this.email.trim(),
+            password: this.password,
+          };
+          this.$store.dispatch('updateUserRegisterInfo', user);
+          this.$store.dispatch('updateRegisterState', 2);
+        } catch (err) {
+          this.emailExistState = true;
+        }
       }
-    },    
+    },
   },
   watch: {
     rePassword(val) {
@@ -97,6 +107,9 @@ export default {
         this.samePasswordState = false;
       }
     },
+    email() {
+      this.emailExistState = false;
+    },
   },
 };
 </script>
@@ -109,6 +122,12 @@ button {
 
 .borderRed {
   border-color: #a83f39 !important;
+}
+
+.alert-txt {
+  color: #a83f39;
+  font-weight: 800;
+  font-size: 0.9rem;
 }
 
 .register-form-container {
@@ -175,11 +194,17 @@ button {
     width: 12rem;
     font-size: 0.8rem;
   }
+  .register-form-container {
+    padding: 1rem 3rem;
+  }
 }
 
 @media screen and (max-width: 450px) {
   .form-input {
     width: 10rem;
+  }
+  .register-form-container {
+    padding: 1rem;
   }
 }
 </style>

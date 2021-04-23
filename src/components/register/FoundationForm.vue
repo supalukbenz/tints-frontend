@@ -149,7 +149,6 @@ export default {
           this.colorSelected !== '--Select color--'
         ) {
           let foundationList = this.getFoundationFormList;
-          console.log('');
           const form = {
             brandSelected: this.brandSelected,
             productSelected: this.productSelected,

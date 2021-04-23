@@ -10,7 +10,6 @@
         <FoundationForm
           :clickedNextState="clickedNextState"
           :neverOption="neverOption"
-          class="fadeIn"
         ></FoundationForm>
         <hr />
       </div>
