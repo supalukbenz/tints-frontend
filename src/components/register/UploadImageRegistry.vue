@@ -50,7 +50,9 @@ export default {
           email: this.getUserRegisterInfo.email,
           password: this.getUserRegisterInfo.password,
           userImage: this.getUserRegisterInfo.userImage,
+          foundationList: JSON.stringify(this.getUserRegisterInfo.foundationList),
         };
+        console.log('from', form);
         await userResgister(form);
         await this.$store.dispatch('loadUserInfo', form);
         this.$router.push('/login');

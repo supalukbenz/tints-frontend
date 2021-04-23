@@ -30,6 +30,11 @@ async function userUnlikedFoundation(item) {
   return response.data;
 }
 
+async function getFoundationList(item) {        
+  const response = await axios.get('user/get/foundation/info', item);
+  return response.data;
+}
+
 export {
   userLikedLipsticks,
   userLikedBlush,
@@ -37,4 +42,5 @@ export {
   userUnlikedLipsticks,
   userUnlikedBlush,
   userUnlikedFoundation,
+  getFoundationList,
 };

@@ -23,7 +23,7 @@
             </a>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <div v-for="(brand, index) in foundationBrand" :key="index">
+              <div v-for="(brand, index) in foundation.brand_list" :key="index">
                 <a class="dropdown-item item" @click="handleBrandSelected(brand)">{{ brand }}</a>
               </div>
             </div>
@@ -39,6 +39,7 @@
                 :class="{
                   selectedItem: productSelected !== '--Select product--',
                   notSelectedItem: productSelected === '--Select product--' && clickedNextState,
+                  disabled: brandSelected === '--Select brand--',
                 }"
                 href="#"
                 role="button"
@@ -51,10 +52,12 @@
               </a>
 
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <div v-for="(product, index) in foundationProduct" :key="index">
-                  <a class="dropdown-item item" @click="handleProductSelected(product)">{{
-                    product
-                  }}</a>
+                <div v-for="(foundation, index) in foundationListByBrand" :key="index">
+                  <a
+                    class="dropdown-item item"
+                    @click="handleProductSelected(foundation.name, index)"
+                    >{{ foundation.name }}</a
+                  >
                 </div>
               </div>
             </div>
@@ -67,6 +70,7 @@
                 :class="{
                   selectedItem: colorSelected !== '--Select color--',
                   notSelectedItem: colorSelected === '--Select color--' && clickedNextState,
+                  disabled: productSelected === '--Select product--',
                 }"
                 data-display="static"
                 href="#"
@@ -80,8 +84,12 @@
               </a>
 
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <div v-for="(color, index) in foundationColor" :key="index">
-                  <a class="dropdown-item item" @click="handleColorSelected(color)">{{ color }}</a>
+                <div v-for="(color, index) in colorByProduct" :key="index">
+                  <a
+                    class="dropdown-item item"
+                    @click="handleColorSelected(color.colour_name, index)"
+                    >{{ color.colour_name }}</a
+                  >
                 </div>
               </div>
             </div>
@@ -97,28 +105,10 @@ import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
-      foundationBrand: [
-        'nars',
-        'Fenty',
-        'Maybelline',
-        'Your Skin But Better',
-        'FauxFilter',
-        'Born To Glow!',
-        'Clinique',
-        'nyx',
-        'Forever Skin Glow Foundation',
-        'L`Oréal Paris',
-        'bareMinerals',
-        'Giorgio Armani',
-      ],
-      foundationProduct: [
-        'Burberry Matte Glow Fluid Foundation',
-        'Oxygenetix Oxygenating Foundation SPF 25',
-        'Clé de Peau Radiant Fluid Foundation ',
-        'Vichy Mineral Blend Fluid',
-        'Fenty Beauty Pro Filt’r Hydrating Longwear Foundation',
-      ],
-      foundationColor: ['001 pink', '002 sakura', '003 Fluide De Beauté Natural Finish Foundation'],
+      foundation: {},
+      foundationListByBrand: {},
+      colorByProduct: [],
+      colorItemSelected: {},
       brandSelected: '--Select brand--',
       productSelected: '--Select product--',
       colorSelected: '--Select color--',
@@ -128,18 +118,26 @@ export default {
     neverOption: Boolean,
     clickedNextState: Boolean,
   },
+  async beforeCreate() {
+    await this.$store.dispatch('loadFoundationList');
+    this.foundation = this.getFoundationList;
+  },
   computed: {
-    ...mapGetters(['getFoundationFormList']),
+    ...mapGetters(['getFoundationFormList', 'getFoundationList']),
   },
   methods: {
     handleBrandSelected(brand) {
       this.brandSelected = brand;
+      let filterBrand = this.foundation[brand];
+      this.foundationListByBrand = filterBrand.filter(brand => brand.product_colors.length !== 0);
     },
-    handleProductSelected(product) {
+    handleProductSelected(product, index) {
       this.productSelected = product;
+      this.colorByProduct = this.foundationListByBrand[index].product_colors;
     },
-    handleColorSelected(color) {
+    handleColorSelected(color, index) {
       this.colorSelected = color;
+      this.colorItemSelected = this.colorByProduct[index];
     },
   },
   watch: {
@@ -151,10 +149,11 @@ export default {
           this.colorSelected !== '--Select color--'
         ) {
           let foundationList = this.getFoundationFormList;
+          console.log('');
           const form = {
             brandSelected: this.brandSelected,
             productSelected: this.productSelected,
-            colorSelected: this.colorSelected,
+            colorSelected: this.colorItemSelected,
           };
           foundationList.push(form);
           this.$store.dispatch('updateFoundationFormList', foundationList);
@@ -176,6 +175,12 @@ export default {
 
 .notSelectedItem {
   border-color: #a83f39 !important;
+}
+
+.dropdown-menu {
+  max-height: 20rem;
+  overflow: auto;
+  z-index: 40;
 }
 
 .step-container {
@@ -296,6 +301,9 @@ export default {
   .product-form {
     width: 10rem;
   }
+  .dropdown-menu {
+    height: 15rem !important;
+  }
 }
 
 @media screen and (max-width: 650px) {
@@ -313,6 +321,9 @@ export default {
   .item-display,
   .input-title {
     font-size: 0.7rem;
+  }
+  .dropdown-menu {
+    height: 12rem !important;
   }
 
   .foundation-input {

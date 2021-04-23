@@ -6,7 +6,7 @@
           tints.
         </span>
       </router-link>
-      <div class="dropdown">
+      <div class="dropdown" v-if="JSON.stringify(getUserInfo) !== JSON.stringify({})">
         <button
           class="user-btn"
           type="button"
@@ -15,6 +15,7 @@
           aria-expanded="false"
         >
           <img
+            v-show="JSON.stringify(getUserInfo) !== JSON.stringify({})"
             class="user-img"
             :src="convertBase64Image(getUserInfo.base64_user_image)"
             alt="User"
@@ -24,7 +25,6 @@
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
           <router-link class="dropdown-item user-item" to="/user-profile">Edit profile</router-link>
           <a class="dropdown-item user-item" @click="handleLogout" href="#">Logout</a>
-          <a class="dropdown-item user-item" href="#">Something else here</a>
         </div>
       </div>
     </div>
@@ -40,11 +40,12 @@ export default {
     ...mapGetters(['getUserInfo']),
   },
   methods: {
-    handleLogout() {
-      localStorage.clear();
-      this.$router.push('/').catch(() => {});
+    async handleLogout() {
+      await localStorage.clear();
+      await this.$store.dispatch('updateUserInfo', {});
+      // this.$router.push('/');
     },
-    convertBase64Image(base64) {      
+    convertBase64Image(base64) {
       return `data:image/png;base64, ${base64}`;
     },
   },

@@ -13,13 +13,24 @@
             <div class="login-title">Member Login</div>
             <div class="input-form">
               <div class="email-title title-form">Email</div>
-              <input type="email" class="email-form form-input" v-model="email" />
+              <input
+                type="email"
+                :class="{ borderRed: clickedLoginState && email === '' }"
+                class="email-form form-input"
+                v-model="email"
+              />
             </div>
             <div class="input-form">
               <div class="password-title title-form">Password</div>
-              <input type="password" class="password-form form-input" v-model="password" />
+              <input
+                type="password"
+                :class="{ borderRed: clickedLoginState && password === '' }"
+                class="password-form form-input"
+                v-model="password"
+              />
             </div>
           </div>
+          <div v-show="loginErrorState" class="alert-error">* Incorrect email or password</div>
           <div>
             <button @click="handleLogin" type="button" class="login-btn form-btn">Login</button>
           </div>
@@ -37,6 +48,8 @@ export default {
     return {
       email: '',
       password: '',
+      loginErrorState: false,
+      clickedLoginState: false,
     };
   },
   computed: {
@@ -47,15 +60,20 @@ export default {
   },
   methods: {
     async handleLogin() {
+      this.clickedLoginState = true;
       if (this.email !== '' && this.password !== '') {
+        this.loginErrorState = false;
         const form = {
           email: this.email,
           password: this.password,
         };
-        await this.$store.dispatch('loadUserInfo', form);
-        await this.$store.dispatch('updateUserToken', this.user.token);
-        this.$router.push('/');
-        console.log('token', this.token);
+        try {
+          await this.$store.dispatch('loadUserInfo', form);
+          await this.$store.dispatch('updateUserToken', this.user.token);
+          this.$router.push('/');
+        } catch (err) {
+          this.loginErrorState = true;
+        }
       }
     },
   },
@@ -66,6 +84,16 @@ export default {
 input,
 button {
   outline: none;
+}
+
+.alert-error {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #a83f39;
+}
+
+.borderRed {
+  border-color: #a83f39 !important;
 }
 
 .login-bg {

@@ -6,6 +6,7 @@
       <input
         type="email"
         v-model="email"
+        :class="{ borderRed: clickedRegisState && email === '' }"
         class="email-input form-input"
         placeholder="example@email.com"
       />
@@ -20,7 +21,12 @@
           <i class="fas fa-times time-icon"></i>
         </span>
       </div>
-      <input type="password" v-model="password" class="email-input form-input" />
+      <input
+        type="password"
+        v-model="password"
+        :class="{ borderRed: clickedRegisState && password === '' }"
+        class="email-input form-input"
+      />
     </div>
     <div class="password-form form-container">
       <div class="title-input">
@@ -32,7 +38,12 @@
           <i class="fas fa-times time-icon"></i>
         </span>
       </div>
-      <input type="password" v-model="rePassword" class="email-input form-input" />
+      <input
+        type="password"
+        v-model="rePassword"
+        :class="{ borderRed: clickedRegisState && rePassword === '' }"
+        class="email-input form-input"
+      />
     </div>
     <div class="btn-feature">
       <button @click="handleRegister" class="next-btn" type="button">
@@ -51,10 +62,12 @@ export default {
       rePassword: '',
       samePasswordState: false,
       passwordInput: false,
+      clickedRegisState: false,
     };
   },
   methods: {
     handleRegister() {
+      this.clickedRegisState = true;
       if (
         this.email.trim() !== '' &&
         this.password !== '' &&
@@ -68,7 +81,7 @@ export default {
         this.$store.dispatch('updateUserRegisterInfo', user);
         this.$store.dispatch('updateRegisterState', 2);
       }
-    },
+    },    
   },
   watch: {
     rePassword(val) {
@@ -92,6 +105,10 @@ export default {
 input,
 button {
   outline: none;
+}
+
+.borderRed {
+  border-color: #a83f39 !important;
 }
 
 .register-form-container {

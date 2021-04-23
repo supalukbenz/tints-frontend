@@ -86,7 +86,7 @@
                   </div>
                   <div class="confirm-item">
                     <div class="confirm-detail">Color:</div>
-                    {{ foundation.colorSelected }}
+                    {{ foundation.colorSelected.colour_name }}
                   </div>
                 </div>
                 <hr />
@@ -190,6 +190,7 @@ a {
   font-weight: 800;
   margin-top: 1.5rem;
   width: 32rem;
+  z-index: 30;
 }
 
 .btn-save-change {

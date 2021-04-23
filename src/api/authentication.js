@@ -15,6 +15,7 @@ async function userResgister(form) {
   bodyFormData.append('email', form.email);
   bodyFormData.append('password', form.password);
   bodyFormData.append('user_image', form.userImage);
+  bodyFormData.append('foundation_list', form.foundationList);
   // const response = await axios.post('simulator/lip', bodyFormData, { responseType: "blob" });
   const response = await axios.post('auth/signup', bodyFormData);
   return response.data;

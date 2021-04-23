@@ -5,11 +5,11 @@
       <button v-if="!loadingState" @click="handleAnalysis" type="button" class="analyse-btn">
         Click to Analyse Image
       </button>
-      <img class="user-img filterImg" :src="getUserInfo.userImgURL" />
+      <img class="user-img filterImg" :src="convertBase64Image(getUserInfo.base64_user_image)" />
     </div>
     <div v-show="makeupRecommended">
       <div class="user-img-complete fadeIn">
-        <img class="user-img" :src="getUserInfo.userImgURL" />
+        <img class="user-img" :src="convertBase64Image(getUserInfo.base64_user_image)" />
         <div class="complete-banner" id="completeBanner">
           <div class="complete-text">
             Complete the analysis
@@ -81,6 +81,11 @@ export default {
       this.$nextTick(() => {
         $('html, body').animate({ scrollTop: $(id).offset().top }, 1000);
       });
+    },
+    convertBase64Image(base64) {
+      if (base64) {
+        return `data:image/png;base64, ${base64}`;
+      }
     },
   },
 };

@@ -3,6 +3,9 @@ import Vuex from 'vuex';
 import {
   userLogin
 } from '@/api/authentication';
+import {
+  getFoundationList
+} from '@/api/userFeatures';
 
 
 Vue.use(Vuex);
@@ -15,6 +18,7 @@ export default {
     userInfo: JSON.parse(localStorage.getItem('user')) || {},
     foundationFormList: [],
     checkFoundationForm: false,
+    foundationList: {},
     userProfile: {
       userID: 1,
       username: 'nana',
@@ -343,6 +347,9 @@ export default {
     },
     getCheckFoundationForm: state => {
       return state.checkFoundationForm;
+    },
+    getFoundationList: state => {
+      return state.foundationList;
     }
   },
   mutations: {
@@ -369,6 +376,9 @@ export default {
     setCheckFoundationForm(state, payload) {
       state.checkFoundationForm = payload;      
     },
+    setFoundationList(state, payload) {
+      state.foundationList = payload;      
+    },
   },
   actions: {
     updateUserProfile({ commit }, payload) {
@@ -394,6 +404,9 @@ export default {
     },
     async loadUserInfo({ commit }, payload) {
       commit('setUserInfo', await userLogin(payload));
+    },
+    async loadFoundationList({ commit }) {
+      commit('setFoundationList', await getFoundationList());
     },
   },
   modules: {
