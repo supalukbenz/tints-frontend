@@ -6,9 +6,10 @@
       <input
         type="email"
         v-model="email"
-        :class="{ borderRed: clickedRegisState && email === '' }"
+        :class="{ borderRed: clickedRegisState && email === '', colorRed: emailInvalidType }"
         class="email-input form-input"
         placeholder="example@email.com"
+        @blur="checkEmailInput(email)"
         required
       />
     </div>
@@ -46,7 +47,8 @@
         class="email-input form-input"
       />
     </div>
-    <div v-show="emailExistState" class="alert-txt">* Email already exist.</div>
+    <div v-show="emailExistState" class="alert-txt">* Email already exist</div>
+    <div v-show="emailInvalidType" class="alert-txt">* Invalid email</div>
     <div class="btn-feature">
       <button @click="handleRegister" class="next-btn" type="button">
         Next <i class="fas fa-chevron-right"></i>
@@ -68,15 +70,26 @@ export default {
       passwordInput: false,
       clickedRegisState: false,
       emailExistState: false,
+      emailInvalidType: false,
     };
   },
   methods: {
+    validateEmail(email) {
+      var reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return reg.test(String(email).toLowerCase());
+    },
+    checkEmailInput(email) {
+      if (!this.validateEmail(email)) {
+        this.emailInvalidType = true;
+      }
+    },
     async handleRegister() {
       this.clickedRegisState = true;
       if (
         this.email.trim() !== '' &&
         this.password !== '' &&
         this.rePassword !== '' &&
+        this.validateEmail(this.email) &&
         this.samePasswordState
       ) {
         try {
@@ -109,6 +122,7 @@ export default {
     },
     email() {
       this.emailExistState = false;
+      this.emailInvalidType = false;
     },
   },
 };
@@ -122,6 +136,10 @@ button {
 
 .borderRed {
   border-color: #a83f39 !important;
+}
+
+.colorRed {
+  color: #a83f39;
 }
 
 .alert-txt {

@@ -145,7 +145,7 @@ export default {
         }
       }
     },
-    handleItemLiked() {      
+    handleItemLiked() {
       this.liked = !this.liked;
       const index = this.indexLiked;
       this.pushLikedItem(index, this.item);
@@ -215,12 +215,12 @@ button {
 .brand-name {
   font-weight: 800;
   text-transform: uppercase;
-  font-size: 1.3rem;
+  font-size: 1rem;
   color: #222222;
 }
 
 .serie-name {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 700;
 }
 

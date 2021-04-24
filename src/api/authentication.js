@@ -5,8 +5,7 @@ async function userLogin(form) {
   bodyFormData.append('email', form.email);
   bodyFormData.append('password', form.password);
   // const response = await axios.post('simulator/lip', bodyFormData, { responseType: "blob" });
-  const response = await axios.post('auth/login', bodyFormData);
-  console.log('response.data', response.data);
+  const response = await axios.post('auth/login', bodyFormData);  
   return response.data;
 }
 
@@ -46,10 +45,15 @@ async function userChangePassword(form) {
 
 async function checkEmailExist(email) {
   var bodyFormData = new FormData();  
-  bodyFormData.append('email', email);
-  
+  bodyFormData.append('email', email);  
   const response = await axios.post('check/email/exist', bodyFormData);
-  
+  return response.data;
+}
+
+async function checkImageValid(img) {
+  var bodyFormData = new FormData();  
+  bodyFormData.append('user_image', img);  
+  const response = await axios.post('auth/check/valid/user/image', bodyFormData);
   return response.data;
 }
 
@@ -60,4 +64,5 @@ export {
   getUserInformation,
   userChangePassword,
   checkEmailExist,
+  checkImageValid,
 };

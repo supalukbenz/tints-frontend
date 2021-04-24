@@ -26,7 +26,7 @@
         aria-labelledby="myExtraLargeModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title"><slot></slot></h5>
@@ -48,8 +48,8 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button> -->
             </div>
           </div>
         </div>
@@ -406,6 +406,10 @@ export default {
   .top-item {
     grid-template-columns: 14rem 10rem;
   }
+  .item-grid {
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+    grid-gap: 1rem 0.5rem;
+  }
 }
 
 @media screen and (max-width: 800px) {
@@ -424,7 +428,9 @@ export default {
   .price {
     font-size: 0.9rem;
   }
-
+  // .modal-dialog {
+  //   max-width: 500px !important;
+  // }
   .title-makeup {
     font-size: 1.2rem;
   }
@@ -461,6 +467,9 @@ export default {
     padding: 1rem;
     grid-template-columns: 10rem 8rem;
   }
+  // .modal-dialog {
+  //   max-width: 400px !important;
+  // }
 }
 
 @media screen and (max-width: 502px) {
@@ -497,6 +506,23 @@ export default {
   }
 }
 
+@media screen and (max-width: 545px) {
+  .item-grid {
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+    grid-gap: 1rem 0.5rem;
+  }
+  .modal-dialog {
+    margin: 2rem;
+  }
+}
+
+@media screen and (max-width: 497px) {
+  .item-grid {
+    grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+    grid-gap: 1rem 0.5rem;
+  }
+}
+
 @media screen and (max-width: 468px) {
   .top-container {
     flex-direction: column;
@@ -518,6 +544,11 @@ export default {
     margin-right: 0.2rem;
   }
 
+  // .modal-dialog {
+  //   max-width: 300px !important;
+  //   margin: 1rem;
+  // }
+
   .sub-secound {
     margin: 0;
     margin-top: 0.2rem;
@@ -537,6 +568,10 @@ export default {
   }
   .top-container {
     display: flex !important;
+  }
+  .item-grid {
+    grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+    grid-gap: 0.5rem;
   }
 }
 </style>

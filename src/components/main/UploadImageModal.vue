@@ -47,6 +47,9 @@
             <div v-show="cheekErrorState" class="alert-txt">
               * The system cannot identify facial on the image
             </div>
+            <div v-show="imageErrorState" class="alert-txt">
+              * The system cannot identify facial on the image
+            </div>
             <div v-if="cheekImage && state === 2 && !loadingState">
               <div class="pick-color">
                 Pick cheek color:
@@ -103,7 +106,6 @@
               </button>
               <button
                 @click="uploadNewImage"
-                data-dismiss="modal"
                 class="modal-upload-btn border-0"
                 type="button"
                 v-if="!predictionState"
@@ -121,8 +123,10 @@
 
 <script>
 import ImageColorPicker from 'vue-img-color-picker';
-import { mapGetters } from 'vuex';
 import ProgressBar from '@/components/main/ProgressBar.vue';
+import { mapGetters } from 'vuex';
+import { checkImageValid } from '@/api/authentication';
+import $ from 'jquery';
 
 export default {
   components: {
@@ -141,6 +145,7 @@ export default {
       cheekImage: null,
       loadingState: false,
       cheekErrorState: false,
+      imageErrorState: false,
       colorPicker: '',
       state: 0,
       predictionInfo: {},
@@ -186,6 +191,7 @@ export default {
     },
     async uploadImage(e) {
       this.cheekErrorState = false;
+      this.imageErrorState = false;
       const files = await e.target.files;
       if (this.checkImageType(files[0])) {
         return;
@@ -196,6 +202,7 @@ export default {
       e.stopPropagation();
       e.preventDefault();
       this.cheekErrorState = false;
+      this.imageErrorState = false;
       const files = await e.dataTransfer.files;
       if (this.checkImageType(files[0])) {
         return;
@@ -211,20 +218,30 @@ export default {
       if (this.imageUpload && this.selectedColorState) {
         this.$store.dispatch('updateImageUpload', this.imageUpload);
         this.$store.dispatch('updatePredictionInfo', this.predictionInfo);
+        this.state = 0;
+        $('#myModal').modal('hide');
         this.deleteImageUpload();
       }
     },
-    uploadNewImage() {
+    async uploadNewImage() {
       if (this.imageUpload && this.fileUpload) {
-        this.$store.dispatch('updateImageUpload', this.imageUpload);
-        this.$store.dispatch('updateFileUpload', this.fileUpload);
-        this.state = 0;
-        this.deleteImageUpload();
+        try {
+          await checkImageValid(this.fileUpload);
+          this.$store.dispatch('updateImageUpload', this.imageUpload);
+          this.$store.dispatch('updateFileUpload', this.fileUpload);
+          $('#myModal').modal('hide');
+          this.state = 0;
+          this.deleteImageUpload();
+        } catch (err) {
+          console.log('err');
+          this.imageErrorState = true;
+        }
       }
     },
     handleBackState() {
       this.handleChangeState(this.state - 1);
       this.cheekErrorState = false;
+      this.imageErrorState = false;
     },
     async findCheekImage() {
       await this.$store.dispatch('updateCheekImage', '');
@@ -240,7 +257,6 @@ export default {
           await this.readFileImg(this.getCheekImage.cheek_image);
           this.state = 2;
         } catch (err) {
-          console.log('err');
           this.cheekErrorState = true;
         }
         this.loadingState = false;

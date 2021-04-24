@@ -229,6 +229,8 @@ button {
   justify-content: flex-end;
   height: 100%;
   align-items: flex-end;
+  margin-right: 0.5rem;
+  // width: 0.5rem;
 }
 
 .star-card {
@@ -250,16 +252,16 @@ button {
     height: 6rem;
   }
   .brand-name {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
   }
   .serie-name {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
   .price {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
   .color-name {
-    font-size: 0.6rem;
+    font-size: 0.5rem;
   }
 }
 </style>

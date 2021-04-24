@@ -47,7 +47,9 @@ export default {
       // if (this.$route.path !== '/') {
       //   this.$router.push('/');
       // }
+      this.$router.go(this.$router.currentRoute);
       this.$router.push('/login').catch(() => {});
+
       // this.$router.push('/');
     },
     convertBase64Image(base64) {

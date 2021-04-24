@@ -21,7 +21,7 @@
         <div class="spinner-grow color-brown-100 spinner" role="status"></div>
       </div>
       <!-- <div v-show="imgResult && !fileUploadState"> -->
-      <div v-show="!fileUploadState && getMakeupByImageRef">
+      <div v-show="!fileUploadState && getMakeupByImageRef && imgResult">
         <div class="ref-result-container">
           <div class="ref-result-img">
             <img
@@ -30,9 +30,6 @@
               :class="{ hideImage: !imgResult }"
               class="image-upload fadeIn-2"
             />
-            <a class="add-simu-btn"
-              ><i class="fas fa-plus-circle"></i> Add to simulator collection</a
-            >
           </div>
           <div class="part-reference" v-if="getMakeupByImageRef">
             <div class="sketchy top-title">
@@ -58,6 +55,24 @@
                 :rgbColor="rgbColor"
                 class="fadeIn-3"
               ></RecommendPartCard>
+            </div>
+          </div>
+          <div class="alert-banner">
+            <div v-show="!sameSkinType(userType, refType)" class="alert alert-danger" role="alert">
+              <i class="fas fa-exclamation-circle"></i>
+              Notes: The foundation color(<span class="type-foundation">{{ refType }}</span
+              >) obtained from the reference image have
+              <span class="type-foundation">different</span> shades from your skin tones(<span
+                class="type-foundation"
+                >{{ userType }}</span
+              >).
+            </div>
+            <div class="alert alert-info" v-show="sameSkinType(userType, refType)" role="alert">
+              <i class="fas fa-exclamation-circle"></i>
+
+              Notes: Although the foundation color obtained from the reference image is the
+              <span class="type-foundation">same tone</span> as your skin,
+              <span class="type-foundation">beware of some different undertone shades.</span>
             </div>
           </div>
         </div>
@@ -90,6 +105,8 @@ export default {
       imgResult: null,
       fileUploadState: false,
       rgbColor: '',
+      userType: '',
+      refType: '',
       changeRecommendCardState: false,
     };
   },
@@ -114,6 +131,9 @@ export default {
     checkObjectNotEmpty(obj) {
       return Object.keys(obj).length !== 0;
     },
+    sameSkinType(user, imgRef) {
+      return user === imgRef;
+    },
     async uploadImageRef(imageUpload) {
       this.fileUploadState = true;
 
@@ -126,6 +146,9 @@ export default {
         blush_hex_color: this.getPredictionInfo.blush_hex_color,
       };
       await this.$store.dispatch('updateMakeupByImageRef', form);
+      this.userType = this.getMakeupByImageRef.ref_compare_user_skin_type.User_skin_type;
+      this.refType = this.getMakeupByImageRef.ref_compare_user_skin_type.Ref_skin_type;
+
       this.fileUploadState = false;
       this.scrollToElement('#imageRef');
     },
@@ -159,6 +182,10 @@ button {
 .spinner {
   width: 3rem;
   height: 3rem;
+}
+
+.type-foundation {
+  font-weight: 700;
 }
 
 .btn-body {

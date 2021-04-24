@@ -25,7 +25,7 @@ export default {
     UploadImageModal,
   },
   computed: {
-    ...mapGetters(['getImageUpload', 'getFileUpload', 'getUserRegisterInfo']),
+    ...mapGetters(['getImageUpload', 'getFileUpload', 'getUserRegisterInfo', 'getUserDetail']),
   },
   data() {
     return {
@@ -52,10 +52,10 @@ export default {
           userImage: this.getUserRegisterInfo.userImage,
           foundationList: JSON.stringify(this.getUserRegisterInfo.foundationList),
         };
-        console.log('from', form);
         await userResgister(form);
         await this.$store.dispatch('loadUserInfo', form);
-        this.$router.push('/login');
+        await this.$store.dispatch('updateUserToken', this.getUserDetail.token);
+        this.$router.push('/');
       }
     },
   },
