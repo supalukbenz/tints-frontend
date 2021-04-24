@@ -1,24 +1,27 @@
 <template>
-  <div class="register-bg">
-    <div class="register-container flex-center">
-      <div class="register-card">
-        <div class="step-regis-card">
-          <div :class="{ stepActive: stepRegis === 1 }" class="step-txt">
-            <i class="fas fa-circle circle-icon"></i> Register
+  <div>
+    <Banner bannerImg="user_feature-banner.png"></Banner>
+    <div class="register-bg">
+      <div class="register-container flex-center">
+        <div class="register-card">
+          <div class="step-regis-card">
+            <div :class="{ stepActive: stepRegis === 1 }" class="step-txt">
+              <i class="fas fa-circle circle-icon"></i> Register
+            </div>
+            <div class="step-line"></div>
+            <div :class="{ stepActive: stepRegis === 2 }" class="step-txt">
+              <i class="fas fa-circle circle-icon"></i> Questionnaire
+            </div>
+            <div class="step-line"></div>
+            <div :class="{ stepActive: stepRegis === 3 }" class="step-txt">
+              <i class="fas fa-circle circle-icon"></i> Upload Image
+            </div>
           </div>
-          <div class="step-line"></div>
-          <div :class="{ stepActive: stepRegis === 2 }" class="step-txt">
-            <i class="fas fa-circle circle-icon"></i> Questionnaire
+          <div class="regis-detail">
+            <RegisterForm v-show="stepRegis === 1"></RegisterForm>
+            <Questionare v-show="stepRegis === 2"></Questionare>
+            <UploadImageRegistry v-show="stepRegis === 3"></UploadImageRegistry>
           </div>
-          <div class="step-line"></div>
-          <div :class="{ stepActive: stepRegis === 3 }" class="step-txt">
-            <i class="fas fa-circle circle-icon"></i> Upload Image
-          </div>
-        </div>
-        <div class="regis-detail">
-          <RegisterForm v-show="stepRegis === 1"></RegisterForm>
-          <Questionare v-show="stepRegis === 2"></Questionare>
-          <UploadImageRegistry v-show="stepRegis === 3"></UploadImageRegistry>
         </div>
       </div>
     </div>
@@ -29,6 +32,7 @@
 import RegisterForm from '@/components/register/RegisterForm.vue';
 import Questionare from '@/components/register/Questionare.vue';
 import UploadImageRegistry from '@/components/register/UploadImageRegistry.vue';
+import Banner from '@/components/main/Banner.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -36,6 +40,7 @@ export default {
     RegisterForm,
     Questionare,
     UploadImageRegistry,
+    Banner,
   },
   computed: {
     ...mapGetters({ stepRegis: 'getRegisterState', userRegisInfo: 'getUserRegisterInfo' }),
@@ -44,17 +49,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .register-bg {
-//   background-image: url('../assets/images/banner/home_cosmetics.jpg');
-//   -webkit-background-size: cover;
-//   -moz-background-size: cover;
-//   -o-background-size: cover;
-//   background-size: cover;
-//   background-attachment: fixed;
-//   // height: 100%;
-//   height: 100vh;
-//   margin-bottom: -7rem;
-// }
+.register-bg {
+  background-image: url('../assets/images/banner/fabric_bg.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-attachment: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  margin-bottom: -6rem;
+}
 
 .register-container {
   padding: 5rem 1rem;

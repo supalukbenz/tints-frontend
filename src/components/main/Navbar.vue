@@ -64,6 +64,7 @@ export default {
   height: 5rem;
   align-items: center;
   padding: 0rem 2rem;
+  padding-left: 4rem;
   background-color: #fffcf7;
 }
 
@@ -104,6 +105,12 @@ export default {
   outline: none;
 }
 
+@media screen and (max-width: 930px) {
+  .nav-container {
+    padding-left: 3rem;
+  }
+}
+
 @media screen and (max-width: 892px) {
   .user-btn {
     width: 3rem;
@@ -113,6 +120,18 @@ export default {
   .user-img {
     width: 3rem;
     height: 3rem;
+  }
+}
+
+@media screen and (max-width: 730px) {
+  .nav-container {
+    padding-left: 2rem;
+  }
+}
+
+@media screen and (max-width: 496px) {
+  .nav-container {
+    padding-left: 1rem;
   }
 }
 </style>

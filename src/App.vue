@@ -41,6 +41,8 @@ body {
   -o-background-size: cover;
   background-size: cover;
   background-attachment: fixed;
+  margin: 0;
+  padding: 0;
   height: 100%;
 }
 

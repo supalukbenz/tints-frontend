@@ -170,6 +170,10 @@ button {
   display: flex;
 }
 
+/* .vueperslide {
+  display: flex;
+} */
+
 .transition-none:hover {
   transition: none;
   /* box-shadow: none; */
@@ -217,10 +221,10 @@ button {
 
 @media screen and (max-width: 556px) {
   .vueperslides--fixed-height {
-    height: 18rem;
+    height: 17rem;
   }
   .content-item {
-    height: 18rem;
+    height: 17rem;
   }
   .carousel-width {
     width: 80%;
@@ -232,6 +236,24 @@ button {
   }
   .like-icon {
     font-size: 0.7rem;
+  }
+}
+
+@media screen and (max-width: 462px) {
+  .vueperslides--fixed-height {
+    height: 17rem;
+  }
+  .content-item {
+    height: 17rem;
+  }
+}
+
+@media screen and (max-width: 362px) {
+  .vueperslides--fixed-height {
+    height: 16rem;
+  }
+  .content-item {
+    height: 16rem;
   }
 }
 </style>

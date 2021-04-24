@@ -9,6 +9,8 @@
   position: relative;
   bottom: 0;
   width: 100%;
+  left: 0px;
+  height: 50px;
 }
 
 .footer-bg {

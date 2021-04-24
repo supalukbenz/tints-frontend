@@ -1,21 +1,10 @@
 <template>
-  <div v-if="loadingState" class="loading-container">
+  <div class="loading-container">
     <div class="lds-heart"><div></div></div>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    loadingState: Boolean,
-  },
-};
-</script>
-
 <style lang="scss" scoped>
-.loading-container {
-  position: absolute;
-}
 .lds-heart {
   display: inline-block;
   position: relative;

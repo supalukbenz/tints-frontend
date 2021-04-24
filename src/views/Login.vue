@@ -1,38 +1,41 @@
 <template>
-  <div class="login-bg">
-    <div class="login-container flex-center">
-      <div class="wrapper">
-        <div class="login-banner flex-center">
-          <div class="welcome-txt">Welcome!</div>
-          <router-link to="/register" type="button" class="register-btn form-btn"
-            >Sign up</router-link
-          >
-        </div>
-        <div class="login-form flex-center">
-          <div>
-            <div class="login-title">Member Login</div>
-            <div class="input-form">
-              <div class="email-title title-form">Email</div>
-              <input
-                type="email"
-                :class="{ borderRed: clickedLoginState && email === '' }"
-                class="email-form form-input"
-                v-model="email"
-              />
-            </div>
-            <div class="input-form">
-              <div class="password-title title-form">Password</div>
-              <input
-                type="password"
-                :class="{ borderRed: clickedLoginState && password === '' }"
-                class="password-form form-input"
-                v-model="password"
-              />
-            </div>
+  <div>
+    <Banner bannerImg="user_feature-banner.png"></Banner>
+    <div class="login-bg">
+      <div class="login-container flex-center">
+        <div class="wrapper">
+          <div class="login-banner flex-center">
+            <div class="welcome-txt">Welcome!</div>
+            <router-link to="/register" type="button" class="register-btn form-btn"
+              >Sign up</router-link
+            >
           </div>
-          <div v-show="loginErrorState" class="alert-error">* Incorrect email or password</div>
-          <div>
-            <button @click="handleLogin" type="button" class="login-btn form-btn">Login</button>
+          <div class="login-form flex-center">
+            <div>
+              <div class="login-title">Member Login</div>
+              <div class="input-form">
+                <div class="email-title title-form">Email</div>
+                <input
+                  type="email"
+                  :class="{ borderRed: clickedLoginState && email === '' }"
+                  class="email-form form-input"
+                  v-model="email"
+                />
+              </div>
+              <div class="input-form">
+                <div class="password-title title-form">Password</div>
+                <input
+                  type="password"
+                  :class="{ borderRed: clickedLoginState && password === '' }"
+                  class="password-form form-input"
+                  v-model="password"
+                />
+              </div>
+            </div>
+            <div v-show="loginErrorState" class="alert-error">* Incorrect email or password</div>
+            <div>
+              <button @click="handleLogin" type="button" class="login-btn form-btn">Login</button>
+            </div>
           </div>
         </div>
       </div>
@@ -41,9 +44,13 @@
 </template>
 
 <script>
+import Banner from '@/components/main/Banner.vue';
 import { mapGetters } from 'vuex';
 
 export default {
+  components: {
+    Banner,
+  },
   data() {
     return {
       email: '',
@@ -98,14 +105,17 @@ button {
 }
 
 .login-bg {
-  background-image: url('../assets/images/banner/home_cosmetics.jpg');
+  background-image: url('../assets/images/banner/fabric_bg.jpg');
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   background-attachment: fixed;
+  width: 100%;
   height: 100%;
-  margin-bottom: -7rem;
+  top: 0px;
+  left: 0px;
+  margin-bottom: -6rem;
 }
 
 .login-container {

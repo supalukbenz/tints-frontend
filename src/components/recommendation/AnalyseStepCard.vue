@@ -1,7 +1,9 @@
 <template>
   <div class="analyse-part">
     <div class="user-img-card fadeIn" v-show="!makeupRecommended">
-      <LoadingAnalysis class="loading-content" v-if="loadingState"></LoadingAnalysis>
+      <LoadingStage v-show="loadingState" title="Analyzing">
+        <LoadingAnalysis class="loading-content"></LoadingAnalysis>
+      </LoadingStage>
       <button v-if="!loadingState" @click="handleAnalysis" type="button" class="analyse-btn">
         Click to Analyse Image
       </button>
@@ -42,6 +44,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import LoadingStage from '@/components/main/LoadingStage.vue';
 import LoadingAnalysis from '@/components/recommendation/LoadingAnalysis.vue';
 import TopRecommend from '@/components/recommendation/TopRecommend.vue';
 import $ from 'jquery';
@@ -68,6 +71,7 @@ export default {
   components: {
     LoadingAnalysis,
     TopRecommend,
+    LoadingStage,
   },
   methods: {
     async handleAnalysis() {
@@ -113,10 +117,10 @@ export default {
   z-index: 30;
 }
 
-.loading-content {
-  position: absolute;
-  z-index: 20;
-}
+// .loading-content {
+//   position: absolute;
+//   z-index: 20;
+// }
 
 .analyse-btn {
   background: #353d4e;

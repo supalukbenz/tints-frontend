@@ -1,6 +1,13 @@
 <template>
   <div>
     <Banner bannerImg="makeup-by-ref_banner.png"></Banner>
+    <LoadingStage v-show="fileUploadState" title="Processing">
+      <div class="mt-5 d-flex justify-content-center">
+        <div class="spinner-grow color-green-200 mr-3 spinner" role="status"></div>
+        <div class="spinner-grow color-green-100 mr-3 spinner" role="status"></div>
+        <div class="spinner-grow color-brown-100 spinner" role="status"></div>
+      </div>
+    </LoadingStage>
     <div class="upload-img-border h-100">
       <div class="upload-img-container">
         <div class="upload-img-body">
@@ -15,11 +22,11 @@
           </div>
         </div>
       </div>
-      <div v-if="fileUploadState" class="mt-5 d-flex justify-content-center">
+      <!-- <div v-if="fileUploadState" class="mt-5 d-flex justify-content-center">
         <div class="spinner-grow color-green-200 mr-3 spinner" role="status"></div>
         <div class="spinner-grow color-green-100 mr-3 spinner" role="status"></div>
         <div class="spinner-grow color-brown-100 spinner" role="status"></div>
-      </div>
+      </div> -->
       <!-- <div v-show="imgResult && !fileUploadState"> -->
       <div v-show="!fileUploadState && getMakeupByImageRef && imgResult">
         <div class="ref-result-container">
@@ -85,6 +92,7 @@
 <script>
 import $ from 'jquery';
 import { mapActions, mapGetters } from 'vuex';
+import LoadingStage from '@/components/main/LoadingStage.vue';
 import Banner from '@/components/main/Banner.vue';
 import RecommendPartCard from '@/components/makeupRef/RecommendPartCard.vue';
 import ReferenceTab from '@/components/makeupRef/ReferenceTab.vue';
@@ -99,6 +107,7 @@ export default {
     Banner,
     ExampleCard,
     UploadImageModal,
+    LoadingStage,
   },
   data() {
     return {

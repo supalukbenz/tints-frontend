@@ -34,7 +34,9 @@
             />
           </div>
         </div>
-        <Loading :loadingState="loadingState"></Loading>
+        <LoadingStage v-show="loadingState" title="Simulating makeup">
+          <LoadingSimulation></LoadingSimulation>
+        </LoadingStage>
       </div>
       <div class="selected-makeup">
         <div class="circle-img">
@@ -95,7 +97,8 @@
 import Banner from '@/components/main/Banner.vue';
 import UploadImageModal from '@/components/main/UploadImageModal.vue';
 import SimulatorTab from '@/components/simulator/SimulatorTab.vue';
-import Loading from '@/components/main/Loading.vue';
+import LoadingSimulation from '@/components/simulator/LoadingSimulation.vue';
+import LoadingStage from '@/components/main/LoadingStage.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -103,7 +106,8 @@ export default {
     Banner,
     UploadImageModal,
     SimulatorTab,
-    Loading,
+    LoadingSimulation,
+    LoadingStage,
   },
   data() {
     return {
