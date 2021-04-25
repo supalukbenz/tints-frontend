@@ -23,7 +23,7 @@ export default {
   height: 100%;
   top: 0px;
   left: 0px;
-  z-index: 100;
+  z-index: 2000;
   display: flex;
   justify-content: center;
   align-items: center;

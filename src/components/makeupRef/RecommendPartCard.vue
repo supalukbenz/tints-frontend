@@ -199,7 +199,7 @@ button {
 
 .img-ref {
   max-width: 100%;
-  height: 10rem;
+  max-height: 10rem;
   margin: 0.5rem;
 }
 

@@ -199,7 +199,7 @@ button {
 }
 
 .img-item {
-  height: 9rem;
+  max-height: 9rem;
   max-width: 100%;
 }
 

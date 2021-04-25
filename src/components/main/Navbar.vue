@@ -91,18 +91,21 @@ export default {
 }
 
 .user-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  // width: 50px;
+  max-height: 50px;
+  // border-radius: 50%;
+  // overflow: hidden;
 }
 
 .user-btn {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  background: #edb194;
   padding: 0;
   border: none;
   outline: none;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 930px) {

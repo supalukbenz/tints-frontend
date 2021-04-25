@@ -263,7 +263,7 @@ button {
 }
 
 .selected-simu-img {
-  height: 4rem;
+  max-height: 4rem;
   font-size: 3rem;
   max-width: 100%;
   color: #cfcfcf;
@@ -377,7 +377,7 @@ button {
     margin: 0.2rem;
   }
   .selected-simu-img {
-    height: 3rem;
+    max-height: 3rem;
     font-size: 2rem;
   }
 

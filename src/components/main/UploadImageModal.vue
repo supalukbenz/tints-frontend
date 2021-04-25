@@ -1,5 +1,8 @@
 <template>
   <div>
+    <LoadingStage v-show="detectFaceStage" title="Detecting face">
+      <LoadingAnalysis></LoadingAnalysis>
+    </LoadingStage>
     <button
       v-if="predictionState || registerState"
       class="m-0 img-label border-0"
@@ -37,18 +40,23 @@
             ></ProgressBar>
             <div v-if="loadingState" class="loading-bar">
               <div class="lds-heart"><div></div></div>
-              Loading...
             </div>
             <img
               :src="imageUpload"
               :class="{ hideImage: !imageUpload || state !== 1 }"
               class="image-upload"
             />
-            <div v-show="cheekErrorState" class="alert-txt">
+            <!-- <div v-show="imageErrorState" class="alert-txt">
               * The system cannot identify facial on the image
-            </div>
-            <div v-show="imageErrorState" class="alert-txt">
-              * The system cannot identify facial on the image
+            </div> -->
+            <div
+              v-show="imageErrorState || cheekErrorState"
+              class="alert alert-danger alert-banner"
+              role="alert"
+            >
+              <i class="fas fa-exclamation-circle"></i>
+              <span class="alert-txt"> The system cannot identify facial on the image,</span>
+              <span class="alert-detail"> please go back to change image</span>
             </div>
             <div v-if="cheekImage && state === 2 && !loadingState">
               <div class="pick-color">
@@ -123,6 +131,8 @@
 
 <script>
 import ImageColorPicker from 'vue-img-color-picker';
+import LoadingAnalysis from '@/components/recommendation/LoadingAnalysis.vue';
+import LoadingStage from '@/components/main/LoadingStage.vue';
 import ProgressBar from '@/components/main/ProgressBar.vue';
 import { mapGetters } from 'vuex';
 import { checkImageValid } from '@/api/authentication';
@@ -132,6 +142,8 @@ export default {
   components: {
     ImageColorPicker,
     ProgressBar,
+    LoadingStage,
+    LoadingAnalysis,
   },
   props: {
     titleButton: String,
@@ -146,6 +158,7 @@ export default {
       loadingState: false,
       cheekErrorState: false,
       imageErrorState: false,
+      detectFaceStage: false,
       colorPicker: '',
       state: 0,
       predictionInfo: {},
@@ -226,7 +239,9 @@ export default {
     async uploadNewImage() {
       if (this.imageUpload && this.fileUpload) {
         try {
+          this.detectFaceStage = true;
           await checkImageValid(this.fileUpload);
+          this.detectFaceStage = false;
           this.$store.dispatch('updateImageUpload', this.imageUpload);
           this.$store.dispatch('updateFileUpload', this.fileUpload);
           $('#myModal').modal('hide');
@@ -235,6 +250,7 @@ export default {
         } catch (err) {
           console.log('err');
           this.imageErrorState = true;
+          this.detectFaceStage = false;
         }
       }
     },
@@ -253,11 +269,14 @@ export default {
           userID: this.getUserInfo.userID,
         };
         try {
+          this.detectFaceStage = true;
           await this.$store.dispatch('loadCheekImage', form);
+          this.detectFaceStage = false;
           await this.readFileImg(this.getCheekImage.cheek_image);
           this.state = 2;
         } catch (err) {
           this.cheekErrorState = true;
+          this.detectFaceStage = false;
         }
         this.loadingState = false;
       }
@@ -270,6 +289,7 @@ export default {
 button {
   outline: none;
 }
+
 .modal-upload-img {
   font-weight: 800;
   cursor: pointer;
@@ -303,10 +323,18 @@ button {
 }
 
 .alert-txt {
-  margin-top: 0.5rem;
   color: #a83f39;
   font-size: 0.9rem;
   font-weight: 800;
+}
+
+.alert-detail {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.alert-banner {
+  margin: 1rem 0;
 }
 
 .modal-back-btn:hover {
@@ -346,7 +374,7 @@ button {
 
 .image-upload {
   max-width: 100%;
-  height: 25rem;
+  max-height: 25rem;
 }
 
 .img-label {
@@ -484,6 +512,13 @@ button {
       width: 2rem;
       height: 2rem;
     }
+  }
+  .alert-txt {
+    font-size: 0.7rem;
+  }
+
+  .alert-detail {
+    font-size: 0.7rem;
   }
 
   .change-img-link {

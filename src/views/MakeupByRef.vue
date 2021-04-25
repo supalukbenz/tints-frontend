@@ -22,12 +22,6 @@
           </div>
         </div>
       </div>
-      <!-- <div v-if="fileUploadState" class="mt-5 d-flex justify-content-center">
-        <div class="spinner-grow color-green-200 mr-3 spinner" role="status"></div>
-        <div class="spinner-grow color-green-100 mr-3 spinner" role="status"></div>
-        <div class="spinner-grow color-brown-100 spinner" role="status"></div>
-      </div> -->
-      <!-- <div v-show="imgResult && !fileUploadState"> -->
       <div v-show="!fileUploadState && getMakeupByImageRef && imgResult">
         <div class="ref-result-container">
           <div class="ref-result-img">

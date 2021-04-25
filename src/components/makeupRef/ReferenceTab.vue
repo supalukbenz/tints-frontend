@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="filter-container">
+    <!-- <div class="filter-container">
       <div class="btn-group">
         <button
           type="button"
@@ -20,7 +20,7 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
         <a class="nav-link" :class="{ active: skinActive }" @click="handleSkinActive"

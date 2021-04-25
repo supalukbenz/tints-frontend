@@ -104,19 +104,19 @@ button {
   border-color: #a83f39 !important;
 }
 
-.login-bg {
-  background-image: url('../assets/images/banner/fabric_bg.jpg');
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-attachment: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0px;
-  left: 0px;
-  margin-bottom: -6rem;
-}
+// .login-bg {
+//   background-image: url('../assets/images/banner/fabric_bg.jpg');
+//   -webkit-background-size: cover;
+//   -moz-background-size: cover;
+//   -o-background-size: cover;
+//   background-size: cover;
+//   background-attachment: fixed;
+//   width: 100%;
+//   height: 100%;
+//   top: 0px;
+//   left: 0px;
+//   margin-bottom: -10rem;
+// }
 
 .login-container {
   // margin: 2rem 0;

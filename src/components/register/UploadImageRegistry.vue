@@ -1,28 +1,37 @@
 <template>
-  <div class="upload-image-container">
-    <div v-show="!imageUpload">
-      <UploadImageModal :registerState="true" titleButton="Upload Image"></UploadImageModal>
-    </div>
-    <div v-show="imageUpload" class="new-img-part">
-      <a @click="handleUploadNewImg" class="upload-new-btn">Upload new image</a>
-    </div>
-    <div class="img-container">
-      <img v-show="imageUpload" class="user-img fadeIn" :src="imageUpload" alt="RegisImg" />
-    </div>
-    <div v-show="imageUpload" class="btn-feature">
-      <button @click="handleSubmitRegis" type="button" class="submit-btn">Submit</button>
+  <div>
+    <LoadingStage v-show="loadingLoginStage" title="Loading">
+      <LoadingSimulation></LoadingSimulation>
+    </LoadingStage>
+    <div class="upload-image-container">
+      <div v-show="!imageUpload">
+        <UploadImageModal :registerState="true" titleButton="Upload Image"></UploadImageModal>
+      </div>
+      <div v-show="imageUpload" class="new-img-part">
+        <a @click="handleUploadNewImg" class="upload-new-btn">Upload new image</a>
+      </div>
+      <div class="img-container">
+        <img v-show="imageUpload" class="user-img fadeIn" :src="imageUpload" alt="RegisImg" />
+      </div>
+      <div v-show="imageUpload" class="btn-feature">
+        <button @click="handleSubmitRegis" type="button" class="submit-btn">Submit</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import UploadImageModal from '@/components/main/UploadImageModal.vue';
+import LoadingSimulation from '@/components/simulator/LoadingSimulation.vue';
+import LoadingStage from '@/components/main/LoadingStage.vue';
 import { mapGetters } from 'vuex';
 import { userResgister } from '@/api/authentication';
 
 export default {
   components: {
     UploadImageModal,
+    LoadingStage,
+    LoadingSimulation,
   },
   computed: {
     ...mapGetters(['getImageUpload', 'getFileUpload', 'getUserRegisterInfo', 'getUserDetail']),
@@ -30,6 +39,7 @@ export default {
   data() {
     return {
       imageUpload: null,
+      loadingLoginStage: false,
     };
   },
   methods: {
@@ -40,7 +50,7 @@ export default {
     },
     async handleSubmitRegis() {
       if (this.imageUpload) {
-        console.log('up');
+        this.loadingLoginStage = true;
         let updateUser = this.getUserRegisterInfo;
         updateUser.userImage = this.getFileUpload;
         await this.$store.dispatch('updateUserRegisterInfo', updateUser);
@@ -55,6 +65,7 @@ export default {
         await userResgister(form);
         await this.$store.dispatch('loadUserInfo', form);
         await this.$store.dispatch('updateUserToken', this.getUserDetail.token);
+        this.loadingLoginStage = false;
         this.$router.push('/');
       }
     },
