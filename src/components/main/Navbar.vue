@@ -114,18 +114,6 @@ export default {
   }
 }
 
-@media screen and (max-width: 892px) {
-  .user-btn {
-    width: 3rem;
-    height: 3rem;
-  }
-
-  .user-img {
-    width: 3rem;
-    height: 3rem;
-  }
-}
-
 @media screen and (max-width: 730px) {
   .nav-container {
     padding-left: 2rem;

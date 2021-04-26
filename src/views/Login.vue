@@ -191,6 +191,7 @@ button {
 
 .register-btn {
   border: 2px solid #ffffff !important;
+  background: #edb194;
   padding: 0.2rem 3rem;
 }
 
@@ -233,6 +234,10 @@ button {
 
   .login-title {
     font-size: 1.5rem;
+  }
+
+  .welcome-txt {
+    font-size: 1.2rem;
   }
 
   // .form-btn {

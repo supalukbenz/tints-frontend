@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <Navbar></Navbar>
-    <router-view />
-    <Footer></Footer>
+    <div class="wrapper-container">
+      <Navbar></Navbar>
+      <router-view />
+      <Footer></Footer>
+    </div>
   </div>
 </template>
 
@@ -44,6 +46,13 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+.wrapper-container {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -10rem;
 }
 
 #app {

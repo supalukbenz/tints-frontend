@@ -10,7 +10,9 @@
   bottom: 0;
   width: 100%;
   left: 0px;
-  height: 50px;
+  height: 10rem;
+  display: flex;
+  align-items: flex-end;
 }
 
 .footer-bg {
