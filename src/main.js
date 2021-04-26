@@ -11,7 +11,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 
 Vue.config.productionTip = false;
-axios.defaults.baseURL = 'https://tint-api-um7re.ondigitalocean.app/api/';
+axios.defaults.baseURL = 'https://tint-api-3774d.ondigitalocean.app/api/';
 
 new Vue({
   router,
