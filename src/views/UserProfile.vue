@@ -327,6 +327,7 @@ button {
 .detail-container {
   // background: #eceaea;
   padding: 4rem 0;
+  margin-top: 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;

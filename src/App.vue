@@ -3,8 +3,8 @@
     <div class="wrapper-container">
       <Navbar></Navbar>
       <router-view />
-      <Footer></Footer>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 
@@ -49,10 +49,9 @@ body {
 }
 
 .wrapper-container {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin: 0 auto -10rem;
+  // height: 100%;
+  // margin: 0 auto -10rem;
+  min-height: calc(100vh - 15rem);
 }
 
 #app {
@@ -62,7 +61,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  min-height: 100%;
+  height: 100%;
 }
 
 button {

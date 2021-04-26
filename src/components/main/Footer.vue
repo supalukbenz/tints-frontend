@@ -10,7 +10,7 @@
   bottom: 0;
   width: 100%;
   left: 0px;
-  height: 10rem;
+  height: 15rem;
   display: flex;
   align-items: flex-end;
 }

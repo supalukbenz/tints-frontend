@@ -275,6 +275,7 @@ export default {
           await this.readFileImg(this.getCheekImage.cheek_image);
           this.state = 2;
         } catch (err) {
+          this.loadingState = false;
           this.cheekErrorState = true;
           this.detectFaceStage = false;
         }
