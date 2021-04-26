@@ -11,8 +11,7 @@ async function getLipstickListByImageRef(form) {
 async function getMakeupDetailByImageRef(form) {        
   var bodyFormData = new FormData();
   bodyFormData.append('filename', form.filename);  
-  // bodyFormData.append('blush_hex_color', form.blush_hex_color);    
-  bodyFormData.append('blush_hex_color', '#7e554a');      
+  bodyFormData.append('blush_hex_color', form.blush_hex_color);      
   const response = await axios.post('/v2/get/prediction/color', bodyFormData);    
   return response.data;
 }

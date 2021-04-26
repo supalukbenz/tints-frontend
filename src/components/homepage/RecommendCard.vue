@@ -152,12 +152,18 @@ export default {};
   .recommend-detail {
     padding: 0;
   }
+  .recommend-subtitle {
+    font-size: 0.8rem;
+  }
 }
 
 @media screen and (max-width: 400px) {
   .img-recommend {
     height: 8rem;
     margin: 0 0.2rem;
+  }
+  .recommend-subtitle {
+    font-size: 0.7rem;
   }
 }
 </style>

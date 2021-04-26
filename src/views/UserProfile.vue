@@ -196,14 +196,6 @@ export default {
       ) {
         return;
       }
-      // if (this.passwordInput !== this.getUserInfo.password) {
-      //   this.sameNewPasswordState = false;
-      //   this.newPassword = '';
-      //   this.reNewPassword = '';
-      //   this.passwordIncorrect = true;
-      //   this.passwordInput = '';
-      //   return;
-      // }
       if (this.sameNewPasswordState) {
         const form = {
           currentPassword: this.passwordInput,
@@ -215,7 +207,7 @@ export default {
 
           const updateUser = await getUserInformation();
           await this.$store.dispatch('updateUserInfo', updateUser);
-          // await this.$store.dispatch('updateUserProfile', updateUser);
+
           this.passwordInput = '';
           this.newPassword = '';
           this.reNewPassword = '';
