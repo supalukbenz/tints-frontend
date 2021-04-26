@@ -63,7 +63,7 @@ export default {
 }
 
 .ex-image {
-  height: 20rem;
+  max-height: 20rem;
   max-width: 100%;
 }
 
@@ -93,7 +93,16 @@ export default {
     font-size: 0.8rem;
   }
   .ex-image {
-    height: 15rem;
+    max-height: 15rem;
+  }
+}
+
+@media screen and (max-width: 462px) {
+  .ex-image {
+    max-height: 12rem;
+  }
+  .condition-detail {
+    font-size: 0.7rem;
   }
 }
 </style>

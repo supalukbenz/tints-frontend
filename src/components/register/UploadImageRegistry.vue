@@ -6,6 +6,7 @@
     <div class="upload-image-container">
       <div v-show="!imageUpload">
         <UploadImageModal :registerState="true" titleButton="Upload Image"></UploadImageModal>
+        <ExampleCard class="example-card"></ExampleCard>
       </div>
       <div v-show="imageUpload" class="new-img-part">
         <a @click="handleUploadNewImg" class="upload-new-btn">Upload new image</a>
@@ -24,6 +25,7 @@
 import UploadImageModal from '@/components/main/UploadImageModal.vue';
 import LoadingSimulation from '@/components/simulator/LoadingSimulation.vue';
 import LoadingStage from '@/components/main/LoadingStage.vue';
+import ExampleCard from '@/components/makeupRef/ExampleCard.vue';
 import { mapGetters } from 'vuex';
 import { userResgister } from '@/api/authentication';
 
@@ -32,6 +34,7 @@ export default {
     UploadImageModal,
     LoadingStage,
     LoadingSimulation,
+    ExampleCard,
   },
   computed: {
     ...mapGetters(['getImageUpload', 'getFileUpload', 'getUserRegisterInfo', 'getUserDetail']),
@@ -54,7 +57,7 @@ export default {
         let updateUser = this.getUserRegisterInfo;
         updateUser.userImage = this.getFileUpload;
         await this.$store.dispatch('updateUserRegisterInfo', updateUser);
-        // this.$store.dispatch('updateRegisterState', 1);        
+        // this.$store.dispatch('updateRegisterState', 1);
         const form = {
           email: this.getUserRegisterInfo.email,
           password: this.getUserRegisterInfo.password,
@@ -112,6 +115,10 @@ export default {
   font-size: 0.8rem;
   color: #222;
   text-decoration: underline;
+}
+
+.example-card {
+  margin-top: 1rem;
 }
 
 .submit-btn {
