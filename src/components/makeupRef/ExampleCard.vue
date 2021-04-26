@@ -12,6 +12,10 @@
     <div class="condition-detail">
       <div class="mb-2">
         <i class="fas fa-check condition-icon"></i
+        ><span class="condition-txt"> Straight portrait </span>
+      </div>
+      <div class="mb-2">
+        <i class="fas fa-check condition-icon"></i
         ><span class="condition-txt"> Clear facial structure </span>
       </div>
       <div>
