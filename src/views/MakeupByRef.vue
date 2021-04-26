@@ -92,6 +92,7 @@ import RecommendPartCard from '@/components/makeupRef/RecommendPartCard.vue';
 import ReferenceTab from '@/components/makeupRef/ReferenceTab.vue';
 import ExampleCard from '@/components/makeupRef/ExampleCard.vue';
 import UploadImageModal from '@/components/main/UploadImageModal.vue';
+import axios from 'axios';
 // import ItemCard from '@/components/makeupRef/ItemCard.vue';
 
 export default {
@@ -114,7 +115,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getMakeupByImageRef', 'getImageUpload', 'getUserInfo', 'getPredictionInfo']),
+    ...mapGetters([
+      'getMakeupByImageRef',
+      'getImageUpload',
+      'getUserInfo',
+      'getPredictionInfo',
+      'getUserToken',
+    ]),
   },
   methods: {
     ...mapActions(['updateImageReference']),
@@ -157,6 +164,7 @@ export default {
     },
   },
   mounted() {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${this.getUserToken}`;
     window.addEventListener('resize', this.myEventHandler);
   },
   destroyed() {

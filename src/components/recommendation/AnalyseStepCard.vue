@@ -48,6 +48,7 @@ import LoadingStage from '@/components/main/LoadingStage.vue';
 import LoadingAnalysis from '@/components/recommendation/LoadingAnalysis.vue';
 import TopRecommend from '@/components/recommendation/TopRecommend.vue';
 import $ from 'jquery';
+import axios from 'axios';
 
 export default {
   data() {
@@ -66,6 +67,7 @@ export default {
       'getLipRecommended',
       'getBlushRecommended',
       'getFoundationRecommended',
+      'getUserToken',
     ]),
   },
   components: {
@@ -75,6 +77,7 @@ export default {
   },
   methods: {
     async handleAnalysis() {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${this.getUserToken}`;
       this.loadingState = true;
       await this.$store.dispatch('loadMakeupRecommended');
       this.makeupRecommended = await this.getMakeupRecommended;

@@ -46,6 +46,7 @@
 <script>
 import Banner from '@/components/main/Banner.vue';
 import { mapGetters } from 'vuex';
+import axios from 'axios';
 
 export default {
   components: {
@@ -77,6 +78,8 @@ export default {
         try {
           await this.$store.dispatch('loadUserInfo', form);
           await this.$store.dispatch('updateUserToken', this.user.token);
+          axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+          this.$router.go(this.$router.currentRoute);
           this.$router.push('/');
           this.$router.go(this.$router.currentRoute);
         } catch (err) {

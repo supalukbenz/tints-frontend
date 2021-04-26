@@ -14,6 +14,8 @@ import Banner from '@/components/main/Banner.vue';
 import MakeupByRefCard from '@/components/homepage/MakeupByRefCard.vue';
 import SimulatorCard from '@/components/homepage/SimulatorCard.vue';
 import RecommendCard from '@/components/homepage/RecommendCard.vue';
+import axios from 'axios';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -21,6 +23,12 @@ export default {
     MakeupByRefCard,
     SimulatorCard,
     RecommendCard,
+  },
+  computed: {
+    ...mapGetters(['getUserToken']),
+  },
+  mounted() {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${this.getUserToken}`;
   },
 };
 </script>

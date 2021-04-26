@@ -9,6 +9,7 @@
 import Banner from '@/components/main/Banner.vue';
 import AnalyseStepCard from '@/components/recommendation/AnalyseStepCard.vue';
 
+
 export default {
   components: {
     Banner,
