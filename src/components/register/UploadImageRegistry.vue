@@ -54,8 +54,7 @@ export default {
         let updateUser = this.getUserRegisterInfo;
         updateUser.userImage = this.getFileUpload;
         await this.$store.dispatch('updateUserRegisterInfo', updateUser);
-        // this.$store.dispatch('updateRegisterState', 1);
-        //registerpath
+        // this.$store.dispatch('updateRegisterState', 1);        
         const form = {
           email: this.getUserRegisterInfo.email,
           password: this.getUserRegisterInfo.password,

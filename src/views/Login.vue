@@ -1,6 +1,9 @@
 <template>
   <div>
     <Banner bannerImg="user_feature-banner.png"></Banner>
+    <LoadingStage v-show="loadingLoginStage" title="Loading">
+      <LoadingSimulation></LoadingSimulation>
+    </LoadingStage>
     <div class="login-bg">
       <div class="login-container flex-center">
         <div class="wrapper">
@@ -45,12 +48,16 @@
 
 <script>
 import Banner from '@/components/main/Banner.vue';
+import LoadingSimulation from '@/components/simulator/LoadingSimulation.vue';
+import LoadingStage from '@/components/main/LoadingStage.vue';
 import { mapGetters } from 'vuex';
 import axios from 'axios';
 
 export default {
   components: {
     Banner,
+    LoadingStage,
+    LoadingSimulation,
   },
   data() {
     return {
@@ -58,6 +65,7 @@ export default {
       password: '',
       loginErrorState: false,
       clickedLoginState: false,
+      loadingLoginStage: false,
     };
   },
   computed: {
@@ -70,6 +78,7 @@ export default {
     async handleLogin() {
       this.clickedLoginState = true;
       if (this.email !== '' && this.password !== '') {
+        this.loadingLoginStage = true;
         this.loginErrorState = false;
         const form = {
           email: this.email,
@@ -78,12 +87,14 @@ export default {
         try {
           await this.$store.dispatch('loadUserInfo', form);
           await this.$store.dispatch('updateUserToken', this.user.token);
+          this.loadingLoginStage = false;
           axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
           this.$router.go(this.$router.currentRoute);
           this.$router.push('/');
           this.$router.go(this.$router.currentRoute);
         } catch (err) {
           this.loginErrorState = true;
+          this.loadingLoginStage = false;
         }
       }
     },

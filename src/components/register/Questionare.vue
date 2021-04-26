@@ -194,7 +194,7 @@ a {
 
 .btn-save-change {
   font-size: 0.9rem;
-  background: #9dc99c;
+  background: #28a745;  
   color: #ffffff;
   font-weight: 800;
 }

@@ -192,7 +192,7 @@ button {
 }
 
 .check-icon {
-  color: #9dc99c;
+  color: #28a745;
   margin-left: 0.2rem;
 }
 

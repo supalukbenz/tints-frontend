@@ -10,8 +10,11 @@
         <img class="img-user" src="@/assets/images/mockup/user.jpg" />
       </div> -->
       <div class="recommned-content">
-        <div class="recommend-title">ANALYZE & RECOMMEND</div>
-        <div class="recommend-subtitle">the perfect makeup tone for you</div>
+        <div class="recommend-title">PRODUCTS ANALYZE & SUGGESTION</div>
+        <div class="recommend-subtitle">
+          " Suggest the product based on suitable colors for you by extracting their skin color and
+          finding the tone of it "
+        </div>
         <div class="recommend-btn-container">
           <router-link class="recommend-btn" to="/recommendation">Recommend</router-link>
         </div>
@@ -25,6 +28,8 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+// @import url('https://fonts.googleapis.com/css2?family=Norican&display=swap');
+
 .recommend-container {
   // background-image: url('../../assets/images/card/recommend-bg.png');
   // background-position: center;
@@ -33,6 +38,15 @@ export default {};
   background: #efe5e3;
   // height: calc(70vmin * 9 / 16);
   margin-top: 4rem;
+}
+
+.recommend-subtitle {
+  // font-family: 'Norican', cursive;
+  font-size: 0.9rem;
+  padding: 1rem;
+  border: 1px solid;
+  margin: 0.5rem;
+  // font-weight: 500;
 }
 
 .recommend-detail {

@@ -58,6 +58,7 @@ export default {
       lipBg: '#d8b0b8',
       blushBg: '#E8E4DF',
       makeupRecommended: null,
+      errorStage: false,
     };
   },
   computed: {
@@ -77,12 +78,17 @@ export default {
   },
   methods: {
     async handleAnalysis() {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${this.getUserToken}`;
-      this.loadingState = true;
-      await this.$store.dispatch('loadMakeupRecommended');
-      this.makeupRecommended = await this.getMakeupRecommended;
-      this.scrollToElement('#completeBanner');
-      this.loadingState = false;
+      this.errorStage = false;
+      try {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${this.getUserToken}`;
+        this.loadingState = true;
+        await this.$store.dispatch('loadMakeupRecommended');
+        this.makeupRecommended = await this.getMakeupRecommended;
+        this.scrollToElement('#completeBanner');
+        this.loadingState = false;
+      } catch (err) {
+        this.errorStage = true;
+      }
     },
     scrollToElement(id) {
       this.$nextTick(() => {

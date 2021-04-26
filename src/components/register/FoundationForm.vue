@@ -169,7 +169,7 @@ export default {
 }
 
 .selectedItem {
-  border-color: #9dc99c !important;
+  border-color: #28a745 !important;
 }
 
 .notSelectedItem {
