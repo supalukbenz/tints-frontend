@@ -193,34 +193,38 @@ export default {
     getMakeupSimulator: {
       async handler(val) {
         if (val) {
-          this.loadingState = true;
-          let form = {
-            userID: 123,
-            r_value: this.spilitRgbColor(val.rgb_value)[0],
-            g_value: this.spilitRgbColor(val.rgb_value)[1],
-            b_value: this.spilitRgbColor(val.rgb_value)[2],
-          };
+          try {
+            this.loadingState = true;
+            let form = {
+              userID: 123,
+              r_value: this.spilitRgbColor(val.rgb_value)[0],
+              g_value: this.spilitRgbColor(val.rgb_value)[1],
+              b_value: this.spilitRgbColor(val.rgb_value)[2],
+            };
 
-          if (this.getFileUpload) {
-            form.fileUpload = await this.getFileUpload;
-          } else {
-            let src = document.getElementById('userImage').src;
-            form.fileUpload = await this.imageSrcToFile(src);
-          }
-          console.log(this.getMakeupState);
-          if (this.getMakeupState === 'Lip') {
-            await this.$store.dispatch('loadLipSimulated', form);
-          } else if (this.getMakeupState === 'Blush') {
-            await this.$store.dispatch('loadBlushSimulated', form);
-          } else if (this.getMakeupState === 'Foundation') {
-            await this.$store.dispatch('loadFoundationSimulated', form);
-          }
+            if (this.getFileUpload) {
+              form.fileUpload = await this.getFileUpload;
+            } else {
+              let src = document.getElementById('userImage').src;
+              form.fileUpload = await this.imageSrcToFile(src);
+            }
+            console.log(this.getMakeupState);
+            if (this.getMakeupState === 'Lip') {
+              await this.$store.dispatch('loadLipSimulated', form);
+            } else if (this.getMakeupState === 'Blush') {
+              await this.$store.dispatch('loadBlushSimulated', form);
+            } else if (this.getMakeupState === 'Foundation') {
+              await this.$store.dispatch('loadFoundationSimulated', form);
+            }
 
-          if (this.getMakeupSimulatedImage) {
-            this.imageSimulated = 'data:image/png;base64, ' + this.getMakeupSimulatedImage[1];
+            if (this.getMakeupSimulatedImage) {
+              this.imageSimulated = 'data:image/png;base64, ' + this.getMakeupSimulatedImage[1];
+            }
+            this.loadingState = false;
+            this.simulatedState = true;
+          } catch (err) {
+            this.loadingState = false;
           }
-          this.loadingState = false;
-          this.simulatedState = true;
         }
       },
       deep: true,

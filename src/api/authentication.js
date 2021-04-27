@@ -3,10 +3,16 @@ import axios from 'axios';
 async function userLogin(form) {
   var bodyFormData = new FormData();
   bodyFormData.append('email', form.email);
-  bodyFormData.append('password', form.password);
-  // const response = await axios.post('simulator/lip', bodyFormData, { responseType: "blob" });
-  const response = await axios.post('auth/login', bodyFormData);  
-  return response.data;
+  bodyFormData.append('password', form.password);  
+  // let response = null;
+  for (let i = 0; i <= 5; i++) {
+    const response = await axios.post('auth/login', bodyFormData);
+    if (response) {
+      return response.data;
+    }
+  }
+  // const response = await axios.post('auth/login', bodyFormData);  
+  // return response.data;
 }
 
 async function userResgister(form) {

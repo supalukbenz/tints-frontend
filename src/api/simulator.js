@@ -13,20 +13,30 @@ function createFormData(form) {
 async function getLipSimulator(form) {        
 
   // const response = await axios.post('simulator/lip', bodyFormData, { responseType: "blob" });
-  const response = await axios.post('simulator/lip', createFormData(form));
-  return response.data;
+  for (let i = 0; i <= 5; i++) {
+    const response = await axios.post('simulator/lip', createFormData(form));
+    if (response) {
+      return response.data;
+    }
+  }
 }
 
 async function getBlushSimulator(form) {        
-  
-  const response = await axios.post('simulator/blush', createFormData(form));
-  return response.data;
+  for (let i = 0; i <= 5; i++) {
+    const response = await axios.post('simulator/blush', createFormData(form));
+    if (response) {
+      return response.data;
+    }
+  }
 }
 
 async function getFoundationSimulator(form) {        
-
-  const response = await axios.post('simulator/foundation', createFormData(form));
-  return response.data;
+  for (let i = 0; i <= 5; i++) {
+    const response = await axios.post('simulator/foundation', createFormData(form));
+    if (response) {
+      return response.data;
+    }
+  }
 }
 
 export {

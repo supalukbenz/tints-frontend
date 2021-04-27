@@ -53,22 +53,26 @@ export default {
     },
     async handleSubmitRegis() {
       if (this.imageUpload) {
-        this.loadingLoginStage = true;
-        let updateUser = this.getUserRegisterInfo;
-        updateUser.userImage = this.getFileUpload;
-        await this.$store.dispatch('updateUserRegisterInfo', updateUser);
-        // this.$store.dispatch('updateRegisterState', 1);
-        const form = {
-          email: this.getUserRegisterInfo.email,
-          password: this.getUserRegisterInfo.password,
-          userImage: this.getUserRegisterInfo.userImage,
-          foundationList: JSON.stringify(this.getUserRegisterInfo.foundationList),
-        };
-        await userResgister(form);
-        await this.$store.dispatch('loadUserInfo', form);
-        await this.$store.dispatch('updateUserToken', this.getUserDetail.token);
-        this.loadingLoginStage = false;
-        this.$router.push('/');
+        try {
+          this.loadingLoginStage = true;
+          let updateUser = this.getUserRegisterInfo;
+          updateUser.userImage = this.getFileUpload;
+          await this.$store.dispatch('updateUserRegisterInfo', updateUser);
+          // this.$store.dispatch('updateRegisterState', 1);
+          const form = {
+            email: this.getUserRegisterInfo.email,
+            password: this.getUserRegisterInfo.password,
+            userImage: this.getUserRegisterInfo.userImage,
+            foundationList: JSON.stringify(this.getUserRegisterInfo.foundationList),
+          };
+          await userResgister(form);
+          await this.$store.dispatch('loadUserInfo', form);
+          await this.$store.dispatch('updateUserToken', this.getUserDetail.token);
+          this.loadingLoginStage = false;
+          this.$router.push('/');
+        } catch (err) {
+          this.loadingLoginStage = false;
+        }
       }
     },
   },

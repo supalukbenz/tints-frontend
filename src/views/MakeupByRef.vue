@@ -145,22 +145,26 @@ export default {
       return user === imgRef;
     },
     async uploadImageRef(imageUpload) {
-      this.fileUploadState = true;
+      try {
+        this.fileUploadState = true;
 
-      // await this.$store.dispatch('updateLipstickListByImgRef', []);
-      // await this.updateImageReference(this.imageUpload);
+        // await this.$store.dispatch('updateLipstickListByImgRef', []);
+        // await this.updateImageReference(this.imageUpload);
 
-      this.imgResult = imageUpload;
-      const form = {
-        filename: this.getPredictionInfo.filename,
-        blush_hex_color: this.getPredictionInfo.blush_hex_color,
-      };
-      await this.$store.dispatch('updateMakeupByImageRef', form);
-      this.userType = this.getMakeupByImageRef.ref_compare_user_skin_type.User_skin_type;
-      this.refType = this.getMakeupByImageRef.ref_compare_user_skin_type.Ref_skin_type;
+        this.imgResult = imageUpload;
+        const form = {
+          filename: this.getPredictionInfo.filename,
+          blush_hex_color: this.getPredictionInfo.blush_hex_color,
+        };
+        await this.$store.dispatch('updateMakeupByImageRef', form);
+        this.userType = this.getMakeupByImageRef.ref_compare_user_skin_type.User_skin_type;
+        this.refType = this.getMakeupByImageRef.ref_compare_user_skin_type.Ref_skin_type;
 
-      this.fileUploadState = false;
-      this.scrollToElement('#imageRef');
+        this.fileUploadState = false;
+        this.scrollToElement('#imageRef');
+      } catch (err) {
+        this.fileUploadState = false;
+      }
     },
   },
   mounted() {
