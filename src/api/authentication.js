@@ -1,14 +1,24 @@
 import axios from 'axios';
 
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 async function userLogin(form) {
   var bodyFormData = new FormData();
   bodyFormData.append('email', form.email);
-  bodyFormData.append('password', form.password);  
-  // let response = null;
-  for (let i = 0; i <= 5; i++) {
-    const response = await axios.post('auth/login', bodyFormData);
-    if (response) {
-      return response.data;
+  bodyFormData.append('password', form.password);    
+  for (let i = 0; i <= 10; i++) {    
+    try {
+      const response = await axios.post('auth/login', bodyFormData);
+      if (response.status === 200) {
+        return response.data;
+      }
+      await sleep(2000);
+    } catch (err) {
+      console.log('login state running...');
     }
   }
   // const response = await axios.post('auth/login', bodyFormData);  
@@ -27,17 +37,37 @@ async function userResgister(form) {
 }
 
 async function getUserInformation() {
-  const response = await axios.get('auth/test/get/user_info/token');
-  return response.data;
+  for (let i = 0; i <= 10; i++) {    
+    try {      
+      const response = await axios.get('auth/test/get/user_info/token');
+      if (response.status === 200) {
+        return response.data;
+      }
+      await sleep(2000);
+    } catch (err) {
+      console.log('update user infomation state running...');
+    }
+  }
 }
 
 
 async function userChangeImage(img) {
   var bodyFormData = new FormData();
   bodyFormData.append('user_image', img);
-  // const response = await axios.post('simulator/lip', bodyFormData, { responseType: "blob" });
-  const response = await axios.put('auth/change/user/image', bodyFormData);
-  return response.data;
+  await sleep(2000);
+  for (let i = 0; i <= 10; i++) {
+    try {
+      // const response = await axios.post('simulator/lip', bodyFormData, { responseType: "blob" });
+      const response = await axios.put('auth/change/user/image', bodyFormData);
+      await sleep(4000);
+      if (response.status === 200) {
+        return response.data;
+      }
+      await sleep(2000);
+    } catch (err) {
+      console.log('update user infomation state running...');
+    }
+  }
 }
 
 async function userChangePassword(form) {

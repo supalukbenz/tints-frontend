@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 async function getLipstickListByImageRef(form) {        
   var bodyFormData = new FormData();
   bodyFormData.append('ref_face', form.fileUpload);   
@@ -12,11 +18,16 @@ async function getMakeupDetailByImageRef(form) {
   var bodyFormData = new FormData();
   bodyFormData.append('filename', form.filename);  
   bodyFormData.append('blush_hex_color', form.blush_hex_color);
-  for (let i = 0; i <= 5; i++) {
-    const response = await axios.post('/v2/get/prediction/color', bodyFormData);
-    if (response) {
-      return response.data;
-    }    
+  for (let i = 0; i <= 10; i++) {
+    try {
+      const response = await axios.post('/v2/get/prediction/color', bodyFormData);
+      if (response.status == 200) {
+        return response.data;
+      }
+      await sleep(2000);
+    } catch (err) {
+      console.log('makeup reference running...');
+    }  
   }
 }
 

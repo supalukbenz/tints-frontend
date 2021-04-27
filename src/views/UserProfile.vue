@@ -1,5 +1,8 @@
 <template>
   <div>
+    <LoadingStage v-show="changeImageStage" title="Loading">
+      <LoadingSimulation></LoadingSimulation>
+    </LoadingStage>
     <div class="user-profile-container">
       <div class="user-profile">User profile <i class="fas fa-user-circle"></i></div>
     </div>
@@ -161,6 +164,8 @@
 
 <script>
 import UploadImageModal from '@/components/main/UploadImageModal.vue';
+import LoadingSimulation from '@/components/simulator/LoadingSimulation.vue';
+import LoadingStage from '@/components/main/LoadingStage.vue';
 import $ from 'jquery';
 import { mapGetters } from 'vuex';
 import { userChangeImage, getUserInformation, userChangePassword } from '@/api/authentication';
@@ -168,6 +173,8 @@ import { userChangeImage, getUserInformation, userChangePassword } from '@/api/a
 export default {
   components: {
     UploadImageModal,
+    LoadingStage,
+    LoadingSimulation,
   },
   data() {
     return {
@@ -180,6 +187,7 @@ export default {
       submitEmailState: false,
       newPasswordInput: false,
       passwordIncorrect: false,
+      changeImageStage: false,
     };
   },
   computed: {
@@ -224,6 +232,11 @@ export default {
         }
       }
     },
+    sleep(ms) {
+      return new Promise(resolve => {
+        setTimeout(resolve, ms);
+      });
+    },
     async handleChangeEmail() {
       this.submitEmailState = true;
       if (this.newEmailInput.trim() === '') {
@@ -245,12 +258,20 @@ export default {
     },
   },
   watch: {
-    getImageUpload: {
+    getFileUpload: {
       async handler(val) {
         if (val) {
-          await userChangeImage(this.getFileUpload);
-          const updateUser = await getUserInformation();
-          await this.$store.dispatch('updateUserInfo', updateUser);
+          try {
+            this.changeImageStage = true;
+            await userChangeImage(this.getFileUpload);
+            await this.sleep(10000);
+            const updateUser = await getUserInformation();
+            await this.$store.dispatch('updateUserInfo', updateUser);
+            this.changeImageStage = false;
+          } catch (err) {
+            console.log('err', err);
+            this.changeImageStage = false;
+          }
         }
       },
       deep: true,

@@ -165,6 +165,10 @@ export default {
       selectedColorState: false,
     };
   },
+  beforeCreate() {
+    this.fileUpload = null;
+    this.imageUpload = null;
+  },
   computed: {
     ...mapGetters(['getUserInfo', 'getCheekImage', 'getUserToken']),
   },
@@ -251,6 +255,7 @@ export default {
           console.log('err');
           this.imageErrorState = true;
           this.detectFaceStage = false;
+          this.deleteImageUpload();
         }
       }
     },

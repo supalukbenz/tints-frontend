@@ -18,7 +18,7 @@
                 titleButton="Upload Image"
               ></UploadImageModal>
             </div>
-            <ExampleCard v-show="imgResult"></ExampleCard>
+            <ExampleCard v-show="!imgResult"></ExampleCard>
           </div>
         </div>
       </div>
@@ -164,6 +164,7 @@ export default {
         this.scrollToElement('#imageRef');
       } catch (err) {
         this.fileUploadState = false;
+        this.imgResult = null;
       }
     },
   },

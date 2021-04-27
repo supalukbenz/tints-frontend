@@ -77,6 +77,7 @@ export default {
   methods: {
     async handleLogin() {
       this.clickedLoginState = true;
+
       if (this.email !== '' && this.password !== '') {
         this.loadingLoginStage = true;
         this.loginErrorState = false;

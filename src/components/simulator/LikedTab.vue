@@ -2,9 +2,80 @@
   <div class="like-container">
     <div>
       <div class="title-liked"><slot></slot></div>
+      <div v-show="user.likedFoundation.length === 0 && skinState">
+        <div class="alert" role="alert">
+          <h5 class="alert-heading banner-heading">
+            The cosmetic list is still empty!
+          </h5>
+          <hr />
+          <p class="mb-0 benner-detail">
+            Add more cosmetics from
+            <router-link class="banner-link" to="/makeup-ref">Makeup By Reference</router-link> and
+            <router-link class="banner-link" to="/recommendation">Recommendation</router-link>
+          </p>
+        </div>
+      </div>
       <Carousel v-show="skinState" :skinState="skinState" :list="user.likedFoundation"></Carousel>
+      <div v-show="user.likedFoundation.length !== 0 && skinState">
+        <div class="alert" role="alert">
+          <hr />
+          <p class="mb-0 benner-detail">
+            Add more cosmetics from
+            <router-link class="banner-link" to="/makeup-ref">Makeup By Reference</router-link> and
+            <router-link class="banner-link" to="/recommendation">Recommendation</router-link>
+          </p>
+        </div>
+      </div>
+
+      <div v-show="user.likedBlush.length === 0 && blushState">
+        <div class="alert" role="alert">
+          <h5 class="alert-heading banner-heading">
+            The cosmetic list is still empty!
+          </h5>
+          <hr />
+          <p class="mb-0 benner-detail">
+            Add more cosmetics from
+            <router-link class="banner-link" to="/makeup-ref">Makeup By Reference</router-link> and
+            <router-link class="banner-link" to="/recommendation">Recommendation</router-link>
+          </p>
+        </div>
+      </div>
       <Carousel v-show="blushState" :blushState="blushState" :list="user.likedBlush"></Carousel>
+      <div v-show="user.likedBlush.length !== 0 && blushState">
+        <div class="alert" role="alert">
+          <hr />
+          <p class="mb-0 benner-detail">
+            Add more cosmetics from
+            <router-link class="banner-link" to="/makeup-ref">Makeup By Reference</router-link> and
+            <router-link class="banner-link" to="/recommendation">Recommendation</router-link>
+          </p>
+        </div>
+      </div>
+
+      <div v-show="user.likedLip.length === 0 && lipsState">
+        <div class="alert" role="alert">
+          <h5 class="alert-heading banner-heading">
+            The cosmetic list is still empty!
+          </h5>
+          <hr />
+          <p class="mb-0 benner-detail">
+            Add more cosmetics from
+            <router-link class="banner-link" to="/makeup-ref">Makeup By Reference</router-link> and
+            <router-link class="banner-link" to="/recommendation">Recommendation</router-link>
+          </p>
+        </div>
+      </div>
       <Carousel v-show="lipsState" :lipState="lipsState" :list="user.likedLip"></Carousel>
+      <div v-show="user.likedLip.length !== 0 && lipsState">
+        <div class="alert" role="alert">
+          <hr />
+          <p class="mb-0 benner-detail">
+            Add more cosmetics from
+            <router-link class="banner-link" to="/makeup-ref">Makeup By Reference</router-link> and
+            <router-link class="banner-link" to="/recommendation">Recommendation</router-link>
+          </p>
+        </div>
+      </div>
     </div>
     <!-- <div class="lip-container">
       <div class="title-liked">Blush</div>
@@ -33,6 +104,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.banner-heading {
+  font-weight: 800;
+}
+
+.banner-link {
+  font-weight: 800;
+  color: #333333;
+  text-decoration: underline;
+}
+
 .title-liked {
   font-size: 1.2rem;
   font-weight: 700;
@@ -58,6 +139,16 @@ export default {
     left: 50%;
     transform: translate3d(-50%, -50%, 0) scale(1.015) rotate(0.5deg);
     border-radius: 1% 1% 2% 4% / 2% 6% 5% 4%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .banner-heading {
+    font-size: 0.9rem;
+  }
+
+  .benner-detail {
+    font-size: 0.8rem;
   }
 }
 </style>
