@@ -231,7 +231,7 @@ button {
   }
 
   .like-btn {
-    width: 1.2rem;
+    max-width: 1.2rem !important;
     height: 1.2rem;
   }
   .like-icon {

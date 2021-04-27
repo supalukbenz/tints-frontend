@@ -167,9 +167,15 @@ a.nav-link {
   width: 1rem;
 }
 
-@media screen and (max-width: 390px) {
+@media screen and (max-width: 480px) {
   .tab-pane {
     grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  }
+}
+
+@media screen and (max-width: 362px) {
+  .tab-pane {
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
   }
 }
 </style>

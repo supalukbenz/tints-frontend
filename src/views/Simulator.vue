@@ -344,7 +344,7 @@ button {
 
 .level-btn {
   margin-bottom: 1rem;
-  width: 1rem;
+  max-width: 1rem !important;
   height: 1rem;
   border-radius: 50%;
   border: 2px solid transparent;
@@ -395,7 +395,7 @@ button {
   }
   .level-btn {
     margin-bottom: 0.5rem;
-    height: 15px;
+    max-height: 15px;
   }
 
   .img-profile-btn {

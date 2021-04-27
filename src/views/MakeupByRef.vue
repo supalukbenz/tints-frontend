@@ -1,7 +1,7 @@
 <template>
   <div>
     <Banner bannerImg="makeup-by-ref_banner.png"></Banner>
-    <LoadingStage v-show="fileUploadState" title="Processing">
+    <LoadingStage v-show="loadingState" title="Processing">
       <div class="mt-5 d-flex justify-content-center">
         <div class="spinner-grow color-green-200 mr-3 spinner" role="status"></div>
         <div class="spinner-grow color-green-100 mr-3 spinner" role="status"></div>
@@ -108,6 +108,7 @@ export default {
     return {
       imgResult: null,
       fileUploadState: false,
+      loadingState: false,
       rgbColor: '',
       userType: '',
       refType: '',
@@ -147,6 +148,7 @@ export default {
     async uploadImageRef(imageUpload) {
       try {
         this.fileUploadState = true;
+        this.loadingState = true;
 
         // await this.$store.dispatch('updateLipstickListByImgRef', []);
         // await this.updateImageReference(this.imageUpload);
@@ -161,9 +163,11 @@ export default {
         this.refType = this.getMakeupByImageRef.ref_compare_user_skin_type.Ref_skin_type;
 
         this.fileUploadState = false;
+        this.loadingState = false;
         this.scrollToElement('#imageRef');
       } catch (err) {
         this.fileUploadState = false;
+        this.loadingState = false;
         this.imgResult = null;
       }
     },

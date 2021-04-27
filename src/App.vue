@@ -139,6 +139,7 @@ button {
   border-radius: 50%;
   // margin-left: 0.5rem;
   border: 1px solid;
+  max-width: 2rem;
   background: #ffffff;
   display: flex;
   justify-content: center;
