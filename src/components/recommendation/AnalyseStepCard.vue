@@ -88,6 +88,7 @@ export default {
         this.loadingState = false;
       } catch (err) {
         this.errorStage = true;
+        this.loadingState = false;
       }
     },
     scrollToElement(id) {
