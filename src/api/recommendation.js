@@ -13,11 +13,12 @@ async function getUserRecommendation() {
       if (response.status === 200) {      
         return response.data;
       }
-      await sleep(2000);
+      await sleep(3000);
     } catch (err) {
       console.log('recommendation running...');
     }
   }
+  return;
 }
 
 export {

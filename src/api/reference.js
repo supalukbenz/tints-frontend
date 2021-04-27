@@ -35,15 +35,21 @@ async function getCheekImage(form) {
   var bodyFormData = new FormData();  
   bodyFormData.append('ref_face', form.fileUpload);   
   // bodyFormData.append('user_id', form.userID);
-  const response = await axios.post('/v2/get/cheek/image', bodyFormData, { responseType: "blob" });
-  const filename = response.headers["x-suggested-filename"];
-  // let headerLine1 = response.data.headers['content-disposition'];
-  // const filename = contDis.split("=")[1]
-  
-  return {
-    cheek_image: response.data,
-    filename: filename,
-  };
+  for (let i = 0; i <= 10; i++) {    
+    try {
+      const response = await axios.post('/v2/get/cheek/image', bodyFormData, { responseType: "blob" });
+      const filename = response.headers["x-suggested-filename"];
+      if (response.status === 200) {
+          return {
+          cheek_image: response.data,
+          filename: filename,
+        };
+      }
+      await sleep(2000);
+    } catch (err) {
+      console.log('cheek image state running...');
+    }
+  }
 }
 
 export {

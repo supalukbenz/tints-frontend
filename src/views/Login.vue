@@ -71,13 +71,12 @@ export default {
   computed: {
     ...mapGetters({ token: 'getUserToken', user: 'getUserDetail' }),
   },
-  beforeUpdate() {
+  async beforeUpdate() {
     this.$store.dispatch('updateRegisterState', 1);
   },
   methods: {
     async handleLogin() {
       this.clickedLoginState = true;
-
       if (this.email !== '' && this.password !== '') {
         this.loadingLoginStage = true;
         this.loginErrorState = false;

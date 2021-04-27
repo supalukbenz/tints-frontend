@@ -90,6 +90,7 @@ export default {
         this.errorStage = true;
         this.loadingState = false;
       }
+      this.loadingState = false;
     },
     scrollToElement(id) {
       this.$nextTick(() => {
