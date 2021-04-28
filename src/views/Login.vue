@@ -71,7 +71,10 @@ export default {
   computed: {
     ...mapGetters({ token: 'getUserToken', user: 'getUserDetail' }),
   },
-  async beforeUpdate() {
+  beforeUpdate() {
+    this.$store.dispatch('updateRegisterState', 1);
+  },
+  mounted() {
     this.$store.dispatch('updateRegisterState', 1);
   },
   methods: {
