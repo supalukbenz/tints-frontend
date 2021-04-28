@@ -9,9 +9,9 @@
         <div class="wrapper">
           <div class="login-banner flex-center">
             <div class="welcome-txt">Welcome!</div>
-            <router-link to="/register" type="button" class="register-btn form-btn"
-              >Sign up</router-link
-            >
+            <button @click="handleSignup" type="button" class="register-btn form-btn">
+              Sign up
+            </button>
           </div>
           <div class="login-form flex-center">
             <div>
@@ -103,6 +103,10 @@ export default {
           this.loadingLoginStage = false;
         }
       }
+    },
+    handleSignup() {
+      this.$store.dispatch('updateRegisterState', 1);
+      this.$router.push('/register');
     },
   },
 };
