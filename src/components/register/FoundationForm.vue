@@ -157,16 +157,6 @@ export default {
           foundationList.push(form);
           this.$store.dispatch('updateFoundationFormList', foundationList);
         }
-        // else {
-        //   let foundationList = this.getFoundationFormList;
-        //   const form = {
-        //     brandSelected: '',
-        //     productSelected: '',
-        //     colorSelected: '',
-        //   };
-        //   foundationList.push(form);
-        //   this.$store.dispatch('updateFoundationFormList', foundationList);
-        // }
       }
     },
   },
