@@ -7,6 +7,13 @@ import {
   getFoundationList
 } from '@/api/userFeatures';
 
+function jsonUser(user) {
+  if (typeof user !== 'undefined') {
+    return JSON.parse(user);
+  } else {
+    return {};
+  }
+}
 
 Vue.use(Vuex);
 
@@ -15,7 +22,7 @@ export default {
     token: localStorage.getItem('token') || '',
     registerState: 1,
     userRegisterInfo: {},
-    userInfo: JSON.parse(localStorage.getItem('user')) || {},
+    userInfo: jsonUser(localStorage.getItem('user')) || {},
     foundationFormList: [],
     checkFoundationForm: false,
     foundationList: {},

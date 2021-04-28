@@ -194,7 +194,7 @@ a {
 
 .btn-save-change {
   font-size: 0.9rem;
-  background: #28a745;  
+  background: #28a745;
   color: #ffffff;
   font-weight: 800;
 }
@@ -221,6 +221,7 @@ a {
   font-weight: 700;
   color: #edb194;
   padding-right: 0.5rem;
+  text-align: left;
 }
 
 .question-part {

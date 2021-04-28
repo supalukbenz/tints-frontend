@@ -77,6 +77,9 @@ export default {
   methods: {
     async handleLogin() {
       this.clickedLoginState = true;
+      await localStorage.clear();
+      await this.$store.dispatch('updateUserInfo', {});
+      await this.$store.dispatch('updateUserToken', '');
       if (this.email !== '' && this.password !== '') {
         this.loadingLoginStage = true;
         this.loginErrorState = false;
